@@ -6,6 +6,8 @@ category: "Aplikasi & Produktivitas"
 categorySlug: "aplikasi"
 tags: ["Aplikasi", "Produktivitas", "Workflow"]
 publishedAt: 2026-10-08
+aiAssisted: true
+editorialNote: "AI membantu drafting artikel ini. Redaksi bertanggung jawab atas struktur publikasi dan rekomendasi perlu disesuaikan dengan kebutuhan serta workflow pembaca."
 featured: false
 draft: false
 ---

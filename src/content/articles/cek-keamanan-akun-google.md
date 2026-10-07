@@ -6,6 +6,8 @@ category: "Keamanan Digital"
 categorySlug: "keamanan-digital"
 tags: ["Keamanan Akun", "Google", "2FA"]
 publishedAt: 2026-10-08
+aiAssisted: true
+editorialNote: "AI membantu drafting artikel ini. Redaksi bertanggung jawab atas struktur publikasi dan pembaca perlu memeriksa kembali opsi keamanan yang tersedia pada akun masing-masing."
 featured: true
 draft: false
 ---

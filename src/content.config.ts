@@ -22,6 +22,8 @@ const articles = defineCollection({
     author: z.string().default('Redaksi TeknoPraktis'),
     reviewedBy: z.string().optional(),
     sources: z.array(sourceSchema).default([]),
+    aiAssisted: z.boolean().default(false),
+    editorialNote: z.string().max(280).optional(),
     featured: z.boolean().default(false),
     sponsored: z.boolean().default(false),
     draft: z.boolean().default(false),

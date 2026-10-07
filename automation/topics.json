@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "topics": [
+    {
+      "id": "safe-download-check",
+      "workingTitle": "Cara Memeriksa File Download Sebelum Dibuka di Windows",
+      "intent": "Membantu pengguna awam memeriksa sumber, ekstensi, reputasi, dan pemindaian file sebelum membukanya tanpa memberi rasa aman palsu.",
+      "category": "Keamanan Digital",
+      "categorySlug": "keamanan-digital",
+      "suggestedSlug": "cara-memeriksa-file-download-sebelum-dibuka",
+      "status": "pending"
+    },
+    {
+      "id": "cloud-sync-vs-backup",
+      "workingTitle": "Sinkronisasi Cloud Bukan Backup: Bedanya dan Cara Memakainya",
+      "intent": "Menjelaskan perbedaan sync dan backup serta contoh arsitektur sederhana untuk pengguna personal.",
+      "category": "Tutorial",
+      "categorySlug": "tutorial",
+      "suggestedSlug": "sinkronisasi-cloud-bukan-backup",
+      "status": "pending"
+    },
+    {
+      "id": "browser-permission-audit",
+      "workingTitle": "Cara Mengaudit Izin Kamera, Mikrofon, dan Lokasi di Browser",
+      "intent": "Memberikan checklist audit izin situs yang praktis untuk browser modern tanpa mengandalkan satu vendor.",
+      "category": "Keamanan Digital",
+      "categorySlug": "keamanan-digital",
+      "suggestedSlug": "cara-audit-izin-browser-kamera-mikrofon-lokasi",
+      "status": "pending"
+    },
+    {
+      "id": "ai-meeting-notes-privacy",
+      "workingTitle": "Checklist Privasi Sebelum Memakai AI untuk Notulen Rapat",
+      "intent": "Membantu pembaca menilai data sensitif, persetujuan peserta, retensi, dan verifikasi ringkasan AI.",
+      "category": "AI & Otomasi",
+      "categorySlug": "ai",
+      "suggestedSlug": "checklist-privasi-ai-notulen-rapat",
+      "status": "pending"
+    },
+    {
+      "id": "wifi-troubleshooting",
+      "workingTitle": "Urutan Troubleshooting Wi-Fi Sebelum Reset Router",
+      "intent": "Memberikan urutan diagnosis ringan untuk membedakan masalah perangkat, jaringan lokal, DNS, dan ISP.",
+      "category": "Internet",
+      "categorySlug": "internet",
+      "suggestedSlug": "troubleshooting-wifi-sebelum-reset-router",
+      "status": "pending"
+    },
+    {
+      "id": "password-manager-basics",
+      "workingTitle": "Cara Mulai Menggunakan Password Manager Tanpa Membuat Sistem Rumit",
+      "intent": "Membantu pengguna membuat migrasi bertahap ke password manager dan menghindari kebiasaan berisiko.",
+      "category": "Keamanan Digital",
+      "categorySlug": "keamanan-digital",
+      "suggestedSlug": "cara-mulai-menggunakan-password-manager",
+      "status": "pending"
+    },
+    {
+      "id": "android-storage-cleanup",
+      "workingTitle": "Cara Membersihkan Penyimpanan Android Tanpa Menghapus Data Penting",
+      "intent": "Memberikan urutan pembersihan storage yang konservatif dan menjelaskan kategori data yang perlu dicadangkan.",
+      "category": "Perangkat",
+      "categorySlug": "perangkat",
+      "suggestedSlug": "cara-membersihkan-penyimpanan-android",
+      "status": "pending"
+    },
+    {
+      "id": "two-factor-options",
+      "workingTitle": "SMS, Authenticator, atau Passkey: Memilih Metode Login Kedua",
+      "intent": "Membandingkan metode autentikasi dengan bahasa praktis dan tidak menyederhanakan trade-off keamanan.",
+      "category": "Keamanan Digital",
+      "categorySlug": "keamanan-digital",
+      "suggestedSlug": "memilih-sms-authenticator-passkey",
+      "status": "pending"
+    },
+    {
+      "id": "three-two-one-backup",
+      "workingTitle": "Menerapkan Aturan Backup 3-2-1 untuk File Pribadi Secara Sederhana",
+      "intent": "Mengubah konsep backup 3-2-1 menjadi langkah yang realistis untuk foto, dokumen, dan file personal.",
+      "category": "Tutorial",
+      "categorySlug": "tutorial",
+      "suggestedSlug": "aturan-backup-3-2-1-file-pribadi",
+      "status": "pending"
+    },
+    {
+      "id": "phishing-email-checklist",
+      "workingTitle": "Checklist Memeriksa Email Mencurigakan Sebelum Mengklik Tautan",
+      "intent": "Membantu pengguna mengenali sinyal phishing dan melakukan verifikasi aman tanpa mengandalkan satu ciri.",
+      "category": "Keamanan Digital",
+      "categorySlug": "keamanan-digital",
+      "suggestedSlug": "checklist-email-mencurigakan-sebelum-klik",
+      "status": "pending"
+    },
+    {
+      "id": "app-permission-cleanup",
+      "workingTitle": "Audit Izin Aplikasi: Mana yang Perlu Dicabut dan Mana yang Wajar",
+      "intent": "Memberikan cara berpikir praktis ketika mengevaluasi izin aplikasi pada ponsel.",
+      "category": "Aplikasi & Produktivitas",
+      "categorySlug": "aplikasi",
+      "suggestedSlug": "cara-audit-izin-aplikasi",
+      "status": "pending"
+    },
+    {
+      "id": "ai-prompt-fact-check",
+      "workingTitle": "Cara Meminta AI Menunjukkan Batas Kepastian dan Hal yang Perlu Dicek",
+      "intent": "Mengajarkan pola prompt yang membantu pembaca membedakan fakta, asumsi, dan poin yang perlu diverifikasi.",
+      "category": "AI & Otomasi",
+      "categorySlug": "ai",
+      "suggestedSlug": "prompt-ai-batas-kepastian-verifikasi",
+      "status": "pending"
+    }
+  ]
+}

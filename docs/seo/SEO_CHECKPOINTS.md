@@ -20,7 +20,7 @@ Status: PASS / LOCKED
 - Lighthouse Desktop: 100/100/100/100
 
 ## SEO-003 — Editorial Discoverability
-Status: PASS
+Status: PASS / LOCKED
 
 - RSS feed at /rss.xml
 - Breadcrumb schema
@@ -28,18 +28,26 @@ Status: PASS
 - Updated/review metadata support
 - Source/reference metadata support
 - Build-time content quality gate
+- RSS autodiscovery
 
 ## SEO-004 — Google Search Console
-Status: NEXT / USER AUTH REQUIRED
+Status: IN PROGRESS
 
-1. Add Domain property: `teknopraktis.my.id`.
-2. Obtain Google verification TXT value.
-3. Add TXT record to Cloudflare DNS.
-4. Verify ownership.
-5. Submit `https://teknopraktis.my.id/sitemap.xml`.
-6. Inspect homepage and request indexing after successful verification.
+- Domain property `teknopraktis.my.id`: VERIFIED
+- Homepage live test: PASS
+- Homepage indexing request: SUBMITTED
+- Sitemap submitted; live fetch is accessible, Search Console processing/status is still settling
+- Initial article indexing requests: operational task
 
 ## SEO-005 — Automated Publishing
-Status: TODO
+Status: FOUNDATION PASS / ACTIVATION PENDING
 
-Implement scheduler, research sources, draft creation, quality/fact gate, controlled publish, and post-deploy checks.
+- Topic queue: READY
+- Scheduled draft workflow: READY
+- OpenAI Responses API + web search generator: READY
+- Generator hard gate: READY
+- AI assistance disclosure: READY
+- Organizational author/transparency page: READY
+- Manual controlled publish workflow: READY
+- GitHub secret `OPENAI_API_KEY`: REQUIRED BEFORE ACTIVATION
+- First manual automation run: NEXT

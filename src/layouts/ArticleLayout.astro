@@ -25,7 +25,7 @@ const articleSchema = {
   dateModified: (d.updatedAt ?? d.publishedAt).toISOString(),
   inLanguage: 'id-ID',
   isAccessibleForFree: true,
-  author: { '@type': 'Organization', name: d.author },
+  author: { '@type': 'Organization', name: d.author, url: `${SITE.url}/redaksi/` },
   publisher: {
     '@type': 'Organization',
     name: SITE.name,
@@ -67,10 +67,15 @@ const breadcrumbSchema = {
       <h1>{d.title}</h1>
       <p class="article-deck">{d.description}</p>
       <div class="article-byline">
-        <strong>{d.author}</strong>
+        <strong><a href="/redaksi/">{d.author}</a></strong>
         <span>{d.reviewedBy ? `Ditinjau oleh ${d.reviewedBy}.` : 'Ditinjau untuk kejelasan dan akurasi praktis.'}</span>
       </div>
-      {d.sponsored && <p class="disclosure"><strong>Disclosure:</strong> Konten ini memiliki hubungan komersial yang dijelaskan secara transparan.</p>}
+      {d.aiAssisted && (
+        <p class="disclosure">
+          <strong>Proses editorial:</strong> {d.editorialNote ?? 'AI digunakan sebagai alat bantu drafting. Redaksi bertanggung jawab atas keputusan publikasi dan pembaruan konten.'}
+        </p>
+      )}
+      {d.sponsored && <p class="disclosure"><strong>Disclosure komersial:</strong> Konten ini memiliki hubungan komersial yang dijelaskan secara transparan.</p>}
     </header>
 
     <div class="article-body container prose-width">

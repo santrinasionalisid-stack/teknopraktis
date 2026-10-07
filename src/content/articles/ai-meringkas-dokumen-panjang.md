@@ -6,6 +6,8 @@ category: "AI & Otomasi"
 categorySlug: "ai"
 tags: ["AI", "Produktivitas", "Prompt"]
 publishedAt: 2026-10-08
+aiAssisted: true
+editorialNote: "AI membantu drafting artikel ini. Redaksi bertanggung jawab atas struktur publikasi dan pembaca tetap disarankan memverifikasi pengaturan pada layanan yang digunakan."
 featured: true
 draft: false
 ---
