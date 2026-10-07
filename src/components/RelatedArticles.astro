@@ -1,0 +1,17 @@
+---
+import ArticleCard from './ArticleCard.astro';
+const { articles = [] } = Astro.props;
+---
+{articles.length > 0 && (
+  <section class="related-articles" aria-labelledby="related-heading">
+    <div class="section-head">
+      <div>
+        <h2 id="related-heading">Baca selanjutnya</h2>
+        <p>Panduan lain yang berkaitan dengan topik ini.</p>
+      </div>
+    </div>
+    <div class="article-grid">
+      {articles.map((article) => <ArticleCard article={article} />)}
+    </div>
+  </section>
+)}

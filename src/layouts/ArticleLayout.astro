@@ -1,25 +1,101 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import RelatedArticles from '../components/RelatedArticles.astro';
 import { SITE } from '../data/site';
-const { article } = Astro.props;
+
+const { article, related = [] } = Astro.props;
 const d = article.data;
-const published = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }).format(d.publishedAt);
-const schema = {
-  '@context': 'https://schema.org', '@type': 'BlogPosting', headline: d.title, description: d.description,
-  datePublished: d.publishedAt.toISOString(), dateModified: (d.updatedAt ?? d.publishedAt).toISOString(),
+const published = new Intl.DateTimeFormat('id-ID', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+}).format(d.publishedAt);
+
+const modified = d.updatedAt
+  ? new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }).format(d.updatedAt)
+  : null;
+
+const articleUrl = `${SITE.url}/artikel/${d.slug}/`;
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: d.title,
+  description: d.description,
+  datePublished: d.publishedAt.toISOString(),
+  dateModified: (d.updatedAt ?? d.publishedAt).toISOString(),
+  inLanguage: 'id-ID',
+  isAccessibleForFree: true,
   author: { '@type': 'Organization', name: d.author },
-  publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url, logo: { '@type': 'ImageObject', url: `${SITE.url}/brand/teknopraktis-mark.svg` } },
-  mainEntityOfPage: `${SITE.url}/artikel/${d.slug}/`, articleSection: d.category, keywords: d.tags.join(', ')
+  publisher: {
+    '@type': 'Organization',
+    name: SITE.name,
+    url: SITE.url,
+    logo: { '@type': 'ImageObject', url: `${SITE.url}/brand/teknopraktis-mark.svg` },
+  },
+  mainEntityOfPage: articleUrl,
+  articleSection: d.category,
+  keywords: d.tags.join(', '),
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Beranda', item: SITE.url },
+    { '@type': 'ListItem', position: 2, name: 'Artikel', item: `${SITE.url}/artikel/` },
+    { '@type': 'ListItem', position: 3, name: d.title, item: articleUrl },
+  ],
 };
 ---
-<BaseLayout title={d.title} description={d.description} type="article" schema={schema}>
+<BaseLayout
+  title={d.seoTitle ?? d.title}
+  description={d.description}
+  type="article"
+  schema={[articleSchema, breadcrumbSchema]}
+>
   <article class="article-shell">
     <header class="article-hero container prose-width">
-      <div class="eyebrow"><a href={`/kategori/${d.categorySlug}/`}>{d.category}</a><span>•</span><time datetime={d.publishedAt.toISOString()}>{published}</time></div>
-      <h1>{d.title}</h1><p class="article-deck">{d.description}</p>
-      <div class="article-byline"><strong>{d.author}</strong><span>Ditinjau untuk kejelasan dan akurasi praktis.</span></div>
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Beranda</a><span aria-hidden="true">/</span><a href="/artikel/">Artikel</a>
+      </nav>
+      <div class="eyebrow">
+        <a href={`/kategori/${d.categorySlug}/`}>{d.category}</a>
+        <span>•</span>
+        <time datetime={d.publishedAt.toISOString()}>{published}</time>
+        {modified && <><span>•</span><span>Diperbarui {modified}</span></>}
+      </div>
+      <h1>{d.title}</h1>
+      <p class="article-deck">{d.description}</p>
+      <div class="article-byline">
+        <strong>{d.author}</strong>
+        <span>{d.reviewedBy ? `Ditinjau oleh ${d.reviewedBy}.` : 'Ditinjau untuk kejelasan dan akurasi praktis.'}</span>
+      </div>
+      {d.sponsored && <p class="disclosure"><strong>Disclosure:</strong> Konten ini memiliki hubungan komersial yang dijelaskan secara transparan.</p>}
     </header>
-    <div class="article-body container prose-width"><slot /></div>
-    <footer class="article-footer container prose-width"><p><strong>Topik:</strong> {d.tags.join(' · ')}</p><a class="button button--secondary" href="/artikel/">Lihat artikel lainnya</a></footer>
+
+    <div class="article-body container prose-width">
+      <slot />
+    </div>
+
+    {d.sources.length > 0 && (
+      <section class="article-sources container prose-width" aria-labelledby="sources-heading">
+        <h2 id="sources-heading">Sumber & verifikasi</h2>
+        <p>Referensi berikut digunakan untuk membantu memeriksa informasi dalam artikel ini.</p>
+        <ol>
+          {d.sources.map((source) => (
+            <li><a href={source.url} rel="noreferrer">{source.title}</a></li>
+          ))}
+        </ol>
+      </section>
+    )}
+
+    <footer class="article-footer container prose-width">
+      <p><strong>Topik:</strong> {d.tags.join(' · ')}</p>
+      <a class="button button--secondary" href="/artikel/">Lihat artikel lainnya</a>
+    </footer>
+
+    <div class="container related-wrap">
+      <RelatedArticles articles={related} />
+    </div>
   </article>
 </BaseLayout>
