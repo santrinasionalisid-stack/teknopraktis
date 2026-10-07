@@ -1,0 +1,17 @@
+---
+import { NAV } from '../data/site';
+---
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label="TeknoPraktis — Beranda">
+      <img src="/brand/teknopraktis-mark.svg" width="42" height="42" alt="" />
+      <span>Tekno<span>Praktis</span></span>
+    </a>
+    <nav aria-label="Navigasi utama">
+      <ul class="nav-list">
+        {NAV.map((item) => (<li><a href={item.href}>{item.label}</a></li>))}
+      </ul>
+    </nav>
+    <a class="header-cta" href="/tentang/">Tentang kami</a>
+  </div>
+</header>

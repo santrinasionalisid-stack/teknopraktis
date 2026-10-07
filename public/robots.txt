@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://teknopraktis.my.id/sitemap.xml

@@ -1,0 +1,25 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { SITE } from '../data/site';
+const { article } = Astro.props;
+const d = article.data;
+const published = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }).format(d.publishedAt);
+const schema = {
+  '@context': 'https://schema.org', '@type': 'BlogPosting', headline: d.title, description: d.description,
+  datePublished: d.publishedAt.toISOString(), dateModified: (d.updatedAt ?? d.publishedAt).toISOString(),
+  author: { '@type': 'Organization', name: d.author },
+  publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url, logo: { '@type': 'ImageObject', url: `${SITE.url}/brand/teknopraktis-mark.svg` } },
+  mainEntityOfPage: `${SITE.url}/artikel/${d.slug}/`, articleSection: d.category, keywords: d.tags.join(', ')
+};
+---
+<BaseLayout title={d.title} description={d.description} type="article" schema={schema}>
+  <article class="article-shell">
+    <header class="article-hero container prose-width">
+      <div class="eyebrow"><a href={`/kategori/${d.categorySlug}/`}>{d.category}</a><span>•</span><time datetime={d.publishedAt.toISOString()}>{published}</time></div>
+      <h1>{d.title}</h1><p class="article-deck">{d.description}</p>
+      <div class="article-byline"><strong>{d.author}</strong><span>Ditinjau untuk kejelasan dan akurasi praktis.</span></div>
+    </header>
+    <div class="article-body container prose-width"><slot /></div>
+    <footer class="article-footer container prose-width"><p><strong>Topik:</strong> {d.tags.join(' · ')}</p><a class="button button--secondary" href="/artikel/">Lihat artikel lainnya</a></footer>
+  </article>
+</BaseLayout>

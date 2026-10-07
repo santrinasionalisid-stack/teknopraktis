@@ -1,0 +1,13 @@
+---
+const { article } = Astro.props;
+const date = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }).format(article.data.publishedAt);
+---
+<article class="article-card">
+  <div class="article-card__visual" aria-hidden="true"><span>{article.data.category}</span><strong>TP</strong></div>
+  <div class="article-card__body">
+    <div class="eyebrow"><a href={`/kategori/${article.data.categorySlug}/`}>{article.data.category}</a><span>•</span><time datetime={article.data.publishedAt.toISOString()}>{date}</time></div>
+    <h3><a href={`/artikel/${article.data.slug}/`}>{article.data.title}</a></h3>
+    <p>{article.data.description}</p>
+    <a class="text-link" href={`/artikel/${article.data.slug}/`}>Baca panduan <span aria-hidden="true">→</span></a>
+  </div>
+</article>
