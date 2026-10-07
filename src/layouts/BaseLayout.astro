@@ -13,7 +13,15 @@ interface Props {
   schema?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title = SITE.name, description = SITE.description, image = '/brand/teknopraktis-mark.svg', type = 'website', noindex = false, schema } = Astro.props;
+const {
+  title = SITE.name,
+  description = SITE.description,
+  image = '/brand/teknopraktis-mark.svg',
+  type = 'website',
+  noindex = false,
+  schema,
+} = Astro.props;
+
 const pageTitle = title === SITE.name ? SITE.name : `${title} | ${SITE.name}`;
 const canonical = new URL(Astro.url.pathname, SITE.url).toString();
 const socialImage = new URL(image, SITE.url).toString();
@@ -21,14 +29,34 @@ const socialImage = new URL(image, SITE.url).toString();
 <!doctype html>
 <html lang="id">
   <head>
-    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="theme-color" content="#111827" />
-    <meta name="description" content={description} />{noindex && <meta name="robots" content="noindex,nofollow" />}
-    <link rel="canonical" href={canonical} /><link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta property="og:locale" content={SITE.locale} /><meta property="og:type" content={type} /><meta property="og:site_name" content={SITE.name} />
-    <meta property="og:title" content={pageTitle} /><meta property="og:description" content={description} /><meta property="og:url" content={canonical} /><meta property="og:image" content={socialImage} />
-    <meta name="twitter:card" content="summary" /><meta name="twitter:title" content={pageTitle} /><meta name="twitter:description" content={description} /><meta name="twitter:image" content={socialImage} />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#111827" />
+    <meta name="color-scheme" content="light" />
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex,nofollow" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:locale" content={SITE.locale} />
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
     <title>{pageTitle}</title>
     {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
   </head>
-  <body><Header /><main><slot /></main><Footer /></body>
+  <body>
+    <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
+    <Header />
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
 </html>
