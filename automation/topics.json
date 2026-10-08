@@ -21,7 +21,52 @@
       "category": "Tutorial",
       "categorySlug": "tutorial",
       "suggestedSlug": "sinkronisasi-cloud-bukan-backup",
-      "status": "pending"
+      "status": "draft",
+      "generatedAt": "2026-10-08T01:04:29.470Z",
+      "generatedSlug": "sinkronisasi-cloud-bukan-backup",
+      "models": {
+        "draft": "gpt-6-luna",
+        "editor": "gpt-6-sol"
+      },
+      "editorial": {
+        "initial": {
+          "decision": "revise",
+          "effectiveDecision": "revise",
+          "score": 84,
+          "projectedScore": 91,
+          "repairability": "local",
+          "summary": "Draft menjawab intent dengan jelas, praktis, dan tidak melebih-lebihkan kemampuan sinkronisasi. Contoh perilaku penghapusan sesuai dengan dokumentasi Google Drive, iCloud Drive, dan OneDrive. ([support.google.com](https://support.google.com/drive/answer/2375102)) Perlu dua penajaman lokal agar contoh backup tidak justru menghasilkan salinan yang ikut tertimpa atau melewatkan file cloud yang belum tersimpan di perangkat.",
+          "issueCount": 3
+        },
+        "final": {
+          "decision": "pass",
+          "score": 91,
+          "repairability": "none",
+          "summary": "Draft sudah layak terbit. Perbedaan sinkronisasi dan backup dijelaskan dengan akurat; contoh backup kini menjaga versi sebelumnya, mencakup pemeriksaan file yang belum diunduh, dan menguji pemulihan.",
+          "issueCount": 0,
+          "recoveryUsed": true
+        }
+      },
+      "usage": {
+        "draft": {
+          "inputTokens": 13544,
+          "outputTokens": 2350,
+          "totalTokens": 15894,
+          "webSearchCalls": 1
+        },
+        "editorInitial": {
+          "inputTokens": 23759,
+          "outputTokens": 1769,
+          "totalTokens": 25528,
+          "webSearchCalls": 2
+        },
+        "editorFinal": {
+          "inputTokens": 3172,
+          "outputTokens": 168,
+          "totalTokens": 3340,
+          "webSearchCalls": 0
+        }
+      }
     },
     {
       "id": "browser-permission-audit",
