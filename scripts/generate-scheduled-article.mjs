@@ -75,6 +75,8 @@ const reviewSchema = {
   properties: {
     decision: { type: 'string', enum: ['pass', 'revise', 'reject'] },
     score: { type: 'integer', minimum: 0, maximum: 100 },
+    projectedScore: { type: 'integer', minimum: 0, maximum: 100 },
+    repairability: { type: 'string', enum: ['none', 'local', 'substantive', 'fundamental'] },
     summary: { type: 'string' },
     issues: {
       type: 'array',
@@ -137,7 +139,7 @@ const reviewSchema = {
     }
   },
   required: [
-    'decision', 'score', 'summary', 'issues',
+    'decision', 'score', 'projectedScore', 'repairability', 'summary', 'issues',
     'metadataPatches', 'bodyPatches', 'sourceAdditions', 'sourceRemovals'
   ]
 };
@@ -377,22 +379,29 @@ let candidate = normalizeCandidate(draftResult.parsed);
 const draftStats = validateCandidate(candidate, 'Draft Luna');
 
 const editorInstructions = `
-Anda adalah editor senior TeknoPraktis. Anda BUKAN penulis utama. Tugas Anda menjaga kualitas akhir draft secara ketat dengan perubahan seminimal mungkin.
+Anda adalah editor senior TeknoPraktis dan penjaga mutu profesional. Anda BUKAN hakim yang mencari alasan untuk menolak. Tugas utama Anda adalah MENYELAMATKAN draft yang secara fundamental layak dengan koreksi paling kecil, tepat, dan efisien.
+
+Filosofi keputusan:
+- PASS: draft sudah layak tanpa koreksi material.
+- REVISE: pilihan DEFAULT bila ada masalah yang masih dapat diperbaiki secara aman melalui patch lokal, penajaman kalimat, koreksi struktur kecil, atau penambahan/penggantian sumber yang dapat diverifikasi.
+- REJECT: hanya untuk masalah FUNDAMENTAL yang tidak dapat diperbaiki secara bertanggung jawab dengan patch terbatas, misalnya intent artikel salah total, tesis inti tidak didukung fakta, fabrikasi inti, atau perlu penulisan ulang besar.
+- Jangan pernah memilih REJECT hanya karena score di bawah 85 apabila masalahnya masih bisa diperbaiki.
+- Jangan pernah memilih REJECT hanya karena ada beberapa koreksi minor/major yang jelas solusinya.
 
 Standar editor:
 - Nilai apakah artikel benar-benar membantu intent pembaca dan tidak generik.
-- Cek logika, ketepatan istilah, konsistensi, kehati-hatian klaim, struktur, dan keterbacaan.
-- Pastikan klaim faktual penting memiliki dukungan sumber yang masuk akal.
-- Gunakan web search hanya bila perlu memverifikasi klaim yang meragukan atau berubah cepat.
+- Cek logika, ketepatan istilah, konsistensi, kehati-hatian klaim, struktur, keterbacaan, dan kualitas sumber.
+- Gunakan web search hanya bila benar-benar perlu memverifikasi klaim meragukan/berubah cepat atau mencari sumber primer pengganti.
 - Jangan mengarang pengalaman langsung, hasil tes, kredensial, angka, atau sumber.
 - Jangan memperpanjang artikel tanpa alasan.
 - Pertahankan suara TeknoPraktis: praktis, tenang, presisi, tanpa clickbait.
-- PASS hanya jika layak menjadi draft editorial profesional.
-- REVISE bila perbaikan dapat dilakukan dengan patch kecil dan aman.
-- REJECT bila ada masalah fundamental, sumber lemah, risiko misinformasi, atau perlu penulisan ulang besar.
-- score 85+ adalah ambang minimum kualitas yang dapat diterima.
-- Untuk REVISE, berikan patch exact-match sekecil mungkin.
-- Jangan menambahkan link/sumber baru kecuali benar-benar diperlukan.
+- Untuk REVISE, berikan patch exact-match sekecil mungkin dan selesaikan sebanyak mungkin masalah dalam satu putaran.
+- Jika sumber perlu diperbaiki dan Anda dapat memverifikasinya, gunakan sourceAdditions/sourceRemovals daripada menolak draft.
+- score = kualitas draft SAAT INI sebelum patch.
+- projectedScore = estimasi kualitas SETELAH semua patch yang Anda berikan diterapkan.
+- repairability = none/local/substantive/fundamental.
+- Jika keputusan REVISE, targetkan projectedScore minimal 85. Jika belum 85 tetapi masih repairable, tetap beri patch terbaik dan tandai substantive; sistem akan memberi satu putaran recovery editor tambahan.
+- Jangan menambahkan link/sumber baru kecuali diperlukan.
 - Output hanya JSON sesuai schema.
 `;
 
@@ -420,103 +429,147 @@ const editorResult = await createResponse({
 const review = editorResult.parsed;
 let finalEditorResult = null;
 let finalReview = review;
+let effectiveInitialDecision = review.decision;
 
-if (review.decision === 'reject') {
-  throw new Error(`Editor Sol menolak draft (score ${review.score}): ${review.summary}`);
+function hasEditorPatches(value) {
+  return (
+    value.metadataPatches.length > 0 ||
+    value.bodyPatches.length > 0 ||
+    value.sourceAdditions.length > 0 ||
+    value.sourceRemovals.length > 0
+  );
 }
 
-if (review.decision === 'pass' && review.score < 85) {
-  throw new Error(`Editor Sol menyatakan PASS tetapi score ${review.score} masih di bawah ambang 85: ${review.summary}`);
+function hasSeriousIssue(value) {
+  return value.issues.some((issue) => issue.severity === 'major' || issue.severity === 'critical');
 }
 
-if (
-  review.decision === 'revise' &&
-  review.metadataPatches.length === 0 &&
-  review.bodyPatches.length === 0 &&
-  review.sourceAdditions.length === 0 &&
-  review.sourceRemovals.length === 0
-) {
-  throw new Error('Editor Sol meminta revisi tetapi tidak memberikan patch.');
+function normalizeEditorDecision(value, phase) {
+  const hasPatches = hasEditorPatches(value);
+  const hasCritical = value.issues.some((issue) => issue.severity === 'critical');
+
+  // Defensive fallback: a fixable draft should be revised, not rejected.
+  if (value.decision === 'reject' && value.repairability !== 'fundamental' && hasPatches) {
+    console.warn(`${phase}: keputusan reject dikonversi menjadi revise karena editor menyediakan perbaikan dan masalah bukan fundamental.`);
+    return 'revise';
+  }
+
+  if (value.decision === 'reject') {
+    if (value.repairability !== 'fundamental' || !hasCritical) {
+      throw new Error(
+        `${phase}: editor memilih REJECT tanpa dasar fundamental+critical. Draft tidak dihapus, tetapi workflow dihentikan untuk mencegah penolakan berlebihan.`
+      );
+    }
+    return 'reject';
+  }
+
+  if (value.decision === 'pass' && value.score < 85) {
+    if (hasPatches) {
+      console.warn(`${phase}: PASS score <85 dikonversi menjadi REVISE karena patch tersedia.`);
+      return 'revise';
+    }
+    throw new Error(`${phase}: PASS dengan score ${value.score} tetapi tanpa patch perbaikan.`);
+  }
+
+  if (value.decision === 'revise' && !hasPatches) {
+    throw new Error(`${phase}: editor meminta REVISE tetapi tidak memberikan patch.`);
+  }
+
+  return value.decision;
 }
 
-if (review.decision === 'revise') {
+effectiveInitialDecision = normalizeEditorDecision(review, 'Review awal Sol');
+
+if (effectiveInitialDecision === 'reject') {
+  throw new Error(`Editor Sol menolak draft secara fundamental (score ${review.score}): ${review.summary}`);
+}
+
+if (effectiveInitialDecision === 'revise') {
   candidate = applyEditorPatches(candidate, review);
   validateCandidate(candidate, 'Setelah patch editor Sol');
+}
 
-  const finalReviewSchema = {
-    type: 'object',
-    additionalProperties: false,
-    properties: {
-      decision: { type: 'string', enum: ['pass', 'reject'] },
-      score: { type: 'integer', minimum: 0, maximum: 100 },
-      summary: { type: 'string' },
-      issues: {
-        type: 'array',
-        maxItems: 8,
-        items: {
-          type: 'object',
-          additionalProperties: false,
-          properties: {
-            severity: { type: 'string', enum: ['critical', 'major', 'minor'] },
-            area: { type: 'string' },
-            finding: { type: 'string' },
-            recommendation: { type: 'string' }
-          },
-          required: ['severity', 'area', 'finding', 'recommendation']
-        }
-      }
-    },
-    required: ['decision', 'score', 'summary', 'issues']
-  };
+const needsRecoveryPass =
+  effectiveInitialDecision === 'revise' &&
+  (
+    review.projectedScore < 85 ||
+    hasSeriousIssue(review) ||
+    review.sourceAdditions.length > 0 ||
+    review.sourceRemovals.length > 0
+  );
 
-  const finalEditorInstructions = `
-Anda adalah editor senior TeknoPraktis pada tahap FINAL VERIFY.
-Draft ini sudah menerima patch dari review Anda sebelumnya.
+if (needsRecoveryPass) {
+  const recoveryInstructions = `
+Anda adalah editor senior TeknoPraktis pada putaran RECOVERY FINAL. Draft sudah menerima koreksi dari review pertama.
 
-Tugas:
-- Verifikasi apakah patch benar-benar menyelesaikan masalah sebelumnya.
-- Jangan menulis ulang artikel dan jangan memberi patch baru.
-- Jangan memakai web search; fakta baru tidak boleh ditambahkan pada tahap ini.
-- PASS hanya jika artikel sekarang layak menjadi draft editorial profesional.
-- Score minimum PASS adalah 85.
-- REJECT bila masih ada masalah material, patch menimbulkan masalah baru, atau kualitas tetap di bawah ambang.
+Tujuan Anda tetap solutif:
+- PASS jika draft sekarang sudah layak dengan score minimal 85.
+- REVISE jika masih ada masalah yang bisa diselesaikan dengan patch kecil/terbatas.
+- REJECT hanya bila setelah satu putaran perbaikan masih ada masalah FUNDAMENTAL dan CRITICAL yang tidak dapat diperbaiki tanpa penulisan ulang besar.
+- Jangan menolak karena perfeksionisme, preferensi gaya, atau detail minor yang tidak memengaruhi akurasi/manfaat.
+- Tidak ada web search pada putaran ini. Jangan menambahkan fakta atau sumber baru.
+- sourceAdditions dan sourceRemovals harus kosong.
+- score = kualitas saat ini; projectedScore = kualitas setelah patch recovery.
+- Jika REVISE, selesaikan semua isu tersisa yang material dalam patch exact-match sekecil mungkin.
 - Output hanya JSON sesuai schema.
 `;
 
-  const finalEditorPrompt = `
+  const recoveryPrompt = `
 TOPIK:
 ${JSON.stringify(topic, null, 2)}
 
-REVIEW PERTAMA:
+HASIL REVIEW AWAL:
 ${JSON.stringify({
     decision: review.decision,
+    effectiveDecision: effectiveInitialDecision,
     score: review.score,
+    projectedScore: review.projectedScore,
+    repairability: review.repairability,
     summary: review.summary,
     issues: review.issues
   }, null, 2)}
 
-DRAFT SETELAH PATCH:
+DRAFT SETELAH PATCH PERTAMA:
 ${JSON.stringify(candidate, null, 2)}
 
-Lakukan final verify yang ringkas dan ketat.
+Lakukan recovery review yang ringkas, profesional, dan berorientasi solusi.
 `;
 
   finalEditorResult = await createResponse({
     model: editorModel,
-    instructions: finalEditorInstructions,
-    input: finalEditorPrompt,
-    schema: finalReviewSchema,
-    schemaName: 'teknopraktis_sol_final_verify',
-    maxOutputTokens: 1800
+    instructions: recoveryInstructions,
+    input: recoveryPrompt,
+    schema: reviewSchema,
+    schemaName: 'teknopraktis_sol_recovery_review',
+    maxOutputTokens: 2200
   });
 
   finalReview = finalEditorResult.parsed;
 
-  if (finalReview.decision !== 'pass' || finalReview.score < 85) {
-    throw new Error(
-      `Final verify Sol gagal (decision ${finalReview.decision}, score ${finalReview.score}): ${finalReview.summary}`
-    );
+  if (finalReview.sourceAdditions.length > 0 || finalReview.sourceRemovals.length > 0) {
+    throw new Error('Recovery Sol mencoba mengubah sumber tanpa web search; perubahan sumber ditolak.');
   }
+
+  const recoveryDecision = normalizeEditorDecision(finalReview, 'Recovery Sol');
+
+  if (recoveryDecision === 'reject') {
+    throw new Error(`Recovery Sol menemukan masalah fundamental (score ${finalReview.score}): ${finalReview.summary}`);
+  }
+
+  if (recoveryDecision === 'revise') {
+    candidate = applyEditorPatches(candidate, finalReview);
+    validateCandidate(candidate, 'Setelah patch recovery Sol');
+
+    if (finalReview.projectedScore < 85) {
+      throw new Error(
+        `Recovery Sol sudah memberi solusi tetapi projectedScore masih ${finalReview.projectedScore}. Draft dipertahankan sebagai pending topic dan tidak dikomit.`
+      );
+    }
+  } else if (finalReview.score < 85) {
+    throw new Error(`Recovery Sol PASS tetapi score akhir masih ${finalReview.score}.`);
+  }
+} else if (effectiveInitialDecision === 'revise' && review.projectedScore < 85) {
+  throw new Error(`Review Sol memproyeksikan score ${review.projectedScore}; recovery seharusnya dijalankan.`);
 }
 
 const finalStats = validateCandidate(candidate, 'Final setelah editor Sol');
@@ -548,18 +601,26 @@ topic.status = 'draft';
 topic.generatedAt = new Date().toISOString();
 topic.generatedSlug = topic.suggestedSlug;
 topic.models = { draft: draftModel, editor: editorModel };
+const finalEffectiveScore =
+  finalReview.decision === 'revise' ? finalReview.projectedScore : finalReview.score;
+
 topic.editorial = {
   initial: {
     decision: review.decision,
+    effectiveDecision: effectiveInitialDecision,
     score: review.score,
+    projectedScore: review.projectedScore,
+    repairability: review.repairability,
     summary: review.summary,
     issueCount: review.issues.length
   },
   final: {
     decision: finalReview.decision,
-    score: finalReview.score,
+    score: finalEffectiveScore,
+    repairability: finalReview.repairability,
     summary: finalReview.summary,
-    issueCount: finalReview.issues.length
+    issueCount: finalReview.issues.length,
+    recoveryUsed: Boolean(finalEditorResult)
   }
 };
 topic.usage = {
@@ -571,9 +632,9 @@ writeFileSync(queuePath, JSON.stringify(queue, null, 2) + '\n', 'utf8');
 
 console.log(`Draft dibuat: src/content/articles/${topic.suggestedSlug}.md`);
 console.log(`Draft model: ${draftModel}; kata: ${draftStats.words}; H2: ${draftStats.h2Count}`);
-console.log(`Editor model: ${editorModel}; initial decision: ${review.decision}; score: ${review.score}; issues: ${review.issues.length}`);
+console.log(`Editor model: ${editorModel}; initial decision: ${review.decision}; effective: ${effectiveInitialDecision}; score: ${review.score}; projected: ${review.projectedScore}; issues: ${review.issues.length}`);
 if (finalEditorResult) {
-  console.log(`Final verify: decision ${finalReview.decision}; score ${finalReview.score}; issues ${finalReview.issues.length}`);
+  console.log(`Recovery Sol: decision ${finalReview.decision}; score ${finalReview.score}; projected ${finalReview.projectedScore}; issues ${finalReview.issues.length}`);
 }
 console.log(`Final: kata ${finalStats.words}; H2 ${finalStats.h2Count}; sumber ${candidate.sources.length}`);
 console.log(`Usage draft: ${JSON.stringify(topic.usage.draft)}`);
