@@ -176,9 +176,106 @@
       "category": "AI & Otomasi",
       "categorySlug": "ai",
       "suggestedSlug": "checklist-privasi-ai-notulen-rapat",
-      "status": "pending",
+      "status": "published",
       "contentType": "checklist",
-      "visualKind": "ai-privacy"
+      "visualKind": "ai-privacy",
+      "generatedAt": "2026-10-08T05:07:30.697Z",
+      "generatedSlug": "checklist-privasi-ai-notulen-rapat",
+      "models": {
+        "draft": "gpt-6-luna",
+        "editor": "gpt-6-sol"
+      },
+      "publishPolicy": "auto-until-20",
+      "autoPublished": true,
+      "publishedAt": "2026-10-08",
+      "editorial": {
+        "initial": {
+          "decision": "revise",
+          "effectiveDecision": "revise",
+          "score": 83,
+          "projectedScore": 92,
+          "repairability": "local",
+          "summary": "Draft sudah praktis, runtut, dan layak diterbitkan setelah koreksi lokal. Dua pemeriksaan yang penting bagi pembaca Indonesia belum disebut: dukungan bahasa rapat dan kemungkinan cuplikan layar presentasi ikut masuk ke catatan. Satu atribusi sumber juga perlu diluruskan.",
+          "issueCount": 3
+        },
+        "final": {
+          "decision": "pass",
+          "score": 91,
+          "repairability": "none",
+          "summary": "Draft layak diterbitkan. Pemeriksaan dukungan bahasa dan cuplikan layar sudah ditambahkan, atribusi peringatan akurasi sudah diperbaiki, dan checklist tetap praktis serta berhati-hati membedakan fitur antar layanan.",
+          "issueCount": 0,
+          "recoveryUsed": true
+        }
+      },
+      "copyEdit": {
+        "model": "gpt-6-sol",
+        "imageTagline": "Periksa data, akses, dan hasil catatan AI",
+        "hookScore": 94,
+        "flowScore": 94,
+        "concisionScore": 93,
+        "summary": "Checklist untuk menilai kelayakan AI dalam rapat, memberi tahu peserta, membatasi akses dan masa simpan, serta memverifikasi notulen sebelum dipakai.",
+        "wordsBefore": 1101,
+        "wordsAfter": 1025
+      },
+      "image": {
+        "styleVersion": "premium-v1",
+        "model": "gpt-image-2.5-sunburst",
+        "visualKind": "ai-privacy",
+        "featuredImage": "/images/articles/checklist-privasi-ai-notulen-rapat.webp",
+        "socialImage": "/images/articles/checklist-privasi-ai-notulen-rapat.webp",
+        "usage": {
+          "input_tokens": 382,
+          "input_tokens_details": {
+            "image_tokens": 0,
+            "text_tokens": 382
+          },
+          "output_tokens": 1078,
+          "output_tokens_details": {
+            "image_tokens": 1078,
+            "text_tokens": 0
+          },
+          "total_tokens": 1460
+        }
+      },
+      "usage": {
+        "draft": {
+          "inputTokens": 22100,
+          "outputTokens": 2993,
+          "totalTokens": 25093,
+          "webSearchCalls": 2
+        },
+        "editorInitial": {
+          "inputTokens": 22982,
+          "outputTokens": 1554,
+          "totalTokens": 24536,
+          "webSearchCalls": 2
+        },
+        "editorFinal": {
+          "inputTokens": 3409,
+          "outputTokens": 173,
+          "totalTokens": 3582,
+          "webSearchCalls": 0
+        },
+        "copyDesk": {
+          "inputTokens": 3141,
+          "outputTokens": 2100,
+          "totalTokens": 5241,
+          "webSearchCalls": 0
+        },
+        "imageGeneration": {
+          "input_tokens": 382,
+          "input_tokens_details": {
+            "image_tokens": 0,
+            "text_tokens": 382
+          },
+          "output_tokens": 1078,
+          "output_tokens_details": {
+            "image_tokens": 1078,
+            "text_tokens": 0
+          },
+          "total_tokens": 1460
+        }
+      }
     },
     {
       "id": "wifi-troubleshooting",
