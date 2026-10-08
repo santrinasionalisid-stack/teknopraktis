@@ -102,6 +102,16 @@ for (const file of walk(articlesDir)) {
   }
 
   if (published) {
+    if (imageStyle !== 'premium-v1') {
+      addError(short, 'semua artikel terbit wajib memakai imageStyle premium-v1; thumbnail generik dilarang.');
+    }
+    if (!featuredImage.endsWith('.webp')) {
+      addError(short, 'semua artikel terbit wajib memakai featuredImage WebP final 16:9.');
+    }
+    if (!socialImage.endsWith('.webp')) {
+      addError(short, 'semua artikel terbit wajib memakai socialImage WebP final 16:9.');
+    }
+
     const words = wordCount(body);
     const h2Count = (body.match(/^##\s+/gm) ?? []).length;
     if (words < 120) addError(short, `artikel terbit terlalu tipis: ${words} kata; minimum struktural 120 kata.`);
