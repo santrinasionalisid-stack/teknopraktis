@@ -175,6 +175,44 @@ if (h2Count < 4) {
 if (!Array.isArray(candidate.sources) || candidate.sources.length < 3) {
   throw new Error('Generator wajib menghasilkan minimal 3 sumber.');
 }
+const trackingParams = [
+  'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content',
+  'gclid', 'fbclid', 'mc_cid', 'mc_eid'
+];
+
+function canonicalSourceUrl(value) {
+  const url = new URL(value);
+  for (const key of trackingParams) url.searchParams.delete(key);
+  url.hash = '';
+  return url.toString();
+}
+
+candidate.sources = candidate.sources.map((source) => ({
+  ...source,
+  url: canonicalSourceUrl(source.url)
+}));
+
+candidate.body = candidate.body.replace(
+  /https:\/\/[^\s)\]>"]+/g,
+  (value) => {
+    try {
+      return canonicalSourceUrl(value);
+    } catch {
+      return value;
+    }
+  }
+);
+
+const declaredSources = new Set(candidate.sources.map((source) => canonicalSourceUrl(source.url)));
+const bodySourceUrls = [...candidate.body.matchAll(/\[[^\]]+\]\((https:\/\/[^)]+)\)/g)]
+  .map((match) => canonicalSourceUrl(match[1]));
+
+for (const url of bodySourceUrls) {
+  if (!declaredSources.has(url)) {
+    throw new Error(`URL sumber di body belum tercantum di sources: ${url}`);
+  }
+}
+
 for (const source of candidate.sources) {
   const url = new URL(source.url);
   if (url.protocol !== 'https:') throw new Error(`Sumber wajib HTTPS: ${source.url}`);
