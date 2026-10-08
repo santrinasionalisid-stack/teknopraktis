@@ -1,5 +1,5 @@
 {
-  "status": "LONG_TITLE_FIX",
+  "status": "DONE",
   "generationPausedRequired": true,
   "articles": [
     {
@@ -30,7 +30,7 @@
   ],
   "retryNonce": "2026-10-08T03:48:00Z",
   "lastFailure": "Initial batch assumed filename equals slug; fixed to resolve file by frontmatter slug.",
-  "completedAt": "2026-10-08T03:47:46.910Z",
+  "completedAt": "2026-10-08T03:50:29.920Z",
   "retryArticles": [
     {
       "slug": "aturan-satu-fungsi-satu-aplikasi-produktivitas",
