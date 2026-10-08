@@ -89,22 +89,15 @@ const breadcrumbSchema = {
       {d.sponsored && <p class="disclosure"><strong>Disclosure komersial:</strong> Konten ini memiliki hubungan komersial yang dijelaskan secara transparan.</p>}
     </header>
 
-    {d.imageStyle === 'premium-v1' ? (
-      <figure class="article-featured article-featured--premium container">
-        <img src={d.socialImage ?? d.featuredImage} alt={d.featuredImageAlt} width="1536" height="864" decoding="async" />
-        <div class="article-featured__shade" aria-hidden="true"></div>
-        <div class="article-featured__overlay">
-          <span class="article-featured__category">{d.category}</span>
-          <span class="article-featured__label">TEKNOPRAKTIS · {typeLabel.toUpperCase()}</span>
-          <strong class="article-featured__title">{d.title}</strong>
-          {d.imageTagline && <span class="article-featured__tagline">{d.imageTagline}</span>}
-        </div>
-      </figure>
-    ) : (
-      <figure class="article-featured container">
-        <img src={d.featuredImage} alt={d.featuredImageAlt} width="1536" height="864" decoding="async" />
-      </figure>
-    )}
+    <figure class="article-featured container">
+      <img
+        src={d.featuredImage}
+        alt={d.featuredImageAlt}
+        width="1536"
+        height="864"
+        decoding="async"
+      />
+    </figure>
 
     <div class="article-guide-meta container prose-width" aria-label="Informasi panduan">
       <span><strong>{typeLabel}</strong></span>

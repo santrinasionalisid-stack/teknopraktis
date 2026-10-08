@@ -16,27 +16,28 @@ function esc(value) {
     .replace(/"/g, '&quot;');
 }
 
-function wrapTitle(title, max = 20) {
-  const words = String(title).trim().split(/\s+/);
-  const lines = [];
-  let line = '';
+function wrapTitle(title) {
+  const words = String(title).trim().split(/\s+/).filter(Boolean);
+  if (words.length <= 3) return words;
 
-  for (const word of words) {
-    const next = line ? `${line} ${word}` : word;
-    if (next.length > max && line) {
-      lines.push(line);
-      line = word;
-    } else {
-      line = next;
+  let best = null;
+  for (let i = 1; i < words.length - 1; i++) {
+    for (let j = i + 1; j < words.length; j++) {
+      const lines = [
+        words.slice(0, i).join(' '),
+        words.slice(i, j).join(' '),
+        words.slice(j).join(' '),
+      ];
+      const lengths = lines.map((line) => line.length);
+      const max = Math.max(...lengths);
+      const min = Math.min(...lengths);
+      const oversizePenalty = lengths.reduce((sum, len) => sum + Math.max(0, len - 25) * 20, 0);
+      const score = max * 4 + (max - min) * 2 + oversizePenalty;
+      if (!best || score < best.score) best = { lines, score };
     }
   }
-  if (line) lines.push(line);
-
-  // Keep the title inside the locked three-line safe area.
-  if (lines.length <= 3) return lines;
-  return [lines[0], lines[1], lines.slice(2).join(' ')];
+  return best?.lines ?? [title];
 }
-
 function contentTypeLabel(type) {
   return ({
     tutorial: 'TUTORIAL',
@@ -72,11 +73,11 @@ function visualBrief(kind) {
 
 function renderOverlaySvg({ slug, title, category, contentType, tagline, visualDataUrl }) {
   const lines = wrapTitle(title);
-  const fontSize = lines.length <= 2 ? 68 : 58;
+  const fontSize = lines.length <= 2 ? 66 : 56;
   const lineHeight = fontSize * 1.10;
-  const firstY = lines.length <= 2 ? 365 : 330;
+  const firstY = lines.length <= 2 ? 370 : 334;
   const titleLines = lines.map((line, index) =>
-    `<text x="74" y="${firstY + index * lineHeight}" font-family="Inter, Arial, sans-serif" font-size="${fontSize}" font-weight="800" letter-spacing="-2.2" fill="#ffffff">${esc(line)}</text>`
+    `<text x="82" y="${firstY + index * lineHeight}" font-family="Inter, Arial, sans-serif" font-size="${fontSize}" font-weight="800" letter-spacing="-2.2" fill="#ffffff">${esc(line)}</text>`
   ).join('\n');
 
   const categoryWidth = Math.min(390, Math.max(240, 125 + category.length * 12));
@@ -101,18 +102,18 @@ function renderOverlaySvg({ slug, title, category, contentType, tagline, visualD
   <image href="${visualDataUrl}" x="0" y="0" width="1536" height="864" preserveAspectRatio="xMidYMid slice"/>
   <rect x="0" y="0" width="1536" height="864" fill="url(#leftFade)"/>
 
-  <g transform="translate(74 98)" filter="url(#softShadow)">
+  <g transform="translate(82 96)" filter="url(#softShadow)">
     <rect x="0" y="0" width="${categoryWidth}" height="68" rx="34" fill="url(#pill)" stroke="#9a4d1f" stroke-opacity=".75"/>
     <path d="M38 18l15 6v13c0 13-7 23-15 29-9-6-16-16-16-29V24l16-6z" fill="none" stroke="#ffb454" stroke-width="4"/>
     <path d="M30 38l7 7 12-15" fill="none" stroke="#ffb454" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
     <text x="76" y="44" font-family="Inter, Arial, sans-serif" font-size="27" font-weight="750" fill="#ffd19c">${esc(category)}</text>
   </g>
 
-  <text x="74" y="260" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="700" letter-spacing="5" fill="#9fb4d4">TEKNOPRAKTIS · ${esc(contentTypeLabel(contentType))}</text>
+  <text x="82" y="258" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="700" letter-spacing="5" fill="#9fb4d4">TEKNOPRAKTIS · ${esc(contentTypeLabel(contentType))}</text>
   ${titleLines}
 
-  <rect x="74" y="690" width="112" height="5" rx="3" fill="#f97316"/>
-  <text x="74" y="756" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="500" fill="#b8c8df">${esc(tagline)}</text>
+  <rect x="82" y="692" width="112" height="5" rx="3" fill="#f97316"/>
+  <text x="82" y="758" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="500" fill="#b8c8df">${esc(tagline)}</text>
 </svg>`;
 }
 
@@ -190,8 +191,20 @@ Keep all important illustration details inside the right-side safe area. The lef
   writeFileSync(join(outDir, visualFilename), visualBuffer);
   const visualDataUrl = `data:image/webp;base64,${encoded}`;
 
+  const overlayFilename = `${slug}.svg`;
+  const overlayRelativePath = `/images/articles/${overlayFilename}`;
+  const overlaySvg = renderOverlaySvg({
+    slug,
+    title,
+    category,
+    contentType,
+    tagline,
+    visualDataUrl,
+  });
+  writeFileSync(join(outDir, overlayFilename), overlaySvg, 'utf8');
+
   return {
-    path: visualRelativePath,
+    path: overlayRelativePath,
     socialPath: visualRelativePath,
     alt: `Ilustrasi editorial premium tentang ${title} dengan visual yang relevan pada topik ${category}.`,
     styleVersion: THUMBNAIL_STYLE_VERSION,

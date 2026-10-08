@@ -2,6 +2,6 @@
   "topicId": "browser-permission-audit",
   "tagline": "Periksa akses situs sebelum dibiarkan aktif",
   "requestedStyle": "premium-v1",
-  "nonce": "2026-10-08T02:52:00Z",
-  "reason": "Fix premium-v1 rendering: embed raster background in SVG and tighten title safe grid"
+  "nonce": "2026-10-08T03:16:00Z",
+  "reason": "Rebuild premium thumbnail as self-contained SVG composite; remove browser HTML overlay"
 }

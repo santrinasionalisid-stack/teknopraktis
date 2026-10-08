@@ -67,8 +67,11 @@ for (const file of walk(articlesDir)) {
     addError(short, `featuredImageAlt harus 20–180 karakter (sekarang ${featuredImageAlt.length}).`);
   }
   if (imageStyle === 'premium-v1') {
-    if (!socialImage.startsWith('/images/articles/')) {
-      addError(short, 'premium-v1 wajib memiliki socialImage di /images/articles/.');
+    if (!featuredImage.endsWith('.svg')) {
+      addError(short, 'premium-v1 wajib memakai featuredImage SVG komposit yang self-contained.');
+    }
+    if (!socialImage.startsWith('/images/articles/') || !socialImage.endsWith('.webp')) {
+      addError(short, 'premium-v1 wajib memiliki socialImage WebP di /images/articles/.');
     } else {
       const socialAssetPath = join(publicDir, socialImage.replace(/^\//, ''));
       if (!existsSync(socialAssetPath)) addError(short, `socialImage tidak ditemukan: ${socialImage}`);
