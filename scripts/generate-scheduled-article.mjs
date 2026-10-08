@@ -766,6 +766,7 @@ const metadata = {
   featuredImageAlt: media.alt,
   socialImage: media.socialPath,
   imageStyle: media.styleVersion,
+  imageTagline: copyEdit.imageTagline,
   tags: candidate.tags,
   publishedAt: today,
   author: 'Redaksi TeknoPraktis',

@@ -50,6 +50,7 @@ data.featuredImage = media.path;
 data.featuredImageAlt = media.alt;
 data.socialImage = media.socialPath;
 data.imageStyle = media.styleVersion;
+data.imageTagline = tagline;
 
 topic.imageTagline = tagline;
 topic.image = {

@@ -12,7 +12,7 @@ const articleHref = `/artikel/${article.data.slug}/`;
 <article class="article-card">
   <a class="article-card__media" href={articleHref} aria-label={`Baca: ${article.data.title}`}>
     <img
-      src={article.data.featuredImage}
+      src={article.data.socialImage ?? article.data.featuredImage}
       alt={article.data.featuredImageAlt}
       width="1536"
       height="864"

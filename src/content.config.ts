@@ -20,6 +20,7 @@ const articles = defineCollection({
     featuredImageAlt: z.string().min(20).max(180),
     socialImage: z.string().startsWith('/images/articles/').optional(),
     imageStyle: z.literal('premium-v1').optional(),
+    imageTagline: z.string().min(20).max(80).optional(),
     tags: z.array(z.string()).min(2).max(8),
     publishedAt: z.coerce.date(),
     updatedAt: z.coerce.date().optional(),

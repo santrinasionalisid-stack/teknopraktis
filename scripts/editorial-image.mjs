@@ -190,23 +190,8 @@ Keep all important illustration details inside the right-side safe area. The lef
   writeFileSync(join(outDir, visualFilename), visualBuffer);
   const visualDataUrl = `data:image/webp;base64,${encoded}`;
 
-  const overlayFilename = `${slug}.svg`;
-  const overlayRelativePath = `/images/articles/${overlayFilename}`;
-  writeFileSync(
-    join(outDir, overlayFilename),
-    renderOverlaySvg({
-      slug,
-      title,
-      category,
-      contentType,
-      tagline,
-      visualDataUrl,
-    }),
-    'utf8'
-  );
-
   return {
-    path: overlayRelativePath,
+    path: visualRelativePath,
     socialPath: visualRelativePath,
     alt: `Ilustrasi editorial premium tentang ${title} dengan visual yang relevan pada topik ${category}.`,
     styleVersion: THUMBNAIL_STYLE_VERSION,
