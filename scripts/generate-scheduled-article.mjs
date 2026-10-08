@@ -402,13 +402,17 @@ const editorResult = await createResponse({
 });
 
 const review = editorResult.parsed;
+let finalEditorResult = null;
+let finalReview = review;
 
 if (review.decision === 'reject') {
   throw new Error(`Editor Sol menolak draft (score ${review.score}): ${review.summary}`);
 }
-if (review.score < 85) {
-  throw new Error(`Editor Sol memberi score ${review.score}, di bawah ambang 85: ${review.summary}`);
+
+if (review.decision === 'pass' && review.score < 85) {
+  throw new Error(`Editor Sol menyatakan PASS tetapi score ${review.score} masih di bawah ambang 85: ${review.summary}`);
 }
+
 if (
   review.decision === 'revise' &&
   review.metadataPatches.length === 0 &&
@@ -421,6 +425,82 @@ if (
 
 if (review.decision === 'revise') {
   candidate = applyEditorPatches(candidate, review);
+  validateCandidate(candidate, 'Setelah patch editor Sol');
+
+  const finalReviewSchema = {
+    type: 'object',
+    additionalProperties: false,
+    properties: {
+      decision: { type: 'string', enum: ['pass', 'reject'] },
+      score: { type: 'integer', minimum: 0, maximum: 100 },
+      summary: { type: 'string' },
+      issues: {
+        type: 'array',
+        maxItems: 8,
+        items: {
+          type: 'object',
+          additionalProperties: false,
+          properties: {
+            severity: { type: 'string', enum: ['critical', 'major', 'minor'] },
+            area: { type: 'string' },
+            finding: { type: 'string' },
+            recommendation: { type: 'string' }
+          },
+          required: ['severity', 'area', 'finding', 'recommendation']
+        }
+      }
+    },
+    required: ['decision', 'score', 'summary', 'issues']
+  };
+
+  const finalEditorInstructions = `
+Anda adalah editor senior TeknoPraktis pada tahap FINAL VERIFY.
+Draft ini sudah menerima patch dari review Anda sebelumnya.
+
+Tugas:
+- Verifikasi apakah patch benar-benar menyelesaikan masalah sebelumnya.
+- Jangan menulis ulang artikel dan jangan memberi patch baru.
+- Jangan memakai web search; fakta baru tidak boleh ditambahkan pada tahap ini.
+- PASS hanya jika artikel sekarang layak menjadi draft editorial profesional.
+- Score minimum PASS adalah 85.
+- REJECT bila masih ada masalah material, patch menimbulkan masalah baru, atau kualitas tetap di bawah ambang.
+- Output hanya JSON sesuai schema.
+`;
+
+  const finalEditorPrompt = `
+TOPIK:
+${JSON.stringify(topic, null, 2)}
+
+REVIEW PERTAMA:
+${JSON.stringify({
+    decision: review.decision,
+    score: review.score,
+    summary: review.summary,
+    issues: review.issues
+  }, null, 2)}
+
+DRAFT SETELAH PATCH:
+${JSON.stringify(candidate, null, 2)}
+
+Lakukan final verify yang ringkas dan ketat.
+`;
+
+  finalEditorResult = await createResponse({
+    model: editorModel,
+    instructions: finalEditorInstructions,
+    input: finalEditorPrompt,
+    schema: finalReviewSchema,
+    schemaName: 'teknopraktis_sol_final_verify',
+    maxOutputTokens: 1800
+  });
+
+  finalReview = finalEditorResult.parsed;
+
+  if (finalReview.decision !== 'pass' || finalReview.score < 85) {
+    throw new Error(
+      `Final verify Sol gagal (decision ${finalReview.decision}, score ${finalReview.score}): ${finalReview.summary}`
+    );
+  }
 }
 
 const finalStats = validateCandidate(candidate, 'Final setelah editor Sol');
@@ -453,20 +533,33 @@ topic.generatedAt = new Date().toISOString();
 topic.generatedSlug = topic.suggestedSlug;
 topic.models = { draft: draftModel, editor: editorModel };
 topic.editorial = {
-  decision: review.decision,
-  score: review.score,
-  summary: review.summary,
-  issueCount: review.issues.length
+  initial: {
+    decision: review.decision,
+    score: review.score,
+    summary: review.summary,
+    issueCount: review.issues.length
+  },
+  final: {
+    decision: finalReview.decision,
+    score: finalReview.score,
+    summary: finalReview.summary,
+    issueCount: finalReview.issues.length
+  }
 };
 topic.usage = {
   draft: usageSummary(draftResult.data),
-  editor: usageSummary(editorResult.data)
+  editorInitial: usageSummary(editorResult.data),
+  editorFinal: finalEditorResult ? usageSummary(finalEditorResult.data) : null
 };
 writeFileSync(queuePath, JSON.stringify(queue, null, 2) + '\n', 'utf8');
 
 console.log(`Draft dibuat: src/content/articles/${topic.suggestedSlug}.md`);
 console.log(`Draft model: ${draftModel}; kata: ${draftStats.words}; H2: ${draftStats.h2Count}`);
-console.log(`Editor model: ${editorModel}; decision: ${review.decision}; score: ${review.score}; issues: ${review.issues.length}`);
+console.log(`Editor model: ${editorModel}; initial decision: ${review.decision}; score: ${review.score}; issues: ${review.issues.length}`);
+if (finalEditorResult) {
+  console.log(`Final verify: decision ${finalReview.decision}; score ${finalReview.score}; issues ${finalReview.issues.length}`);
+}
 console.log(`Final: kata ${finalStats.words}; H2 ${finalStats.h2Count}; sumber ${candidate.sources.length}`);
 console.log(`Usage draft: ${JSON.stringify(topic.usage.draft)}`);
-console.log(`Usage editor: ${JSON.stringify(topic.usage.editor)}`);
+console.log(`Usage editor initial: ${JSON.stringify(topic.usage.editorInitial)}`);
+console.log(`Usage editor final: ${JSON.stringify(topic.usage.editorFinal)}`);
