@@ -416,7 +416,8 @@ img { max-width: 100%; display: block; }
 .article-deck,
 .article-body p,
 .article-body li {
-  text-align: justify;
+  text-align: justify !important;
+  text-align-last: left;
   text-justify: inter-word;
   hyphens: auto;
 }
