@@ -20,6 +20,12 @@ jobs:
       - name: Install dependencies
         run: npm install --no-audit --no-fund
 
+      - name: Automation script syntax
+        run: |
+          node --check scripts/generate-scheduled-article.mjs
+          node --check scripts/editorial-image.mjs
+          node --check scripts/content-quality.mjs
+
       - name: Editorial quality gate
         run: npm run quality
 
