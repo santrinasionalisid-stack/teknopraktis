@@ -259,7 +259,6 @@ img { max-width: 100%; display: block; }
 }
 .article-featured--premium {
   position: relative;
-  aspect-ratio: 16 / 9;
   overflow: hidden;
   border-radius: 26px;
   background: #07111f;
@@ -267,12 +266,11 @@ img { max-width: 100%; display: block; }
   border: 1px solid #273244;
 }
 .article-featured--premium > img {
-  position: absolute;
-  inset: 0;
+  position: relative;
   width: 100%;
-  height: 100%;
+  height: auto;
   aspect-ratio: auto;
-  object-fit: cover;
+  object-fit: contain;
   border: 0;
   border-radius: 0;
   box-shadow: none;
