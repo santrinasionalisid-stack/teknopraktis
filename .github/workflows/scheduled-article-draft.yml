@@ -27,7 +27,7 @@ jobs:
       OPENAI_IMAGE_MODEL: ${{ vars.OPENAI_IMAGE_MODEL }}
       TOPIC_ID: ${{ inputs.topic_id }}
       AUTO_PUBLISH_UNTIL: "20"
-      CONTENT_GENERATION_PAUSED: "true"
+      CONTENT_GENERATION_PAUSED: "false"
 
     steps:
       - name: Check automation configuration
@@ -36,7 +36,7 @@ jobs:
         run: |
           if [ "$CONTENT_GENERATION_PAUSED" = "true" ]; then
             echo "enabled=false" >> "$GITHUB_OUTPUT"
-            echo "CONTENT GENERATION PAUSED — UI/thumbnail remediation belum selesai." >> "$GITHUB_STEP_SUMMARY"
+            echo "CONTENT GENERATION PAUSED." >> "$GITHUB_STEP_SUMMARY"
           elif [ -z "$OPENAI_API_KEY" ]; then
             echo "enabled=false" >> "$GITHUB_OUTPUT"
             echo "OPENAI_API_KEY belum dikonfigurasi; scheduled generation dilewati." >> "$GITHUB_STEP_SUMMARY"
@@ -71,6 +71,7 @@ jobs:
       - name: Validate repository
         if: steps.config.outputs.enabled == 'true'
         run: |
+          node scripts/ui-regression-gate.mjs
           npm run quality
           npm run build
 

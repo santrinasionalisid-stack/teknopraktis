@@ -26,6 +26,9 @@ jobs:
           node --check scripts/editorial-image.mjs
           node --check scripts/content-quality.mjs
 
+      - name: UI regression gate
+        run: node scripts/ui-regression-gate.mjs
+
       - name: Editorial quality gate
         run: npm run quality
 
