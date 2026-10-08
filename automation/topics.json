@@ -78,8 +78,71 @@
       "category": "Keamanan Digital",
       "categorySlug": "keamanan-digital",
       "suggestedSlug": "cara-audit-izin-browser-kamera-mikrofon-lokasi",
-      "status": "pending",
-      "contentType": "checklist"
+      "status": "published",
+      "contentType": "checklist",
+      "generatedAt": "2026-10-08T02:20:25.820Z",
+      "generatedSlug": "cara-audit-izin-browser-kamera-mikrofon-lokasi",
+      "models": {
+        "draft": "gpt-6-luna",
+        "editor": "gpt-6-sol"
+      },
+      "publishPolicy": "auto-until-20",
+      "autoPublished": true,
+      "publishedAt": "2026-10-08",
+      "editorial": {
+        "initial": {
+          "decision": "revise",
+          "effectiveDecision": "revise",
+          "score": 84,
+          "projectedScore": 91,
+          "repairability": "local",
+          "summary": "Draft sudah membantu pembaca mengambil keputusan per situs dan tidak bergantung pada satu browser. Koreksi lokal diperlukan agar langkah menemukan pengaturan lebih praktis, tindakan untuk izin yang sudah tersimpan tidak menyesatkan, dan penjelasan status izin lebih tepat.",
+          "issueCount": 4
+        },
+        "final": {
+          "decision": "pass",
+          "score": 91,
+          "repairability": "none",
+          "summary": "Draft sudah layak terbit. Checklist memberi jalur awal untuk menemukan pengaturan, membedakan izin tersimpan dari pilihan sementara, dan menjelaskan perbedaan izin situs dengan izin sistem operasi. Tidak ada masalah material yang memerlukan patch recovery.",
+          "issueCount": 0,
+          "recoveryUsed": true
+        }
+      },
+      "copyEdit": {
+        "model": "gpt-6-sol",
+        "hookScore": 95,
+        "flowScore": 94,
+        "concisionScore": 94,
+        "summary": "Pembukaan dibuat lebih konkret, alur audit dirapikan, dan pengulangan dipangkas tanpa mengubah substansi atau URL sumber.",
+        "wordsBefore": 940,
+        "wordsAfter": 844
+      },
+      "usage": {
+        "draft": {
+          "inputTokens": 19663,
+          "outputTokens": 2342,
+          "totalTokens": 22005,
+          "webSearchCalls": 2
+        },
+        "editorInitial": {
+          "inputTokens": 24740,
+          "outputTokens": 2835,
+          "totalTokens": 27575,
+          "webSearchCalls": 2
+        },
+        "editorFinal": {
+          "inputTokens": 3026,
+          "outputTokens": 296,
+          "totalTokens": 3322,
+          "webSearchCalls": 0
+        },
+        "copyDesk": {
+          "inputTokens": 2605,
+          "outputTokens": 1639,
+          "totalTokens": 4244,
+          "webSearchCalls": 0
+        }
+      }
     },
     {
       "id": "ai-meeting-notes-privacy",
