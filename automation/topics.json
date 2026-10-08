@@ -8,7 +8,10 @@
       "category": "Keamanan Digital",
       "categorySlug": "keamanan-digital",
       "suggestedSlug": "cara-memeriksa-file-download-sebelum-dibuka",
-      "status": "pending"
+      "status": "draft",
+      "generatedAt": "2026-10-08T00:18:28.245Z",
+      "generatedSlug": "cara-memeriksa-file-download-sebelum-dibuka",
+      "model": "gpt-6-sol"
     },
     {
       "id": "cloud-sync-vs-backup",
