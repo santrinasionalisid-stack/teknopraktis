@@ -1,19 +1,32 @@
 ---
-title: "Cara Menggunakan AI untuk Meringkas Dokumen Panjang dengan Lebih Aman"
-description: "Panduan praktis memakai AI untuk meringkas dokumen panjang tanpa kehilangan konteks penting, termasuk cara menyiapkan prompt, memeriksa hasil, dan melindungi data sensitif."
-slug: "cara-menggunakan-ai-meringkas-dokumen"
-category: "AI & Otomasi"
-categorySlug: "ai"
+title: Cara Menggunakan AI untuk Meringkas Dokumen Panjang dengan Lebih Aman
+description: Panduan praktis memakai AI untuk meringkas dokumen panjang tanpa
+  kehilangan konteks penting, termasuk cara menyiapkan prompt, memeriksa hasil,
+  dan melindungi data sensitif.
+slug: cara-menggunakan-ai-meringkas-dokumen
+category: AI & Otomasi
+categorySlug: ai
 contentType: tutorial
-featuredImage: /images/articles/cara-menggunakan-ai-meringkas-dokumen.svg
-featuredImageAlt: Ilustrasi editorial AI dengan langkah tutorial untuk meringkas dokumen panjang secara lebih aman.
-tags: ["AI", "Produktivitas", "Prompt"]
+featuredImage: /images/articles/cara-menggunakan-ai-meringkas-dokumen.webp
+featuredImageAlt: Ilustrasi editorial premium tentang Cara Menggunakan AI untuk
+  Meringkas Dokumen Panjang dengan Lebih Aman dengan visual yang relevan pada
+  topik AI & Otomasi.
+tags:
+  - AI
+  - Produktivitas
+  - Prompt
 publishedAt: 2026-10-08
 aiAssisted: true
-editorialNote: "AI membantu drafting artikel ini. Redaksi bertanggung jawab atas struktur publikasi dan pembaca tetap disarankan memverifikasi pengaturan pada layanan yang digunakan."
+editorialNote: AI membantu drafting artikel ini. Redaksi bertanggung jawab atas
+  struktur publikasi dan pembaca tetap disarankan memverifikasi pengaturan pada
+  layanan yang digunakan.
 featured: true
 draft: false
+socialImage: /images/articles/cara-menggunakan-ai-meringkas-dokumen.webp
+imageStyle: premium-v1
+imageTagline: Ringkas dokumen tanpa kehilangan konteks penting
 ---
+
 AI dapat memangkas waktu membaca dokumen, tetapi hasil ringkasan tetap perlu diperiksa. Kesalahan paling umum adalah meminta ringkasan terlalu umum, memasukkan data sensitif tanpa pertimbangan, lalu menganggap hasil model selalu benar.
 
 ## Tentukan tujuan ringkasan lebih dulu

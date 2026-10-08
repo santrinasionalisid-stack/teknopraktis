@@ -1,19 +1,32 @@
 ---
-title: "Terlalu Banyak Aplikasi Produktivitas? Gunakan Aturan Satu Fungsi Satu Alat"
-description: "Cara menyederhanakan aplikasi produktivitas agar pekerjaan tidak tersebar di terlalu banyak tempat, dengan aturan satu fungsi satu alat dan proses audit yang praktis."
-slug: "aturan-satu-fungsi-satu-aplikasi-produktivitas"
-category: "Aplikasi & Produktivitas"
-categorySlug: "aplikasi"
+title: Terlalu Banyak Aplikasi Produktivitas? Gunakan Aturan Satu Fungsi Satu Alat
+description: Cara menyederhanakan aplikasi produktivitas agar pekerjaan tidak
+  tersebar di terlalu banyak tempat, dengan aturan satu fungsi satu alat dan
+  proses audit yang praktis.
+slug: aturan-satu-fungsi-satu-aplikasi-produktivitas
+category: Aplikasi & Produktivitas
+categorySlug: aplikasi
 contentType: decision-guide
-featuredImage: /images/articles/aturan-satu-fungsi-satu-aplikasi-produktivitas.svg
-featuredImageAlt: Ilustrasi editorial aplikasi dengan alur pilihan untuk menyederhanakan alat produktivitas.
-tags: ["Aplikasi", "Produktivitas", "Workflow"]
+featuredImage: /images/articles/aturan-satu-fungsi-satu-aplikasi-produktivitas.webp
+featuredImageAlt: Ilustrasi editorial premium tentang Terlalu Banyak Aplikasi
+  Produktivitas? Gunakan Aturan Satu Fungsi Satu Alat dengan visual yang relevan
+  pada topik Aplikasi & Produktivitas.
+tags:
+  - Aplikasi
+  - Produktivitas
+  - Workflow
 publishedAt: 2026-10-08
 aiAssisted: true
-editorialNote: "AI membantu drafting artikel ini. Redaksi bertanggung jawab atas struktur publikasi dan rekomendasi perlu disesuaikan dengan kebutuhan serta workflow pembaca."
+editorialNote: AI membantu drafting artikel ini. Redaksi bertanggung jawab atas
+  struktur publikasi dan rekomendasi perlu disesuaikan dengan kebutuhan serta
+  workflow pembaca.
 featured: false
 draft: false
+socialImage: /images/articles/aturan-satu-fungsi-satu-aplikasi-produktivitas.webp
+imageStyle: premium-v1
+imageTagline: Sederhanakan workflow, kurangi aplikasi yang tumpang tindih
 ---
+
 Masalah produktivitas tidak selalu disebabkan kekurangan aplikasi. Sering kali masalah justru muncul karena catatan, tugas, file, dan komunikasi tersebar di terlalu banyak tempat.
 
 ## Petakan fungsi, bukan merek aplikasi

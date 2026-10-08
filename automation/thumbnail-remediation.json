@@ -1,5 +1,5 @@
 {
-  "status": "RETRY",
+  "status": "DONE",
   "generationPausedRequired": true,
   "articles": [
     {
@@ -29,5 +29,6 @@
     }
   ],
   "retryNonce": "2026-10-08T03:48:00Z",
-  "lastFailure": "Initial batch assumed filename equals slug; fixed to resolve file by frontmatter slug."
+  "lastFailure": "Initial batch assumed filename equals slug; fixed to resolve file by frontmatter slug.",
+  "completedAt": "2026-10-08T03:47:46.910Z"
 }

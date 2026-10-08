@@ -8,8 +8,10 @@ slug: cara-memeriksa-file-download-sebelum-dibuka
 category: Keamanan Digital
 categorySlug: keamanan-digital
 contentType: checklist
-featuredImage: /images/articles/cara-memeriksa-file-download-sebelum-dibuka.svg
-featuredImageAlt: Ilustrasi editorial keamanan digital dengan checklist sebelum membuka file unduhan di Windows.
+featuredImage: /images/articles/cara-memeriksa-file-download-sebelum-dibuka.webp
+featuredImageAlt: Ilustrasi editorial premium tentang Cara Memeriksa File
+  Download Sebelum Dibuka di Windows dengan visual yang relevan pada topik
+  Keamanan Digital.
 tags:
   - Keamanan Digital
   - Windows
@@ -43,6 +45,9 @@ editorialNote: AI membantu riset dan drafting. Publikasi tetap mengikuti quality
 featured: false
 sponsored: false
 draft: false
+socialImage: /images/articles/cara-memeriksa-file-download-sebelum-dibuka.webp
+imageStyle: premium-v1
+imageTagline: Periksa sumber dan risiko sebelum membuka file
 ---
 
 File sudah selesai diunduh, tetapi belum tentu perlu langsung dibuka. Pemeriksaan yang paling berguna bukan mencari satu tanda bahwa file “aman”, melainkan mencocokkan beberapa hal: apakah Anda memang meminta file itu, dari mana asalnya, apakah jenisnya sesuai, dan apakah Windows menemukan sesuatu yang mencurigakan.

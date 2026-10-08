@@ -7,8 +7,10 @@ slug: sinkronisasi-cloud-bukan-backup
 category: Internet
 categorySlug: internet
 contentType: tutorial
-featuredImage: /images/articles/sinkronisasi-cloud-bukan-backup.svg
-featuredImageAlt: Ilustrasi editorial Internet dengan langkah tutorial untuk membedakan sinkronisasi cloud dan backup.
+featuredImage: /images/articles/sinkronisasi-cloud-bukan-backup.webp
+featuredImageAlt: "Ilustrasi editorial premium tentang Sinkronisasi Cloud Bukan
+  Backup: Bedanya dan Cara Memakainya dengan visual yang relevan pada topik
+  Internet."
 tags:
   - sinkronisasi cloud
   - backup
@@ -31,10 +33,14 @@ sources:
   - title: "Apple Support: Delete files in iCloud Drive on iCloud.com"
     url: https://support.apple.com/en-ca/guide/icloud/mm3b7fcd0c10/icloud
 aiAssisted: true
-editorialNote: AI membantu riset dan drafting. GPT-6 Sol digunakan sebagai editor penjaga kualitas sebelum publikasi.
+editorialNote: AI membantu riset dan drafting. GPT-6 Sol digunakan sebagai
+  editor penjaga kualitas sebelum publikasi.
 featured: false
 sponsored: false
 draft: false
+socialImage: /images/articles/sinkronisasi-cloud-bukan-backup.webp
+imageStyle: premium-v1
+imageTagline: Bedakan sinkronisasi dari salinan pemulihan
 ---
 
 File yang terlihat di laptop, ponsel, dan layanan cloud bisa jadi merupakan salinan-salinan yang saling mengikuti perubahan, bukan salinan yang berdiri sendiri untuk pemulihan. Jika file terhapus atau rusak, perubahan itu dapat ikut tersinkron ke perangkat lain. Karena itu, sinkronisasi berguna untuk akses dan kelanjutan kerja, tetapi tidak otomatis menjadi backup.
