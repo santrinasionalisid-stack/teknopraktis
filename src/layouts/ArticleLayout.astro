@@ -62,7 +62,7 @@ const breadcrumbSchema = {
   type="article"
   schema={[articleSchema, breadcrumbSchema]}
 >
-  <article class="article-shell" data-ui-version="editorial-remediation-20261008-v3">
+  <article class="article-shell" data-ui-version="editorial-remediation-20261008-v4">
     <header class="article-hero container prose-width">
       <nav class="breadcrumb" aria-label="Breadcrumb">
         <a href="/">Beranda</a><span aria-hidden="true">/</span><a href="/panduan/">Panduan</a>
@@ -76,7 +76,7 @@ const breadcrumbSchema = {
         {modified && <><span>•</span><span>Diperbarui {modified}</span></>}
       </div>
       <h1>{d.title}</h1>
-      <p class="article-deck" style="text-align: justify !important; text-justify: inter-word;">{d.description}</p>
+      <p class="article-deck">{d.description}</p>
       <div class="article-byline">
         <strong><a href="/redaksi/">{d.author}</a></strong>
         <span>{d.reviewedBy ? `Ditinjau oleh ${d.reviewedBy}.` : 'Ditinjau untuk kejelasan dan akurasi praktis.'}</span>
@@ -115,7 +115,7 @@ const breadcrumbSchema = {
       </nav>
     )}
 
-    <div class="article-body container prose-width" style="text-align: justify !important; text-justify: inter-word;">
+    <div class="article-body container prose-width">
       <slot />
     </div>
 
@@ -140,11 +140,4 @@ const breadcrumbSchema = {
       <RelatedArticles articles={related} />
     </div>
   </article>
-
-  <script is:inline>
-    document.querySelectorAll('.article-deck, .article-body p, .article-body li').forEach((element) => {
-      element.style.setProperty('text-align', 'justify', 'important');
-      element.style.setProperty('text-align-last', 'left');
-    });
-  </script>
 </BaseLayout>

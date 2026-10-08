@@ -12,11 +12,12 @@ const checks = [
   ['editorial disclosure hidden', !layout.includes('Proses editorial:')],
   ['featured figure hard 16:9', layout.includes('aspect-ratio: 16 / 9; overflow: hidden;')],
   ['featured image cannot crop', layout.includes('object-fit:contain')],
-  ['article body justify inline', /class="article-body container prose-width"[^>]*text-align:\s*justify(?:\s*!important)?/.test(layout)],
-  ['deck justify inline', /class="article-deck"[^>]*text-align:\s*justify(?:\s*!important)?/.test(layout)],
-  ['runtime paragraph justify', layout.includes("style.setProperty('text-align', 'justify', 'important')")],
+  ['article body has no forced justify inline', !/class="article-body container prose-width"[^>]*text-align:\s*justify/.test(layout)],
+  ['deck has no forced justify inline', !/class="article-deck"[^>]*text-align:\s*justify/.test(layout)],
+  ['runtime justify script removed', !layout.includes("setProperty('text-align', 'justify'")],
   ['card media 16:9', /\.article-card__media\s*\{[\s\S]*?aspect-ratio:\s*16\s*\/\s*9/.test(css)],
-  ['body paragraph justify CSS', /\.article-body p,[\s\S]*?text-align:\s*justify\s*!important/.test(css)],
+  ['body paragraph left-aligned CSS', /\.article-body p,[\s\S]*?text-align:\s*left/.test(css)],
+  ['article body reading width capped', /\.article-body\s*\{[\s\S]*?width:\s*min\(740px/.test(css)],
   ['card uses final featuredImage', card.includes('src={article.data.featuredImage}')],
 ];
 

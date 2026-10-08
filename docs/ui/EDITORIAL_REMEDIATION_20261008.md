@@ -42,3 +42,12 @@ Content generation is intentionally paused until every item below is verified.
 - 6/6 contained the hard 16:9 featured-media rule.
 - 6/6 referenced only final title-relevant WebP article images.
 - No Scheduled Article Draft run occurred during the remediation window.
+
+
+## Typography refinement — V4
+- Forced paragraph justification was removed after visual review showed inconsistent inter-word spacing.
+- Article deck and body now use readability-first left alignment.
+- Body measure is capped at 740px on desktop, with 18px / 1.75 line-height on mobile.
+- Lists are left-aligned; tables retain their existing left-aligned cell treatment.
+- Browser-dependent hyphenation and inter-word stretching are disabled.
+- Production marker updated to `editorial-remediation-20261008-v4`.

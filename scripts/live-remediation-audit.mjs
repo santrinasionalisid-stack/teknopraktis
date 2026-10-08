@@ -7,10 +7,10 @@ const urls = [
   'https://teknopraktis.my.id/artikel/cara-audit-izin-browser-kamera-mikrofon-lokasi/',
 ];
 
-const marker = 'data-ui-version="editorial-remediation-20261008-v3"';
-const justifyNeedles = [
-  'text-align: justify !important',
-  "style.setProperty('text-align', 'justify', 'important')",
+const marker = 'data-ui-version="editorial-remediation-20261008-v4"';
+const forbiddenJustifyNeedles = [
+  'text-align: justify',
+  "setProperty('text-align', 'justify'",
 ];
 const failures = [];
 
@@ -30,7 +30,7 @@ for (const url of urls) {
     http200: response.ok,
     marker: html.includes(marker),
     disclosureAbsent: !html.includes('Proses editorial:'),
-    justifyInline: justifyNeedles.every((needle) => html.includes(needle)),
+    forcedJustifyAbsent: forbiddenJustifyNeedles.every((needle) => !html.includes(needle)),
     featured16x9: html.includes('aspect-ratio: 16 / 9; overflow: hidden;'),
     finalWebp: /\/images\/articles\/[a-z0-9-]+\.webp/.test(html),
   };
