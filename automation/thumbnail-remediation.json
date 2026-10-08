@@ -1,0 +1,31 @@
+{
+  "status": "RUNNING",
+  "generationPausedRequired": true,
+  "articles": [
+    {
+      "slug": "cara-menggunakan-ai-meringkas-dokumen",
+      "visualKind": "ai-document-summary",
+      "tagline": "Ringkas dokumen tanpa kehilangan konteks penting"
+    },
+    {
+      "slug": "aturan-satu-fungsi-satu-aplikasi-produktivitas",
+      "visualKind": "productivity-stack",
+      "tagline": "Sederhanakan workflow, kurangi aplikasi yang tumpang tindih"
+    },
+    {
+      "slug": "cara-memeriksa-file-download-sebelum-dibuka",
+      "visualKind": "file-scan",
+      "tagline": "Periksa sumber dan risiko sebelum membuka file"
+    },
+    {
+      "slug": "checklist-keamanan-akun-google",
+      "visualKind": "account-security",
+      "tagline": "Tinjau akses akun sebelum masalah muncul"
+    },
+    {
+      "slug": "sinkronisasi-cloud-bukan-backup",
+      "visualKind": "cloud-backup",
+      "tagline": "Bedakan sinkronisasi dari salinan pemulihan"
+    }
+  ]
+}

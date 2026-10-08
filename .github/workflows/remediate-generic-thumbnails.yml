@@ -1,0 +1,63 @@
+name: Remediate Generic Thumbnails
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "automation/thumbnail-remediation.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: teknopraktis-thumbnail-remediation
+  cancel-in-progress: false
+
+jobs:
+  remediate:
+    runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_IMAGE_MODEL: ${{ vars.OPENAI_IMAGE_MODEL }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Install image compositor
+        run: python3 -m pip install --disable-pip-version-check pillow
+
+      - name: Regenerate every generic thumbnail by article title
+        run: node scripts/refresh-generic-thumbnails.mjs
+
+      - name: Validate
+        run: |
+          node --check scripts/refresh-generic-thumbnails.mjs
+          node --check scripts/editorial-image.mjs
+          npm run quality
+          npm run build
+
+      - name: Commit thumbnail remediation
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "Tidak ada perubahan." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          git config user.name "teknopraktis-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add automation/thumbnail-remediation.json src/content/articles/ public/images/articles/
+          git commit -m "design: replace generic thumbnails with title-relevant visuals"
+          git pull --rebase origin main
+          git push origin HEAD:main

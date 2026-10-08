@@ -81,11 +81,6 @@ const breadcrumbSchema = {
         <strong><a href="/redaksi/">{d.author}</a></strong>
         <span>{d.reviewedBy ? `Ditinjau oleh ${d.reviewedBy}.` : 'Ditinjau untuk kejelasan dan akurasi praktis.'}</span>
       </div>
-      {d.aiAssisted && (
-        <p class="disclosure">
-          <strong>Proses editorial:</strong> {d.editorialNote ?? 'AI digunakan sebagai alat bantu drafting. Redaksi bertanggung jawab atas keputusan publikasi dan pembaruan konten.'}
-        </p>
-      )}
       {d.sponsored && <p class="disclosure"><strong>Disclosure komersial:</strong> Konten ini memiliki hubungan komersial yang dijelaskan secara transparan.</p>}
     </header>
 
