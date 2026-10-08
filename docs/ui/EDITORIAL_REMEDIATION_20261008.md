@@ -1,6 +1,6 @@
 # Editorial Remediation — 2026-10-08
 
-Status: **PASS / LOCKED**
+Status: **LIVE JUSTIFY VERIFICATION PENDING / GENERATION PAUSED**
 
 Content generation is intentionally paused until every item below is verified.
 
@@ -11,7 +11,7 @@ Content generation is intentionally paused until every item below is verified.
 - [x] All remaining generic thumbnails regenerated to match each article title.
 - [x] Repository quality/build PASS after image remediation.
 - [x] Live visual audit: featured 16:9/no crop, disclosure absent, card thumbnails 16:9 and title-relevant.
-- [x] Content generation re-enabled only after remediation and regression guards were installed.
+- [ ] Content generation remains paused until computed live text alignment is verified as `justify`.
 
 ## Audit detail
 - 6/6 published articles now reference `premium-v1` WebP thumbnails.
@@ -27,8 +27,13 @@ Content generation is intentionally paused until every item below is verified.
 - Content generation remained paused throughout remediation.
 - No scheduled/manual article generation was executed during the remediation window.
 - A permanent UI regression gate now blocks builds if 16:9 featured media, justify rules, disclosure removal, or card image wiring regress.
-- Content generation is re-enabled after the remediation checks completed.
+- Content generation was re-paused after live computed-style verification showed the deployed page still reporting `text-align: left`; it stays paused until production serves the verified remediation build.
 
 ## Deployment verification marker
 - Article DOM marker: `data-ui-version="editorial-remediation-20261008-v3"`.
 - Marker exists only to verify that Cloudflare production is serving the remediated layout before generation is re-enabled.
+
+## Current hold
+- Repository implementation: justify rules present in CSS, inline article containers, and runtime enforcement script.
+- Live audit previously reported computed `text-align:left`, indicating production had not yet served the latest remediation build at audit time.
+- Generation must remain paused until the deployment marker and computed `text-align:justify` are both observed live.
