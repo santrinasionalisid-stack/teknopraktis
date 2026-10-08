@@ -500,9 +500,106 @@
       "category": "Perangkat",
       "categorySlug": "perangkat",
       "suggestedSlug": "cara-membersihkan-penyimpanan-android",
-      "status": "pending",
+      "status": "published",
       "contentType": "tutorial",
-      "visualKind": "android-storage"
+      "visualKind": "android-storage",
+      "generatedAt": "2026-10-08T05:45:02.005Z",
+      "generatedSlug": "cara-membersihkan-penyimpanan-android",
+      "models": {
+        "draft": "gpt-6-luna",
+        "editor": "gpt-6-sol"
+      },
+      "publishPolicy": "auto-until-20",
+      "autoPublished": true,
+      "publishedAt": "2026-10-08",
+      "editorial": {
+        "initial": {
+          "decision": "revise",
+          "effectiveDecision": "revise",
+          "score": 87,
+          "projectedScore": 94,
+          "repairability": "local",
+          "summary": "Draft sudah menjawab intent dengan urutan yang konservatif dan pembedaan yang jelas antara cache, data aplikasi, serta salinan foto di perangkat. Sumber Google yang digunakan relevan. Dua instruksi perlu dipertegas agar pembaca tidak salah mengira dapat memeriksa file sampah satu per satu atau menganggap foto yang terlihat di aplikasi pasti sudah dicadangkan.",
+          "issueCount": 4
+        },
+        "final": {
+          "decision": "pass",
+          "score": 94,
+          "repairability": "none",
+          "summary": "Draft layak terbit. Koreksi sebelumnya sudah memperjelas bahwa pembersihan file sampah dapat bersifat permanen dan bahwa cadangan foto perlu diverifikasi melalui peramban. Urutan langkah tetap konservatif, dengan peringatan yang jelas untuk data aplikasi dan file penting.",
+          "issueCount": 0,
+          "recoveryUsed": true
+        }
+      },
+      "copyEdit": {
+        "model": "gpt-6-sol",
+        "imageTagline": "Amankan file penting sebelum mulai menghapus",
+        "hookScore": 94,
+        "flowScore": 93,
+        "concisionScore": 92,
+        "summary": "Artikel diringkas dan diurutkan agar pembaca memeriksa ruang, memverifikasi cadangan, lalu membersihkan file dengan risiko paling rendah terlebih dahulu.",
+        "wordsBefore": 1060,
+        "wordsAfter": 955
+      },
+      "image": {
+        "styleVersion": "premium-v1",
+        "model": "gpt-image-2.5-sunburst",
+        "visualKind": "android-storage",
+        "featuredImage": "/images/articles/cara-membersihkan-penyimpanan-android.webp",
+        "socialImage": "/images/articles/cara-membersihkan-penyimpanan-android.webp",
+        "usage": {
+          "input_tokens": 377,
+          "input_tokens_details": {
+            "image_tokens": 0,
+            "text_tokens": 377
+          },
+          "output_tokens": 1078,
+          "output_tokens_details": {
+            "image_tokens": 1078,
+            "text_tokens": 0
+          },
+          "total_tokens": 1455
+        }
+      },
+      "usage": {
+        "draft": {
+          "inputTokens": 20002,
+          "outputTokens": 2759,
+          "totalTokens": 22761,
+          "webSearchCalls": 2
+        },
+        "editorInitial": {
+          "inputTokens": 22205,
+          "outputTokens": 1951,
+          "totalTokens": 24156,
+          "webSearchCalls": 2
+        },
+        "editorFinal": {
+          "inputTokens": 3520,
+          "outputTokens": 268,
+          "totalTokens": 3788,
+          "webSearchCalls": 0
+        },
+        "copyDesk": {
+          "inputTokens": 2982,
+          "outputTokens": 1968,
+          "totalTokens": 4950,
+          "webSearchCalls": 0
+        },
+        "imageGeneration": {
+          "input_tokens": 377,
+          "input_tokens_details": {
+            "image_tokens": 0,
+            "text_tokens": 377
+          },
+          "output_tokens": 1078,
+          "output_tokens_details": {
+            "image_tokens": 1078,
+            "text_tokens": 0
+          },
+          "total_tokens": 1455
+        }
+      }
     },
     {
       "id": "two-factor-options",
