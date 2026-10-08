@@ -22,7 +22,7 @@
       "category": "Internet",
       "categorySlug": "internet",
       "suggestedSlug": "sinkronisasi-cloud-bukan-backup",
-      "status": "draft",
+      "status": "published",
       "generatedAt": "2026-10-08T01:04:29.470Z",
       "generatedSlug": "sinkronisasi-cloud-bukan-backup",
       "models": {
@@ -68,7 +68,8 @@
           "webSearchCalls": 0
         }
       },
-      "contentType": "tutorial"
+      "contentType": "tutorial",
+      "publishedAt": "2026-10-08"
     },
     {
       "id": "browser-permission-audit",

@@ -17,6 +17,8 @@ tags:
   - cloud
 publishedAt: 2026-10-08
 author: Redaksi TeknoPraktis
+reviewedAt: 2026-10-08
+reviewedBy: Redaksi TeknoPraktis
 sources:
   - title: "CISA: Data Backup Options"
     url: https://www.cisa.gov/sites/default/files/publications/data_backup_options.pdf
@@ -29,11 +31,10 @@ sources:
   - title: "Apple Support: Delete files in iCloud Drive on iCloud.com"
     url: https://support.apple.com/en-ca/guide/icloud/mm3b7fcd0c10/icloud
 aiAssisted: true
-editorialNote: Draft dibuat dengan bantuan AI dan ditinjau oleh pipeline editor
-  GPT-6 Sol sebelum masuk antrean review publikasi.
+editorialNote: AI membantu riset dan drafting. GPT-6 Sol digunakan sebagai editor penjaga kualitas sebelum publikasi.
 featured: false
 sponsored: false
-draft: true
+draft: false
 ---
 
 File yang terlihat di laptop, ponsel, dan layanan cloud bisa jadi merupakan salinan-salinan yang saling mengikuti perubahan, bukan salinan yang berdiri sendiri untuk pemulihan. Jika file terhapus atau rusak, perubahan itu dapat ikut tersinkron ke perangkat lain. Karena itu, sinkronisasi berguna untuk akses dan kelanjutan kerja, tetapi tidak otomatis menjadi backup.
