@@ -242,8 +242,19 @@ const trackingParams = [
 function canonicalSourceUrl(value) {
   const url = new URL(value);
   for (const key of trackingParams) url.searchParams.delete(key);
+
+  // Locale/display parameters do not identify a different source document.
+  // Remove them so a citation such as ?hl=en_1 matches the same declared source page.
+  for (const key of ['hl', 'language', 'locale']) url.searchParams.delete(key);
+
   url.hash = '';
   return url.toString();
+}
+
+function sourceIdentity(value) {
+  const url = new URL(value);
+  const pathname = url.pathname.length > 1 ? url.pathname.replace(/\/+$/, '') : '/';
+  return `${url.origin.toLowerCase()}${pathname}`;
 }
 
 function normalizeCandidate(candidate) {
@@ -252,11 +263,16 @@ function normalizeCandidate(candidate) {
     url: canonicalSourceUrl(source.url)
   }));
 
+  const declaredByIdentity = new Map(
+    candidate.sources.map((source) => [sourceIdentity(source.url), source.url])
+  );
+
   candidate.body = candidate.body.replace(
     /https:\/\/[^\s)\]>"]+/g,
     (value) => {
       try {
-        return canonicalSourceUrl(value);
+        const cleaned = canonicalSourceUrl(value);
+        return declaredByIdentity.get(sourceIdentity(cleaned)) || cleaned;
       } catch {
         return value;
       }
