@@ -21,14 +21,19 @@ Tidak ada API image tambahan sehingga biaya generation tidak bertambah.
 Asset ditulis ke `public/images/articles/<slug>.svg`.
 
 ## Copywriting gate Sol
-Sol wajib menilai:
-- pembukaan langsung ke masalah/manfaat;
+Sol wajib melakukan final professional copy edit dengan standar:
+- paragraf pertama memiliki **hook informatif**: masalah, konsekuensi, kontras, atau manfaat konkret langsung terasa;
+- 1–2 kalimat pertama menjawab alasan pembaca perlu melanjutkan;
 - Bahasa Indonesia natural, bukan terjemahan kaku;
 - jargon hanya bila perlu dan dijelaskan;
+- kesinambungan antar paragraf terjaga; tidak ada lompatan topik;
+- hubungan masalah→solusi, sebab→akibat, atau langkah→langkah terasa jelas;
 - heading mudah dipindai;
-- urutan tutorial/checklist jelas;
-- kalimat tidak bertele-tele;
-- tidak clickbait dan tidak overclaim.
+- kalimat aktif, konkret, tidak melingkar, tidak bertele-tele;
+- pengulangan dan filler dipangkas;
+- ritme kalimat bervariasi tetapi tetap ringkas;
+- tidak clickbait dan tidak overclaim;
+- hookScore, flowScore, dan concisionScore minimum 90.
 
 Sol tetap repair-first: bila masalah masih dapat diperbaiki, pilih revise dan berikan patch kecil, bukan reject.
 
@@ -39,3 +44,13 @@ Sol tetap repair-first: bila masalah masih dapat diperbaiki, pilih revise dan be
 - Live Panduan hub: PASS
 - Live article featured image / content type / table of contents metadata: PASS
 - Internet category route without published article: PASS
+
+## Final Copy Desk V2.1
+- Model: GPT-6 Sol
+- Posisi: tahap terakhir setelah fact/source review dan recovery
+- Web search: OFF
+- Boleh menulis ulang kalimat/paragraf untuk memperbaiki alur
+- Dilarang menambah fakta, klaim, contoh, angka, atau sumber baru
+- Daftar URL eksternal sebelum/sesudah harus identik
+- Panjang artikel maksimum bertambah 8%
+- Target utama: hook, flow, concision, continuity
