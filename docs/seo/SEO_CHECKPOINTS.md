@@ -59,7 +59,7 @@ Status: V1 PASS / ACTIVE SAFE MODE
 - Auto-publish: DISABLED by design; scheduled runs create drafts only
 
 ## SEO-006 — Editorial UI V2
-Status: IMPLEMENTED / CI PENDING
+Status: PASS / PRODUCTION VERIFIED
 
 - Topic taxonomy dipisahkan dari content type: IMPLEMENTED
 - Menu Panduan + category hub tetap tersedia walau kategori masih kosong: IMPLEMENTED
@@ -69,4 +69,8 @@ Status: IMPLEMENTED / CI PENDING
 - Tutorial/checklist/decision-guide labels: IMPLEMENTED
 - Sol copywriting gate (bahasa natural, jargon, heading, scanability): IMPLEMENTED
 - Generator featured image otomatis tanpa biaya API tambahan: IMPLEMENTED
-- Final production verification: PENDING CI
+- Quality Gate: PASS
+- Production build: PASS — 19 pages
+- Live /panduan/: PASS
+- Live article featured image + TOC + social metadata: PASS
+- Empty-category routing for Internet/Perangkat: PASS
