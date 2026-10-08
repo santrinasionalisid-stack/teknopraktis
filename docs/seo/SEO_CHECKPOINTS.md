@@ -44,8 +44,11 @@ Status: V1 PASS / ACTIVE SAFE MODE
 
 - Topic queue: READY
 - Scheduled draft workflow: ACTIVE (Mon/Wed/Fri 09:15 WIB)
-- OpenAI Responses API + web search generator: PASS
-- Generator hard gate: PASS
+- GPT-6 Luna research + drafting: ACTIVE
+- GPT-6 Sol professional editor gate: ACTIVE
+- Sol minimum editorial score: 85
+- OpenAI Responses API + conditional web search: PASS
+- Generator hard gate before/after editor: PASS
 - Source consistency / tracking URL hygiene: PASS
 - AI assistance disclosure: PASS
 - Organizational author/transparency page: PASS
