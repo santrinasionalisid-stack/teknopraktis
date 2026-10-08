@@ -12,8 +12,12 @@ const apiKey = process.env.OPENAI_API_KEY;
 const draftModel = process.env.OPENAI_DRAFT_MODEL || process.env.OPENAI_MODEL || 'gpt-6-luna';
 const editorModel = process.env.OPENAI_EDITOR_MODEL || 'gpt-6-sol';
 const requestedTopicId = (process.env.TOPIC_ID || '').trim();
+const autoPublishUntil = Number.parseInt(process.env.AUTO_PUBLISH_UNTIL || '0', 10);
 
 if (!apiKey) throw new Error('OPENAI_API_KEY belum tersedia.');
+if (!Number.isInteger(autoPublishUntil) || autoPublishUntil < 0) {
+  throw new Error('AUTO_PUBLISH_UNTIL harus berupa bilangan bulat >= 0.');
+}
 
 const queue = JSON.parse(readFileSync(queuePath, 'utf8'));
 const topic = requestedTopicId
@@ -36,12 +40,22 @@ const existing = readdirSync(articlesDir)
     if (!match) return null;
     try {
       const data = parse(match[1]);
-      return { title: data.title, slug: data.slug, categorySlug: data.categorySlug };
+      return {
+        title: data.title,
+        slug: data.slug,
+        categorySlug: data.categorySlug,
+        draft: data.draft === true
+      };
     } catch {
       return null;
     }
   })
   .filter(Boolean);
+
+const publishedCountBefore = existing.filter((item) => item.draft !== true).length;
+const autoPublish =
+  autoPublishUntil > 0 &&
+  publishedCountBefore < autoPublishUntil;
 
 const articleSchema = {
   type: 'object',
@@ -744,20 +758,29 @@ const metadata = {
   author: 'Redaksi TeknoPraktis',
   sources: candidate.sources,
   aiAssisted: true,
-  editorialNote: 'AI membantu riset dan drafting. GPT-6 Sol melakukan fact/source review dan final copy edit profesional sebelum artikel masuk antrean review publikasi.',
+  editorialNote: autoPublish
+    ? 'AI membantu riset dan drafting. GPT-6 Sol melakukan fact/source review dan final copy edit profesional. Artikel dipublikasikan otomatis selama fase bootstrap editorial sampai target 20 artikel.'
+    : 'AI membantu riset dan drafting. GPT-6 Sol melakukan fact/source review dan final copy edit profesional sebelum artikel masuk antrean review publikasi.',
   featured: false,
   sponsored: false,
-  draft: true
+  draft: !autoPublish
 };
 
 const articlePath = join(articlesDir, `${topic.suggestedSlug}.md`);
 const article = `---\n${stringify(metadata).trim()}\n---\n\n${candidate.body.trim()}\n`;
 writeFileSync(articlePath, article, 'utf8');
 
-topic.status = 'draft';
+topic.status = autoPublish ? 'published' : 'draft';
 topic.generatedAt = new Date().toISOString();
 topic.generatedSlug = topic.suggestedSlug;
 topic.models = { draft: draftModel, editor: editorModel };
+topic.publishPolicy = autoPublish ? `auto-until-${autoPublishUntil}` : 'manual-approval';
+topic.autoPublished = autoPublish;
+if (autoPublish) {
+  topic.publishedAt = today;
+} else {
+  delete topic.publishedAt;
+}
 const finalEffectiveScore =
   finalReview.decision === 'revise' ? finalReview.projectedScore : finalReview.score;
 
@@ -797,7 +820,11 @@ topic.usage = {
 };
 writeFileSync(queuePath, JSON.stringify(queue, null, 2) + '\n', 'utf8');
 
-console.log(`Draft dibuat: src/content/articles/${topic.suggestedSlug}.md`);
+console.log(
+  autoPublish
+    ? `Artikel otomatis diterbitkan: src/content/articles/${topic.suggestedSlug}.md (artikel terbit sebelum run: ${publishedCountBefore}; target: ${autoPublishUntil})`
+    : `Draft dibuat: src/content/articles/${topic.suggestedSlug}.md (auto-publish nonaktif/target sudah tercapai)`
+);
 console.log(`Draft model: ${draftModel}; kata: ${draftStats.words}; H2: ${draftStats.h2Count}`);
 console.log(`Editor model: ${editorModel}; initial decision: ${review.decision}; effective: ${effectiveInitialDecision}; score: ${review.score}; projected: ${review.projectedScore}; issues: ${review.issues.length}`);
 if (finalEditorResult) {

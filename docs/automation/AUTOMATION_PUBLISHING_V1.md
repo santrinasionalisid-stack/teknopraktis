@@ -1,6 +1,6 @@
 # TeknoPraktis — Automated Publishing V2
 
-Status: **HYBRID LUNA → SOL / SAFE MODE**
+Status: **HYBRID LUNA → SOL / BOOTSTRAP AUTO-PUBLISH TO 20**
 
 ## Prinsip
 
@@ -31,7 +31,8 @@ Cron GitHub Actions disimpan dalam UTC: `15 2 * * 1,3,5`.
 11. Draft hanya berhenti setelah dua putaran jika masalah material tetap tidak dapat diselesaikan; draft yang gagal tidak dikomit dan topic tetap pending.
 12. Setelah fact/source edit lolos, **GPT-6 Sol menjalankan Final Copy Desk** tanpa web search: memperkuat hook paragraf pertama, memastikan kesinambungan antar paragraf, memangkas kalimat bertele-tele, dan memoles Bahasa Indonesia agar natural.
 13. Final Copy Desk wajib mencapai `hookScore`, `flowScore`, dan `concisionScore` minimal **90/100**. URL eksternal tidak boleh berubah dan panjang akhir tidak boleh bertambah lebih dari 8%.
-14. Artikel lolos ditulis sebagai `draft: true`.
+14. **Bootstrap publishing:** selama jumlah artikel terbit di repository masih **di bawah 20**, artikel yang lolos seluruh gate ditulis sebagai `draft: false` dan langsung masuk produksi.
+15. Begitu jumlah artikel terbit mencapai **20**, auto-publish berhenti otomatis; artikel berikutnya kembali ditulis sebagai `draft: true` dan membutuhkan approval manual.
 10. `npm run quality` dan production build harus PASS.
 11. Draft dikomit otomatis ke `main` dan tidak muncul di website.
 12. Setelah approval, workflow **Publish Approved Article** mengubah `draft: false`, mencatat review, menjalankan quality gate lagi, lalu push ke main.
@@ -56,7 +57,7 @@ Jangan pernah menaruh API key di repository, workflow YAML, artikel, issue, log,
 
 ## Policy
 
-- Tidak ada auto-publish pada V1.
+- Auto-publish sementara aktif hanya untuk fase bootstrap sampai total **20 artikel terbit**. Setelah target tercapai, mode kembali ke manual approval secara otomatis.
 - Tidak ada YMYL, politik, kesehatan, investasi, atau topik legal otomatis pada queue default.
 - Tidak boleh mengarang pengalaman penggunaan atau pengujian.
 - Sumber diprioritaskan dari dokumentasi resmi/primer.
@@ -71,3 +72,11 @@ Jangan pernah menaruh API key di repository, workflow YAML, artikel, issue, log,
 ## Aktivasi
 
 Automation akan tetap dorman tanpa `OPENAI_API_KEY`. Setelah secret tersedia, jalankan workflow manual satu kali sebelum mengandalkan schedule.
+
+## Featured image otomatis
+
+- Setiap artikel hasil pipeline wajib memiliki featured image.
+- Generator membuat SVG editorial **1200×675** berdasarkan judul, kategori, dan content type.
+- Gambar dipakai sebagai thumbnail card, hero artikel, Open Graph image, dan Twitter large image.
+- Quality gate memblokir artikel jika file featured image yang dirujuk tidak tersedia.
+- Ini adalah featured image/thumbnail otomatis; screenshot langkah-demi-langkah di dalam body tutorial belum dibuat otomatis.

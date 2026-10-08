@@ -170,6 +170,56 @@
       "suggestedSlug": "prompt-ai-batas-kepastian-verifikasi",
       "status": "pending",
       "contentType": "tutorial"
+    },
+    {
+      "id": "browser-cache-cookies-reset",
+      "workingTitle": "Cache, Cookies, atau Data Situs: Mana yang Perlu Dihapus Saat Browser Bermasalah",
+      "intent": "Membantu pengguna memilih data browser yang tepat untuk dihapus saat troubleshooting tanpa menghapus sesi atau preferensi secara berlebihan.",
+      "category": "Internet",
+      "categorySlug": "internet",
+      "suggestedSlug": "cache-cookies-data-situs-browser",
+      "status": "pending",
+      "contentType": "decision-guide"
+    },
+    {
+      "id": "windows-startup-apps",
+      "workingTitle": "Cara Meninjau Aplikasi Startup Windows yang Membuat Boot Lambat",
+      "intent": "Memberikan urutan aman untuk mengidentifikasi aplikasi startup yang tidak perlu tanpa menonaktifkan komponen penting secara sembarangan.",
+      "category": "Perangkat",
+      "categorySlug": "perangkat",
+      "suggestedSlug": "cara-meninjau-aplikasi-startup-windows",
+      "status": "pending",
+      "contentType": "tutorial"
+    },
+    {
+      "id": "pdf-image-compression",
+      "workingTitle": "Cara Mengecilkan Ukuran PDF dan Gambar Tanpa Mengorbankan Keterbacaan",
+      "intent": "Menjelaskan cara memilih kompresi yang sesuai untuk dokumen dan gambar dengan fokus pada ukuran file, keterbacaan, dan privasi.",
+      "category": "Aplikasi & Produktivitas",
+      "categorySlug": "aplikasi",
+      "suggestedSlug": "cara-mengecilkan-ukuran-pdf-dan-gambar",
+      "status": "pending",
+      "contentType": "tutorial"
+    },
+    {
+      "id": "browser-profile-separation",
+      "workingTitle": "Memisahkan Profil Browser untuk Kerja dan Pribadi: Kapan Berguna",
+      "intent": "Membantu pengguna memutuskan kapan profil browser terpisah berguna untuk akun, bookmark, ekstensi, dan fokus kerja.",
+      "category": "Aplikasi & Produktivitas",
+      "categorySlug": "aplikasi",
+      "suggestedSlug": "memisahkan-profil-browser-kerja-pribadi",
+      "status": "pending",
+      "contentType": "decision-guide"
+    },
+    {
+      "id": "official-app-update-check",
+      "workingTitle": "Cara Memastikan Update Aplikasi Berasal dari Sumber Resmi",
+      "intent": "Memberikan checklist praktis untuk memverifikasi notifikasi update, alamat unduhan, penerbit, dan kanal resmi sebelum memasang pembaruan.",
+      "category": "Keamanan Digital",
+      "categorySlug": "keamanan-digital",
+      "suggestedSlug": "cara-memastikan-update-aplikasi-sumber-resmi",
+      "status": "pending",
+      "contentType": "checklist"
     }
   ]
 }

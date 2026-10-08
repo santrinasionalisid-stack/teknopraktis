@@ -25,6 +25,7 @@ jobs:
       OPENAI_DRAFT_MODEL: ${{ vars.OPENAI_DRAFT_MODEL }}
       OPENAI_EDITOR_MODEL: ${{ vars.OPENAI_EDITOR_MODEL }}
       TOPIC_ID: ${{ inputs.topic_id }}
+      AUTO_PUBLISH_UNTIL: "20"
 
     steps:
       - name: Check automation configuration
@@ -64,7 +65,7 @@ jobs:
           npm run quality
           npm run build
 
-      - name: Commit draft to main
+      - name: Commit editorial result to main
         if: steps.config.outputs.enabled == 'true'
         shell: bash
         run: |
@@ -75,7 +76,7 @@ jobs:
           git config user.name "teknopraktis-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add automation/topics.json src/content/articles/ public/images/articles/
-          git commit -m "content: generate scheduled editorial draft"
+          git commit -m "content: run scheduled editorial pipeline"
           git pull --rebase origin main
           git push origin HEAD:main
-          echo "Draft baru tersimpan di main sebagai draft:true dan belum dipublikasikan." >> "$GITHUB_STEP_SUMMARY"
+          echo "Pipeline selesai. Selama total artikel terbit < 20, artikel yang lolos semua gate dipublikasikan otomatis. Setelah target 20 tercapai, pipeline kembali menyimpan artikel sebagai draft." >> "$GITHUB_STEP_SUMMARY"
