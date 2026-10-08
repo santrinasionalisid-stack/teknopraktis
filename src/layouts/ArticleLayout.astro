@@ -140,4 +140,11 @@ const breadcrumbSchema = {
       <RelatedArticles articles={related} />
     </div>
   </article>
+
+  <script is:inline>
+    document.querySelectorAll('.article-deck, .article-body p, .article-body li').forEach((element) => {
+      element.style.setProperty('text-align', 'justify', 'important');
+      element.style.setProperty('text-align-last', 'left');
+    });
+  </script>
 </BaseLayout>
