@@ -67,8 +67,8 @@ for (const file of walk(articlesDir)) {
     addError(short, `featuredImageAlt harus 20–180 karakter (sekarang ${featuredImageAlt.length}).`);
   }
   if (imageStyle === 'premium-v1') {
-    if (!featuredImage.endsWith('.svg')) {
-      addError(short, 'premium-v1 wajib memakai featuredImage SVG komposit yang self-contained.');
+    if (!featuredImage.endsWith('.webp')) {
+      addError(short, 'premium-v1 wajib memakai featuredImage WebP final 16:9.');
     }
     if (!socialImage.startsWith('/images/articles/') || !socialImage.endsWith('.webp')) {
       addError(short, 'premium-v1 wajib memiliki socialImage WebP di /images/articles/.');

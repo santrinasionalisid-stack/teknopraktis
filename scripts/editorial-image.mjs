@@ -1,6 +1,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { execFileSync } from 'node:child_process';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const outDir = join(root, 'public', 'images', 'articles');
@@ -187,25 +188,31 @@ Keep all important illustration details inside the right-side safe area. The lef
 
   const visualFilename = `${slug}-visual.webp`;
   const visualRelativePath = `/images/articles/${visualFilename}`;
+  const visualAbsolutePath = join(outDir, visualFilename);
   const visualBuffer = Buffer.from(encoded, 'base64');
-  writeFileSync(join(outDir, visualFilename), visualBuffer);
-  const visualDataUrl = `data:image/webp;base64,${encoded}`;
+  writeFileSync(visualAbsolutePath, visualBuffer);
 
-  const overlayFilename = `${slug}.svg`;
-  const overlayRelativePath = `/images/articles/${overlayFilename}`;
-  const overlaySvg = renderOverlaySvg({
-    slug,
-    title,
-    category,
-    contentType,
-    tagline,
-    visualDataUrl,
-  });
-  writeFileSync(join(outDir, overlayFilename), overlaySvg, 'utf8');
+  const finalFilename = `${slug}.webp`;
+  const finalRelativePath = `/images/articles/${finalFilename}`;
+  const finalAbsolutePath = join(outDir, finalFilename);
+
+  execFileSync(
+    'python3',
+    [
+      join(root, 'scripts', 'compose-thumbnail.py'),
+      '--input', visualAbsolutePath,
+      '--output', finalAbsolutePath,
+      '--title', title,
+      '--category', category,
+      '--content-type', contentTypeLabel(contentType),
+      '--tagline', tagline,
+    ],
+    { stdio: 'inherit' }
+  );
 
   return {
-    path: overlayRelativePath,
-    socialPath: visualRelativePath,
+    path: finalRelativePath,
+    socialPath: finalRelativePath,
     alt: `Ilustrasi editorial premium tentang ${title} dengan visual yang relevan pada topik ${category}.`,
     styleVersion: THUMBNAIL_STYLE_VERSION,
     model: imageModel,

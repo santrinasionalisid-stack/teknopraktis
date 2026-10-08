@@ -56,6 +56,10 @@ jobs:
         if: steps.config.outputs.enabled == 'true'
         run: npm install --no-audit --no-fund
 
+      - name: Install image compositor
+        if: steps.config.outputs.enabled == 'true'
+        run: python3 -m pip install --disable-pip-version-check pillow
+
       - name: Generate Luna draft + Sol editorial review
         if: steps.config.outputs.enabled == 'true'
         run: node scripts/generate-scheduled-article.mjs

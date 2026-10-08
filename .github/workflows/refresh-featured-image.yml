@@ -41,6 +41,9 @@ jobs:
       - name: Install dependencies
         run: npm install --no-audit --no-fund
 
+      - name: Install image compositor
+        run: python3 -m pip install --disable-pip-version-check pillow
+
       - name: Generate locked premium featured image
         run: node scripts/regenerate-featured-image.mjs
 
