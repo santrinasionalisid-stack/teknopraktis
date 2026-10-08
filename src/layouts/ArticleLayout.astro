@@ -76,7 +76,7 @@ const breadcrumbSchema = {
         {modified && <><span>•</span><span>Diperbarui {modified}</span></>}
       </div>
       <h1>{d.title}</h1>
-      <p class="article-deck">{d.description}</p>
+      <p class="article-deck" style="text-align: justify; text-justify: inter-word;">{d.description}</p>
       <div class="article-byline">
         <strong><a href="/redaksi/">{d.author}</a></strong>
         <span>{d.reviewedBy ? `Ditinjau oleh ${d.reviewedBy}.` : 'Ditinjau untuk kejelasan dan akurasi praktis.'}</span>
@@ -84,13 +84,17 @@ const breadcrumbSchema = {
       {d.sponsored && <p class="disclosure"><strong>Disclosure komersial:</strong> Konten ini memiliki hubungan komersial yang dijelaskan secara transparan.</p>}
     </header>
 
-    <figure class="article-featured container">
+    <figure
+      class="article-featured container"
+      style="aspect-ratio: 16 / 9; overflow: hidden;"
+    >
       <img
         src={d.featuredImage}
         alt={d.featuredImageAlt}
         width="1536"
         height="864"
         decoding="async"
+        style="display:block;width:100%;height:100%;object-fit:contain;object-position:center;"
       />
     </figure>
 
@@ -111,7 +115,7 @@ const breadcrumbSchema = {
       </nav>
     )}
 
-    <div class="article-body container prose-width">
+    <div class="article-body container prose-width" style="text-align: justify; text-justify: inter-word;">
       <slot />
     </div>
 
