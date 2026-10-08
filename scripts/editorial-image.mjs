@@ -16,7 +16,7 @@ function esc(value) {
     .replace(/"/g, '&quot;');
 }
 
-function wrapTitle(title, max = 22) {
+function wrapTitle(title, max = 20) {
   const words = String(title).trim().split(/\s+/);
   const lines = [];
   let line = '';
@@ -70,11 +70,11 @@ function visualBrief(kind) {
   return briefs[kind] || briefs.generic;
 }
 
-function renderOverlaySvg({ slug, title, category, contentType, tagline, visualPath }) {
+function renderOverlaySvg({ slug, title, category, contentType, tagline, visualDataUrl }) {
   const lines = wrapTitle(title);
-  const fontSize = lines.length <= 2 ? 76 : 66;
-  const lineHeight = fontSize * 1.08;
-  const firstY = lines.length <= 2 ? 360 : 330;
+  const fontSize = lines.length <= 2 ? 68 : 58;
+  const lineHeight = fontSize * 1.10;
+  const firstY = lines.length <= 2 ? 365 : 330;
   const titleLines = lines.map((line, index) =>
     `<text x="74" y="${firstY + index * lineHeight}" font-family="Inter, Arial, sans-serif" font-size="${fontSize}" font-weight="800" letter-spacing="-2.2" fill="#ffffff">${esc(line)}</text>`
   ).join('\n');
@@ -98,7 +98,7 @@ function renderOverlaySvg({ slug, title, category, contentType, tagline, visualP
     </filter>
   </defs>
 
-  <image href="${visualPath}" x="0" y="0" width="1536" height="864" preserveAspectRatio="xMidYMid slice"/>
+  <image href="${visualDataUrl}" x="0" y="0" width="1536" height="864" preserveAspectRatio="xMidYMid slice"/>
   <rect x="0" y="0" width="1536" height="864" fill="url(#leftFade)"/>
 
   <g transform="translate(74 98)" filter="url(#softShadow)">
@@ -134,14 +134,14 @@ export async function createEditorialImage({
 Create a premium 16:9 editorial hero background for TeknoPraktis, an Indonesian professional technology publication.
 
 LOCKED VISUAL STYLE:
-- sophisticated dark navy / charcoal palette with controlled warm orange glow;
+- sophisticated dark navy / charcoal palette with controlled warm orange glow across the ENTIRE canvas; never use a white, light-gray, or washed-out background;
 - high-end editorial technology aesthetic, modern and expensive, never cartoonish or template-like;
 - polished 3D + realistic UI hybrid illustration;
 - cinematic but restrained lighting, soft depth, subtle reflections, rounded premium interface cards;
 - composition must reserve the LEFT 55% as a clean, dark, low-detail text-safe zone;
-- place the main topic-relevant hero object on the RIGHT 45%, large and visually strong;
+- place ONE coherent main topic-relevant hero object on the RIGHT 45%, large and visually strong; it should occupy roughly 75–90% of the right-side height without crossing into the left text-safe zone;
 - illustration should feel integrated into the environment, not pasted on;
-- balanced negative space, professional proportions, no clutter;
+- balanced negative space, professional proportions, no clutter; the left text-safe zone must remain dark and quiet, while the right hero must be the dominant visual object;
 - no stock-photo look, no people unless absolutely necessary;
 - no logos, no watermarks, no branding marks;
 - IMPORTANT: render NO WORDS, NO LETTERS, NO NUMBERS, NO READABLE UI TEXT anywhere. Use abstract bars/icons/status dots only. Exact typography will be overlaid later by the publishing system.
@@ -186,7 +186,9 @@ Keep all important illustration details inside the right-side safe area. The lef
 
   const visualFilename = `${slug}-visual.webp`;
   const visualRelativePath = `/images/articles/${visualFilename}`;
-  writeFileSync(join(outDir, visualFilename), Buffer.from(encoded, 'base64'));
+  const visualBuffer = Buffer.from(encoded, 'base64');
+  writeFileSync(join(outDir, visualFilename), visualBuffer);
+  const visualDataUrl = `data:image/webp;base64,${encoded}`;
 
   const overlayFilename = `${slug}.svg`;
   const overlayRelativePath = `/images/articles/${overlayFilename}`;
@@ -198,7 +200,7 @@ Keep all important illustration details inside the right-side safe area. The lef
       category,
       contentType,
       tagline,
-      visualPath: visualRelativePath,
+      visualDataUrl,
     }),
     'utf8'
   );
