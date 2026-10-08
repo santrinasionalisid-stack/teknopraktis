@@ -151,8 +151,8 @@
         "styleVersion": "premium-v1",
         "model": "gpt-image-2.5-sunburst",
         "visualKind": "browser-permissions",
-        "featuredImage": "/images/articles/cara-audit-izin-browser-kamera-mikrofon-lokasi.svg",
-        "socialImage": "/images/articles/cara-audit-izin-browser-kamera-mikrofon-lokasi-visual.webp",
+        "featuredImage": "/images/articles/cara-audit-izin-browser-kamera-mikrofon-lokasi.webp",
+        "socialImage": "/images/articles/cara-audit-izin-browser-kamera-mikrofon-lokasi.webp",
         "usage": {
           "input_tokens": 384,
           "input_tokens_details": {
@@ -166,7 +166,7 @@
           },
           "total_tokens": 1462
         },
-        "refreshedAt": "2026-10-08T03:17:41.041Z"
+        "refreshedAt": "2026-10-08T03:21:51.722Z"
       }
     },
     {

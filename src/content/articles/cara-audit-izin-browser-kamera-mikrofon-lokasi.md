@@ -8,7 +8,7 @@ slug: cara-audit-izin-browser-kamera-mikrofon-lokasi
 category: Keamanan Digital
 categorySlug: keamanan-digital
 contentType: checklist
-featuredImage: /images/articles/cara-audit-izin-browser-kamera-mikrofon-lokasi.svg
+featuredImage: /images/articles/cara-audit-izin-browser-kamera-mikrofon-lokasi.webp
 featuredImageAlt: Ilustrasi editorial premium tentang Checklist Audit Izin
   Kamera, Mikrofon, dan Lokasi di Browser dengan visual yang relevan pada topik
   Keamanan Digital.
@@ -39,7 +39,7 @@ editorialNote: AI membantu riset dan drafting. GPT-6 Sol melakukan fact/source
 featured: false
 sponsored: false
 draft: false
-socialImage: /images/articles/cara-audit-izin-browser-kamera-mikrofon-lokasi-visual.webp
+socialImage: /images/articles/cara-audit-izin-browser-kamera-mikrofon-lokasi.webp
 imageStyle: premium-v1
 imageTagline: Periksa akses situs sebelum dibiarkan aktif
 ---
