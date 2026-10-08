@@ -145,6 +145,22 @@ const reviewSchema = {
   ]
 };
 
+const finalCopySchema = {
+  type: 'object',
+  additionalProperties: false,
+  properties: {
+    title: { type: 'string' },
+    seoTitle: { type: 'string' },
+    description: { type: 'string' },
+    body: { type: 'string' },
+    hookScore: { type: 'integer', minimum: 0, maximum: 100 },
+    flowScore: { type: 'integer', minimum: 0, maximum: 100 },
+    concisionScore: { type: 'integer', minimum: 0, maximum: 100 },
+    summary: { type: 'string' }
+  },
+  required: ['title', 'seoTitle', 'description', 'body', 'hookScore', 'flowScore', 'concisionScore', 'summary']
+};
+
 const draftInstructions = `
 Anda adalah penulis riset TeknoPraktis. Tugas Anda menghasilkan draft people-first yang kuat dan hemat, bukan halaman SEO massal.
 
@@ -288,6 +304,29 @@ function normalizeCandidate(candidate) {
   );
 
   return candidate;
+}
+
+function bodyExternalUrls(body) {
+  return [...new Set(
+    [...body.matchAll(/https:\/\/[^\s)\]>"]+/g)]
+      .map((match) => {
+        try {
+          return canonicalSourceUrl(match[0]);
+        } catch {
+          return match[0];
+        }
+      })
+  )].sort();
+}
+
+function assertSameExternalUrls(beforeBody, afterBody, phase) {
+  const before = bodyExternalUrls(beforeBody);
+  const after = bodyExternalUrls(afterBody);
+  if (JSON.stringify(before) !== JSON.stringify(after)) {
+    throw new Error(
+      `${phase}: final copy edit mengubah daftar URL eksternal. Sebelum=${JSON.stringify(before)} Sesudah=${JSON.stringify(after)}`
+    );
+  }
 }
 
 function articleStats(candidate) {
@@ -581,7 +620,106 @@ Lakukan recovery review yang ringkas, profesional, dan berorientasi solusi.
   throw new Error(`Review Sol memproyeksikan score ${review.projectedScore}; recovery seharusnya dijalankan.`);
 }
 
-const finalStats = validateCandidate(candidate, 'Final setelah editor Sol');
+const preCopyCandidate = structuredClone(candidate);
+const preCopyStats = articleStats(preCopyCandidate);
+
+const finalCopyInstructions = `
+Anda adalah PENULIS PROFESIONAL sekaligus FINAL COPY EDITOR TeknoPraktis. Ini adalah tahap editorial terakhir setelah fakta, sumber, dan risiko sudah diperiksa. Tugas Anda bukan menambah riset, tetapi membuat tulisan terasa matang, mengalir, ringkas, dan enak dibaca.
+
+PRIORITAS MUTLAK:
+1. HOOK PARAGRAF PERTAMA
+   - Paragraf pertama harus langsung menarik pembaca dengan masalah nyata, konsekuensi, kontras, atau manfaat konkret yang relevan dengan intent artikel.
+   - Hook harus informatif, bukan clickbait.
+   - Hindari pembukaan generik seperti "Di era digital...", "Teknologi berkembang pesat...", atau pertanyaan retoris kosong.
+   - Dalam 1–2 kalimat pertama pembaca harus memahami mengapa artikel ini layak diteruskan.
+
+2. ALIRAN ANTAR PARAGRAF
+   - Setiap paragraf harus meneruskan gagasan sebelumnya secara logis.
+   - Jaga kesinambungan sebab-akibat, masalah-solusi, atau langkah-ke-langkah.
+   - Hindari paragraf yang terasa berdiri sendiri, lompatan topik, dan transisi mendadak.
+   - Gunakan transisi natural seperlunya; jangan memenuhi artikel dengan kata penghubung mekanis.
+
+3. RINGKAS TANPA KEHILANGAN MAKNA
+   - Pangkas pengulangan, filler, kalimat melingkar, tautologi, dan penjelasan yang sudah jelas dari konteks.
+   - Utamakan kalimat aktif dan konkret.
+   - Satu paragraf idealnya membawa satu ide utama.
+   - Variasikan panjang kalimat agar ritmenya natural, tetapi hindari kalimat yang terlalu panjang.
+   - Hasil akhir sebaiknya sama panjang atau lebih pendek dari draft, kecuali sedikit tambahan benar-benar diperlukan untuk memperbaiki hook/transisi.
+
+4. SUARA TEKNOPRAKTIS
+   - Bahasa Indonesia natural, modern, profesional, mudah dipahami pembaca umum.
+   - Jangan terdengar seperti terjemahan literal, laporan akademik, atau teks AI generik.
+   - Istilah teknis hanya dipakai bila perlu; jelaskan dengan bahasa sehari-hari.
+   - Heading harus membantu navigasi pembaca dan terasa natural.
+   - Tetap tenang, presisi, praktis, dan tidak hiperbolis.
+
+BATAS KETAT:
+- JANGAN menambah fakta, angka, klaim, contoh, produk, pengalaman, atau sumber baru.
+- JANGAN mengubah makna faktual yang sudah ada.
+- JANGAN menghapus, menambah, atau mengubah URL eksternal/citation yang ada di body.
+- Pertahankan struktur Markdown yang valid.
+- Boleh merapikan judul H2 bila maknanya tetap sama dan alur menjadi lebih baik.
+- Title, seoTitle, dan description boleh diperhalus bila lebih natural tetapi harus tetap akurat terhadap isi.
+- Jangan mengubah artikel menjadi gaya promosi atau clickbait.
+- Output hanya JSON sesuai schema.
+
+Penilaian:
+- hookScore: kekuatan pembukaan sebagai hook informatif.
+- flowScore: kesinambungan antar kalimat, paragraf, dan bagian.
+- concisionScore: ketepatan, keringkasan, dan bebas pengulangan.
+Targetkan ketiganya minimal 90.
+`;
+
+const finalCopyPrompt = `
+TOPIK:
+${JSON.stringify(topic, null, 2)}
+
+DRAFT YANG SUDAH LOLOS FACT/SOURCE EDIT:
+${JSON.stringify({
+  title: candidate.title,
+  seoTitle: candidate.seoTitle,
+  description: candidate.description,
+  body: candidate.body
+}, null, 2)}
+
+Lakukan final professional copy edit secara menyeluruh. Anda boleh menulis ulang kalimat/paragraf untuk memperbaiki hook, ritme, kesinambungan, dan keringkasan, tetapi tidak boleh mengubah substansi faktual atau daftar URL eksternal.
+`;
+
+const finalCopyResult = await createResponse({
+  model: editorModel,
+  instructions: finalCopyInstructions,
+  input: finalCopyPrompt,
+  schema: finalCopySchema,
+  schemaName: 'teknopraktis_sol_final_copy_edit',
+  maxOutputTokens: 5200
+});
+
+const copyEdit = finalCopyResult.parsed;
+
+candidate = normalizeCandidate({
+  ...candidate,
+  title: copyEdit.title,
+  seoTitle: copyEdit.seoTitle,
+  description: copyEdit.description,
+  body: copyEdit.body
+});
+
+assertSameExternalUrls(preCopyCandidate.body, candidate.body, 'Final copy edit Sol');
+const postCopyStats = validateCandidate(candidate, 'Final copy edit Sol');
+
+if (postCopyStats.words > Math.ceil(preCopyStats.words * 1.08)) {
+  throw new Error(
+    `Final copy edit Sol terlalu memanjang: ${preCopyStats.words} → ${postCopyStats.words} kata (maks +8%).`
+  );
+}
+
+if (copyEdit.hookScore < 90 || copyEdit.flowScore < 90 || copyEdit.concisionScore < 90) {
+  throw new Error(
+    `Final copy edit Sol belum memenuhi standar: hook=${copyEdit.hookScore}, flow=${copyEdit.flowScore}, concision=${copyEdit.concisionScore} (minimum 90).`
+  );
+}
+
+const finalStats = validateCandidate(candidate, 'Final setelah copy editor Sol');
 const contentType = topic.contentType || 'explainer';
 const media = createEditorialImage({
   slug: topic.suggestedSlug,
@@ -606,7 +744,7 @@ const metadata = {
   author: 'Redaksi TeknoPraktis',
   sources: candidate.sources,
   aiAssisted: true,
-  editorialNote: 'Draft dibuat dengan bantuan AI dan ditinjau oleh pipeline editor GPT-6 Sol sebelum masuk antrean review publikasi.',
+  editorialNote: 'AI membantu riset dan drafting. GPT-6 Sol melakukan fact/source review dan final copy edit profesional sebelum artikel masuk antrean review publikasi.',
   featured: false,
   sponsored: false,
   draft: true
@@ -642,10 +780,20 @@ topic.editorial = {
     recoveryUsed: Boolean(finalEditorResult)
   }
 };
+topic.copyEdit = {
+  model: editorModel,
+  hookScore: copyEdit.hookScore,
+  flowScore: copyEdit.flowScore,
+  concisionScore: copyEdit.concisionScore,
+  summary: copyEdit.summary,
+  wordsBefore: preCopyStats.words,
+  wordsAfter: postCopyStats.words
+};
 topic.usage = {
   draft: usageSummary(draftResult.data),
   editorInitial: usageSummary(editorResult.data),
-  editorFinal: finalEditorResult ? usageSummary(finalEditorResult.data) : null
+  editorFinal: finalEditorResult ? usageSummary(finalEditorResult.data) : null,
+  copyDesk: usageSummary(finalCopyResult.data)
 };
 writeFileSync(queuePath, JSON.stringify(queue, null, 2) + '\n', 'utf8');
 
@@ -655,7 +803,9 @@ console.log(`Editor model: ${editorModel}; initial decision: ${review.decision};
 if (finalEditorResult) {
   console.log(`Recovery Sol: decision ${finalReview.decision}; score ${finalReview.score}; projected ${finalReview.projectedScore}; issues ${finalReview.issues.length}`);
 }
+console.log(`Final copy Sol: hook ${copyEdit.hookScore}; flow ${copyEdit.flowScore}; concision ${copyEdit.concisionScore}; kata ${preCopyStats.words}→${postCopyStats.words}`);
 console.log(`Final: kata ${finalStats.words}; H2 ${finalStats.h2Count}; sumber ${candidate.sources.length}`);
 console.log(`Usage draft: ${JSON.stringify(topic.usage.draft)}`);
 console.log(`Usage editor initial: ${JSON.stringify(topic.usage.editorInitial)}`);
 console.log(`Usage editor final: ${JSON.stringify(topic.usage.editorFinal)}`);
+console.log(`Usage copy desk: ${JSON.stringify(topic.usage.copyDesk)}`);
