@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse, stringify } from 'yaml';
@@ -17,8 +17,22 @@ if (config.generationPausedRequired !== true) {
   throw new Error('Remediation hanya boleh berjalan saat content generation dipause.');
 }
 
+const articleFiles = readdirSync(articlesDir).filter((name) => /\.mdx?$/.test(name));
+
+function findArticlePathBySlug(slug) {
+  for (const name of articleFiles) {
+    const candidatePath = join(articlesDir, name);
+    const raw = readFileSync(candidatePath, 'utf8');
+    const match = raw.match(/^---\s*\r?\n([\s\S]*?)\r?\n---/);
+    if (!match) continue;
+    const data = parse(match[1]) || {};
+    if (data.slug === slug) return candidatePath;
+  }
+  throw new Error(`Artikel dengan slug ${slug} tidak ditemukan.`);
+}
+
 for (const item of config.articles) {
-  const articlePath = join(articlesDir, `${item.slug}.md`);
+  const articlePath = findArticlePathBySlug(item.slug);
   const raw = readFileSync(articlePath, 'utf8');
   const match = raw.match(/^---\s*\r?\n([\s\S]*?)\r?\n---\s*\r?\n([\s\S]*)$/);
   if (!match) throw new Error(`Frontmatter tidak valid: ${item.slug}`);

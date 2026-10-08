@@ -1,5 +1,5 @@
 {
-  "status": "RUNNING",
+  "status": "RETRY",
   "generationPausedRequired": true,
   "articles": [
     {
@@ -27,5 +27,7 @@
       "visualKind": "cloud-backup",
       "tagline": "Bedakan sinkronisasi dari salinan pemulihan"
     }
-  ]
+  ],
+  "retryNonce": "2026-10-08T03:48:00Z",
+  "lastFailure": "Initial batch assumed filename equals slug; fixed to resolve file by frontmatter slug."
 }
