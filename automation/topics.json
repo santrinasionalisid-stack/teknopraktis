@@ -608,9 +608,106 @@
       "category": "Keamanan Digital",
       "categorySlug": "keamanan-digital",
       "suggestedSlug": "memilih-sms-authenticator-passkey",
-      "status": "pending",
+      "status": "published",
       "contentType": "decision-guide",
-      "visualKind": "auth-methods"
+      "visualKind": "auth-methods",
+      "generatedAt": "2026-10-08T05:55:35.573Z",
+      "generatedSlug": "memilih-sms-authenticator-passkey",
+      "models": {
+        "draft": "gpt-6-luna",
+        "editor": "gpt-6-sol"
+      },
+      "publishPolicy": "auto-until-20",
+      "autoPublished": true,
+      "publishedAt": "2026-10-08",
+      "editorial": {
+        "initial": {
+          "decision": "revise",
+          "effectiveDecision": "revise",
+          "score": 87,
+          "projectedScore": 94,
+          "repairability": "local",
+          "summary": "Draft sudah praktis, berimbang, dan didukung sumber primer. Revisi lokal diperlukan agar judul tidak menyebut passkey sebagai langkah kedua, serta agar pembaca memahami bahwa passkey tidak otomatis menutup jalur masuk lain yang lebih lemah.",
+          "issueCount": 3
+        },
+        "final": {
+          "decision": "pass",
+          "score": 94,
+          "repairability": "none",
+          "summary": "Draft sudah layak terbit. Judul dan pembuka tidak lagi menyamakan passkey dengan langkah kedua; perbandingan risiko phishing, kegunaan, dan pemulihan berimbang. Artikel juga mengingatkan pembaca untuk memeriksa jalur masuk lain setelah menambahkan passkey.",
+          "issueCount": 0,
+          "recoveryUsed": true
+        }
+      },
+      "copyEdit": {
+        "model": "gpt-6-sol",
+        "imageTagline": "Pilih perlindungan yang bisa Anda pulihkan",
+        "hookScore": 95,
+        "flowScore": 94,
+        "concisionScore": 93,
+        "summary": "Merapikan pembukaan, alur perbandingan, dan panduan keputusan tanpa mengubah substansi atau tautan sumber.",
+        "wordsBefore": 1126,
+        "wordsAfter": 1015
+      },
+      "image": {
+        "styleVersion": "premium-v1",
+        "model": "gpt-image-2.5-sunburst",
+        "visualKind": "auth-methods",
+        "featuredImage": "/images/articles/memilih-sms-authenticator-passkey.webp",
+        "socialImage": "/images/articles/memilih-sms-authenticator-passkey.webp",
+        "usage": {
+          "input_tokens": 386,
+          "input_tokens_details": {
+            "image_tokens": 0,
+            "text_tokens": 386
+          },
+          "output_tokens": 1078,
+          "output_tokens_details": {
+            "image_tokens": 1078,
+            "text_tokens": 0
+          },
+          "total_tokens": 1464
+        }
+      },
+      "usage": {
+        "draft": {
+          "inputTokens": 22236,
+          "outputTokens": 2790,
+          "totalTokens": 25026,
+          "webSearchCalls": 2
+        },
+        "editorInitial": {
+          "inputTokens": 18984,
+          "outputTokens": 2199,
+          "totalTokens": 21183,
+          "webSearchCalls": 3
+        },
+        "editorFinal": {
+          "inputTokens": 3348,
+          "outputTokens": 208,
+          "totalTokens": 3556,
+          "webSearchCalls": 0
+        },
+        "copyDesk": {
+          "inputTokens": 3033,
+          "outputTokens": 2151,
+          "totalTokens": 5184,
+          "webSearchCalls": 0
+        },
+        "imageGeneration": {
+          "input_tokens": 386,
+          "input_tokens_details": {
+            "image_tokens": 0,
+            "text_tokens": 386
+          },
+          "output_tokens": 1078,
+          "output_tokens_details": {
+            "image_tokens": 1078,
+            "text_tokens": 0
+          },
+          "total_tokens": 1464
+        }
+      }
     },
     {
       "id": "three-two-one-backup",
