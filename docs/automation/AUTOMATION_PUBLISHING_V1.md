@@ -1,6 +1,6 @@
-# TeknoPraktis — Automated Publishing V1
+# TeknoPraktis — Automated Publishing V2
 
-Status: **FOUNDATION PASS / SAFE MODE**
+Status: **HYBRID LUNA → SOL / SAFE MODE**
 
 ## Prinsip
 
@@ -19,16 +19,18 @@ Cron GitHub Actions disimpan dalam UTC: `15 2 * * 1,3,5`.
 ## Alur
 
 1. Pilih topic `pending` pertama dari `automation/topics.json`.
-2. Panggil OpenAI Responses API.
-3. Model melakukan web search dan wajib menghasilkan minimal 3 sumber HTTPS.
-4. Generator memeriksa panjang metadata, minimal 700 kata, minimal 4 H2, dan sumber.
-5. Artikel ditulis dengan `draft: true`.
-6. `npm run quality` dan production build harus PASS.
-7. Draft dikomit otomatis ke `main`.
-8. Draft tidak muncul di website.
-9. Setelah review, jalankan workflow **Publish Approved Article** dengan slug terkait.
-10. Workflow mengubah `draft: false`, mencatat review, menjalankan quality gate lagi, lalu push ke main.
-11. Cloudflare Pages deploy dan sitemap/internal linking otomatis mengikuti konten terbit.
+2. **GPT-6 Luna** melakukan web research dan menyusun draft awal dengan maksimal 3 web-search call.
+3. Generator menjalankan hard gate metadata, struktur, sumber, dan source hygiene.
+4. **GPT-6 Sol** bertindak sebagai editor senior: memeriksa logika, kegunaan, akurasi istilah, kekuatan sumber, klaim berisiko, struktur, dan gaya.
+5. Sol dapat memakai maksimal 2 web-search call hanya ketika verifikasi tambahan memang diperlukan.
+6. Sol harus memberi keputusan `pass`, `revise`, atau `reject` dan score editorial.
+7. Score di bawah 85 atau keputusan `reject` membuat workflow gagal; tidak ada draft yang dikomit.
+8. Bila `revise`, Sol memberi patch kecil exact-match; script menerapkannya lalu menjalankan hard gate ulang.
+9. Artikel lolos ditulis sebagai `draft: true`.
+10. `npm run quality` dan production build harus PASS.
+11. Draft dikomit otomatis ke `main` dan tidak muncul di website.
+12. Setelah approval, workflow **Publish Approved Article** mengubah `draft: false`, mencatat review, menjalankan quality gate lagi, lalu push ke main.
+13. Cloudflare Pages deploy dan sitemap/internal linking otomatis mengikuti konten terbit.
 
 ## Secrets / variables
 
@@ -36,8 +38,14 @@ Wajib:
 - GitHub Actions secret: `OPENAI_API_KEY`
 
 Opsional:
-- GitHub Actions variable: `OPENAI_MODEL`
-- Default kode: `gpt-6-sol`
+- GitHub Actions variable: `OPENAI_DRAFT_MODEL` — default `gpt-6-luna`
+- GitHub Actions variable: `OPENAI_EDITOR_MODEL` — default `gpt-6-sol`
+
+Arsitektur biaya/kualitas:
+- Luna = riset + produksi draft.
+- Sol = editor profesional penjaga kualitas.
+- Script = auditor mekanis tanpa biaya model.
+- Token usage dan jumlah web-search call untuk kedua tahap dicatat di `automation/topics.json` agar biaya aktual dapat dievaluasi.
 
 Jangan pernah menaruh API key di repository, workflow YAML, artikel, issue, log, atau chat publik.
 
@@ -48,7 +56,8 @@ Jangan pernah menaruh API key di repository, workflow YAML, artikel, issue, log,
 - Tidak boleh mengarang pengalaman penggunaan atau pengujian.
 - Sumber diprioritaskan dari dokumentasi resmi/primer.
 - AI assistance diungkapkan pada halaman artikel.
-- Jika source atau quality gate gagal, workflow harus gagal dan tidak boleh publish.
+- Jika source, hard gate, atau review Sol gagal, workflow harus gagal dan tidak boleh menyimpan draft baru.
+- Sol tidak menulis ulang seluruh artikel secara default; perubahan dilakukan lewat patch kecil untuk menjaga efisiensi token.
 
 ## Aktivasi
 
