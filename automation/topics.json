@@ -154,19 +154,19 @@
         "featuredImage": "/images/articles/cara-audit-izin-browser-kamera-mikrofon-lokasi.svg",
         "socialImage": "/images/articles/cara-audit-izin-browser-kamera-mikrofon-lokasi-visual.webp",
         "usage": {
-          "input_tokens": 320,
+          "input_tokens": 384,
           "input_tokens_details": {
             "image_tokens": 0,
-            "text_tokens": 320
+            "text_tokens": 384
           },
           "output_tokens": 1078,
           "output_tokens_details": {
             "image_tokens": 1078,
             "text_tokens": 0
           },
-          "total_tokens": 1398
+          "total_tokens": 1462
         },
-        "refreshedAt": "2026-10-08T02:44:33.159Z"
+        "refreshedAt": "2026-10-08T02:50:13.804Z"
       }
     },
     {
