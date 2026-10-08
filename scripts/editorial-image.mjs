@@ -1,4 +1,4 @@
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync, unlinkSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
@@ -212,6 +212,11 @@ Keep all important illustration details inside the right-side safe area. The lef
     ],
     { stdio: 'inherit' }
   );
+
+  // The raw GPT background is only an intermediate asset. Keep one final 16:9
+  // image per article so cards, article hero, OG, and Twitter all share exactly
+  // the same source and no stale/generic image can be selected accidentally.
+  unlinkSync(visualAbsolutePath);
 
   return {
     path: finalRelativePath,
