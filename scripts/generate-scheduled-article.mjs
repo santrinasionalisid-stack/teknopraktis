@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse, stringify } from 'yaml';
+import { createEditorialImage } from './editorial-image.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const queuePath = join(root, 'automation', 'topics.json');
@@ -154,7 +155,11 @@ Aturan:
 - Jika informasi bergantung versi/produk/waktu, jelaskan batasnya.
 - Jangan menulis seolah Redaksi sudah menguji perangkat/layanan jika tidak ada bukti.
 - Artikel 800–1.400 kata tanpa filler.
-- Bahasa Indonesia natural, jelas, ringkas, profesional.
+- Bahasa Indonesia natural, jelas, ringkas, profesional, dan terasa ditulis untuk pembaca Indonesia.
+- Hindari terjemahan kaku dan jargon yang tidak perlu. Bila istilah teknis diperlukan, jelaskan dengan kata sehari-hari.
+- Pembukaan harus cepat menjelaskan masalah, akibat, dan manfaat artikel; hindari intro generik.
+- Heading harus natural dan membantu pembaca memindai isi, bukan terdengar seperti dokumen teknis internal.
+- Untuk tutorial/checklist, gunakan urutan tindakan yang jelas dan keputusan praktis.
 - Tanpa H1 di body. Minimal 4 heading H2.
 - Sertakan langkah/checklist, kesalahan umum, batasan/risiko, dan kesimpulan praktis bila relevan.
 - Hindari clickbait, keyword stuffing, pembukaan generik, dan pengulangan.
@@ -176,6 +181,7 @@ ${JSON.stringify(existing, null, 2)}
 
 Slug terkunci: ${topic.suggestedSlug}
 Kategori terkunci: ${topic.category} / ${topic.categorySlug}
+Jenis konten terkunci: ${topic.contentType}
 
 Tulis sintesis yang membantu pembaca mengambil tindakan atau keputusan, bukan sekadar merangkum sumber.
 `;
@@ -395,6 +401,9 @@ Standar editor:
 - Jangan mengarang pengalaman langsung, hasil tes, kredensial, angka, atau sumber.
 - Jangan memperpanjang artikel tanpa alasan.
 - Pertahankan suara TeknoPraktis: praktis, tenang, presisi, tanpa clickbait.
+- Lakukan copy-editing: hilangkan frasa kaku/terjemahan literal, jargon yang tidak perlu, heading yang terlalu akademis, pengulangan, dan kalimat yang terlalu panjang.
+- Pastikan judul/heading menjanjikan isi secara akurat dan terasa natural bagi pembaca Indonesia.
+- Untuk tutorial/checklist, pastikan urutan langkah, label tindakan, risiko, dan hasil yang diharapkan mudah dipindai.
 - Untuk REVISE, berikan patch exact-match sekecil mungkin dan selesaikan sebanyak mungkin masalah dalam satu putaran.
 - Jika sumber perlu diperbaiki dan Anda dapat memverifikasinya, gunakan sourceAdditions/sourceRemovals daripada menolak draft.
 - score = kualitas draft SAAT INI sebelum patch.
@@ -573,6 +582,13 @@ Lakukan recovery review yang ringkas, profesional, dan berorientasi solusi.
 }
 
 const finalStats = validateCandidate(candidate, 'Final setelah editor Sol');
+const contentType = topic.contentType || 'explainer';
+const media = createEditorialImage({
+  slug: topic.suggestedSlug,
+  title: candidate.title,
+  category: topic.category,
+  contentType,
+});
 
 const today = new Date().toISOString().slice(0, 10);
 const metadata = {
@@ -582,6 +598,9 @@ const metadata = {
   slug: topic.suggestedSlug,
   category: topic.category,
   categorySlug: topic.categorySlug,
+  contentType,
+  featuredImage: media.path,
+  featuredImageAlt: media.alt,
   tags: candidate.tags,
   publishedAt: today,
   author: 'Redaksi TeknoPraktis',

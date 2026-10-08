@@ -12,14 +12,15 @@
       "generatedAt": "2026-10-08T00:18:28.245Z",
       "generatedSlug": "cara-memeriksa-file-download-sebelum-dibuka",
       "model": "gpt-6-sol",
-      "publishedAt": "2026-10-08"
+      "publishedAt": "2026-10-08",
+      "contentType": "checklist"
     },
     {
       "id": "cloud-sync-vs-backup",
       "workingTitle": "Sinkronisasi Cloud Bukan Backup: Bedanya dan Cara Memakainya",
       "intent": "Menjelaskan perbedaan sync dan backup serta contoh arsitektur sederhana untuk pengguna personal.",
-      "category": "Tutorial",
-      "categorySlug": "tutorial",
+      "category": "Internet",
+      "categorySlug": "internet",
       "suggestedSlug": "sinkronisasi-cloud-bukan-backup",
       "status": "draft",
       "generatedAt": "2026-10-08T01:04:29.470Z",
@@ -66,7 +67,8 @@
           "totalTokens": 3340,
           "webSearchCalls": 0
         }
-      }
+      },
+      "contentType": "tutorial"
     },
     {
       "id": "browser-permission-audit",
@@ -75,7 +77,8 @@
       "category": "Keamanan Digital",
       "categorySlug": "keamanan-digital",
       "suggestedSlug": "cara-audit-izin-browser-kamera-mikrofon-lokasi",
-      "status": "pending"
+      "status": "pending",
+      "contentType": "checklist"
     },
     {
       "id": "ai-meeting-notes-privacy",
@@ -84,7 +87,8 @@
       "category": "AI & Otomasi",
       "categorySlug": "ai",
       "suggestedSlug": "checklist-privasi-ai-notulen-rapat",
-      "status": "pending"
+      "status": "pending",
+      "contentType": "checklist"
     },
     {
       "id": "wifi-troubleshooting",
@@ -93,7 +97,8 @@
       "category": "Internet",
       "categorySlug": "internet",
       "suggestedSlug": "troubleshooting-wifi-sebelum-reset-router",
-      "status": "pending"
+      "status": "pending",
+      "contentType": "tutorial"
     },
     {
       "id": "password-manager-basics",
@@ -102,7 +107,8 @@
       "category": "Keamanan Digital",
       "categorySlug": "keamanan-digital",
       "suggestedSlug": "cara-mulai-menggunakan-password-manager",
-      "status": "pending"
+      "status": "pending",
+      "contentType": "tutorial"
     },
     {
       "id": "android-storage-cleanup",
@@ -111,7 +117,8 @@
       "category": "Perangkat",
       "categorySlug": "perangkat",
       "suggestedSlug": "cara-membersihkan-penyimpanan-android",
-      "status": "pending"
+      "status": "pending",
+      "contentType": "tutorial"
     },
     {
       "id": "two-factor-options",
@@ -120,16 +127,18 @@
       "category": "Keamanan Digital",
       "categorySlug": "keamanan-digital",
       "suggestedSlug": "memilih-sms-authenticator-passkey",
-      "status": "pending"
+      "status": "pending",
+      "contentType": "decision-guide"
     },
     {
       "id": "three-two-one-backup",
       "workingTitle": "Menerapkan Aturan Backup 3-2-1 untuk File Pribadi Secara Sederhana",
       "intent": "Mengubah konsep backup 3-2-1 menjadi langkah yang realistis untuk foto, dokumen, dan file personal.",
-      "category": "Tutorial",
-      "categorySlug": "tutorial",
+      "category": "Keamanan Digital",
+      "categorySlug": "keamanan-digital",
       "suggestedSlug": "aturan-backup-3-2-1-file-pribadi",
-      "status": "pending"
+      "status": "pending",
+      "contentType": "tutorial"
     },
     {
       "id": "phishing-email-checklist",
@@ -138,7 +147,8 @@
       "category": "Keamanan Digital",
       "categorySlug": "keamanan-digital",
       "suggestedSlug": "checklist-email-mencurigakan-sebelum-klik",
-      "status": "pending"
+      "status": "pending",
+      "contentType": "checklist"
     },
     {
       "id": "app-permission-cleanup",
@@ -147,7 +157,8 @@
       "category": "Aplikasi & Produktivitas",
       "categorySlug": "aplikasi",
       "suggestedSlug": "cara-audit-izin-aplikasi",
-      "status": "pending"
+      "status": "pending",
+      "contentType": "checklist"
     },
     {
       "id": "ai-prompt-fact-check",
@@ -156,7 +167,8 @@
       "category": "AI & Otomasi",
       "categorySlug": "ai",
       "suggestedSlug": "prompt-ai-batas-kepastian-verifikasi",
-      "status": "pending"
+      "status": "pending",
+      "contentType": "tutorial"
     }
   ]
 }

@@ -7,6 +7,9 @@ description: Periksa asal file, ekstensi, peringatan Windows, dan hasil
 slug: cara-memeriksa-file-download-sebelum-dibuka
 category: Keamanan Digital
 categorySlug: keamanan-digital
+contentType: checklist
+featuredImage: /images/articles/cara-memeriksa-file-download-sebelum-dibuka.svg
+featuredImageAlt: Ilustrasi editorial keamanan digital dengan checklist sebelum membuka file unduhan di Windows.
 tags:
   - Keamanan Digital
   - Windows

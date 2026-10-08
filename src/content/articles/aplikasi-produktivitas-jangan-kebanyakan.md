@@ -4,6 +4,9 @@ description: "Cara menyederhanakan aplikasi produktivitas agar pekerjaan tidak t
 slug: "aturan-satu-fungsi-satu-aplikasi-produktivitas"
 category: "Aplikasi & Produktivitas"
 categorySlug: "aplikasi"
+contentType: decision-guide
+featuredImage: /images/articles/aturan-satu-fungsi-satu-aplikasi-produktivitas.svg
+featuredImageAlt: Ilustrasi editorial aplikasi dengan alur pilihan untuk menyederhanakan alat produktivitas.
 tags: ["Aplikasi", "Produktivitas", "Workflow"]
 publishedAt: 2026-10-08
 aiAssisted: true

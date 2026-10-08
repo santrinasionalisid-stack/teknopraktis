@@ -1,13 +1,34 @@
 ---
+import { contentTypeLabel } from '../data/editorial';
+
 const { article } = Astro.props;
-const date = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }).format(article.data.publishedAt);
+const date = new Intl.DateTimeFormat('id-ID', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+}).format(article.data.publishedAt);
+const articleHref = `/artikel/${article.data.slug}/`;
 ---
 <article class="article-card">
-  <div class="article-card__visual" aria-hidden="true"><span>{article.data.category}</span><strong>TP</strong></div>
+  <a class="article-card__media" href={articleHref} aria-label={`Baca: ${article.data.title}`}>
+    <img
+      src={article.data.featuredImage}
+      alt={article.data.featuredImageAlt}
+      width="1200"
+      height="675"
+      loading="lazy"
+      decoding="async"
+    />
+    <span class="content-type-badge">{contentTypeLabel(article.data.contentType)}</span>
+  </a>
   <div class="article-card__body">
-    <div class="eyebrow"><a href={`/kategori/${article.data.categorySlug}/`}>{article.data.category}</a><span>•</span><time datetime={article.data.publishedAt.toISOString()}>{date}</time></div>
-    <h3><a href={`/artikel/${article.data.slug}/`}>{article.data.title}</a></h3>
+    <div class="eyebrow">
+      <a href={`/kategori/${article.data.categorySlug}/`}>{article.data.category}</a>
+      <span>•</span>
+      <time datetime={article.data.publishedAt.toISOString()}>{date}</time>
+    </div>
+    <h3><a href={articleHref}>{article.data.title}</a></h3>
     <p>{article.data.description}</p>
-    <a class="text-link" href={`/artikel/${article.data.slug}/`}>Baca panduan <span aria-hidden="true">→</span></a>
+    <a class="text-link" href={articleHref}>Baca panduan <span aria-hidden="true">→</span></a>
   </div>
 </article>

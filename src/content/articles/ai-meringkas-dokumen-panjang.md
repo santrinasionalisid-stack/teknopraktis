@@ -4,6 +4,9 @@ description: "Panduan praktis memakai AI untuk meringkas dokumen panjang tanpa k
 slug: "cara-menggunakan-ai-meringkas-dokumen"
 category: "AI & Otomasi"
 categorySlug: "ai"
+contentType: tutorial
+featuredImage: /images/articles/cara-menggunakan-ai-meringkas-dokumen.svg
+featuredImageAlt: Ilustrasi editorial AI dengan langkah tutorial untuk meringkas dokumen panjang secara lebih aman.
 tags: ["AI", "Produktivitas", "Prompt"]
 publishedAt: 2026-10-08
 aiAssisted: true

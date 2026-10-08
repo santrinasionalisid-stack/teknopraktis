@@ -11,7 +11,8 @@ export async function getStaticPaths() {
       .map((candidate) => {
         const sharedTags = candidate.data.tags.filter((tag) => article.data.tags.includes(tag)).length;
         const sameCategory = candidate.data.categorySlug === article.data.categorySlug ? 3 : 0;
-        return { candidate, score: sameCategory + sharedTags };
+        const sameType = candidate.data.contentType === article.data.contentType ? 1 : 0;
+        return { candidate, score: sameCategory + sameType + sharedTags };
       })
       .filter(({ score }) => score > 0)
       .sort((a, b) => b.score - a.score || b.candidate.data.publishedAt.valueOf() - a.candidate.data.publishedAt.valueOf())
@@ -26,8 +27,8 @@ export async function getStaticPaths() {
 }
 
 const { article, related } = Astro.props;
-const { Content } = await render(article);
+const { Content, headings } = await render(article);
 ---
-<ArticleLayout article={article} related={related}>
+<ArticleLayout article={article} related={related} headings={headings}>
   <Content />
 </ArticleLayout>

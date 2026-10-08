@@ -4,18 +4,59 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import { SITE } from '../data/site';
 
-const articles = (await getCollection('articles', ({ data }) => !data.draft)).sort((a,b)=>b.data.publishedAt.valueOf()-a.data.publishedAt.valueOf());
-const latest = articles.slice(0,6);
+const articles = (await getCollection('articles', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+const latest = articles.slice(0, 6);
 const schema = [
   {'@context':'https://schema.org','@type':'WebSite',name:SITE.name,url:SITE.url,description:SITE.description,inLanguage:'id-ID'},
   {'@context':'https://schema.org','@type':'Organization',name:SITE.name,url:SITE.url,logo:`${SITE.url}/brand/teknopraktis-mark.svg`}
 ];
 ---
 <BaseLayout schema={schema}>
-  <section class="hero"><div class="container hero-grid">
-    <div><span class="kicker">Teknologi yang bisa langsung dipakai</span><h1>Paham teknologi tanpa harus <span>ribet.</span></h1><p class="hero-copy">TeknoPraktis membahas AI, aplikasi, keamanan digital, internet, dan perangkat dengan fokus pada langkah yang jelas, manfaat nyata, dan risiko yang perlu diketahui.</p><div class="hero-actions"><a class="button" href="/artikel/">Mulai dari panduan terbaru</a><a class="button button--secondary" href="/pedoman-redaksi/">Cara kami menulis</a></div></div>
-    <aside class="hero-panel"><small>Jelajahi topik</small><h2>Temukan jawaban berdasarkan kebutuhan Anda.</h2><div class="topic-list"><a href="/kategori/ai/"><span>AI & Otomasi</span><span>→</span></a><a href="/kategori/aplikasi/"><span>Aplikasi & Produktivitas</span><span>→</span></a><a href="/kategori/keamanan-digital/"><span>Keamanan Digital</span><span>→</span></a></div></aside>
-  </div></section>
-  <section class="section"><div class="container"><div class="section-head"><div><h2>Panduan terbaru</h2><p>Ringkas, terstruktur, dan dibuat untuk langsung dipraktikkan.</p></div><a class="text-link" href="/artikel/">Lihat semua artikel →</a></div><div class="article-grid">{latest.map((article)=><ArticleCard article={article}/>)}</div></div></section>
-  <section class="section section--soft"><div class="container"><div class="section-head"><div><h2>Standar TeknoPraktis</h2><p>Bukan sekadar mengejar banyak artikel.</p></div></div><div class="value-grid"><div class="value-card"><strong>Praktis lebih dulu</strong><p>Setiap artikel harus membantu pembaca menyelesaikan masalah atau mengambil keputusan.</p></div><div class="value-card"><strong>Jelas sumber dan batasnya</strong><p>Informasi penting diperiksa, asumsi dijelaskan, dan klaim berisiko tidak dibuat sembarangan.</p></div><div class="value-card"><strong>Otomasi dengan kontrol kualitas</strong><p>AI dapat membantu proses editorial, tetapi kualitas dan manfaat pembaca tetap menjadi standar publikasi.</p></div></div></div></section>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="kicker">Teknologi yang bisa langsung dipakai</span>
+        <h1>Paham teknologi tanpa harus <span>ribet.</span></h1>
+        <p class="hero-copy">TeknoPraktis membahas AI, aplikasi, keamanan digital, internet, dan perangkat dengan fokus pada langkah yang jelas, manfaat nyata, dan risiko yang perlu diketahui.</p>
+        <div class="hero-actions">
+          <a class="button" href="/panduan/">Jelajahi panduan</a>
+          <a class="button button--secondary" href="/pedoman-redaksi/">Cara kami menulis</a>
+        </div>
+      </div>
+      <aside class="hero-panel">
+        <small>Jelajahi sesuai kebutuhan</small>
+        <h2>Mulai dari format atau topik yang paling relevan.</h2>
+        <div class="topic-list">
+          <a href="/panduan/"><span>Panduan & Tutorial</span><span>→</span></a>
+          <a href="/kategori/ai/"><span>AI & Otomasi</span><span>→</span></a>
+          <a href="/kategori/keamanan-digital/"><span>Keamanan Digital</span><span>→</span></a>
+          <a href="/kategori/internet/"><span>Internet & Cloud</span><span>→</span></a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div><h2>Panduan terbaru</h2><p>Ringkas, terstruktur, dan dibuat untuk langsung dipraktikkan.</p></div>
+        <a class="text-link" href="/panduan/">Lihat semua panduan →</a>
+      </div>
+      <div class="article-grid">{latest.map((article) => <ArticleCard article={article} />)}</div>
+    </div>
+  </section>
+
+  <section class="section section--soft">
+    <div class="container">
+      <div class="section-head">
+        <div><h2>Standar TeknoPraktis</h2><p>Bukan sekadar mengejar banyak artikel.</p></div>
+      </div>
+      <div class="value-grid">
+        <div class="value-card"><strong>Praktis lebih dulu</strong><p>Setiap artikel harus membantu pembaca menyelesaikan masalah atau mengambil keputusan.</p></div>
+        <div class="value-card"><strong>Jelas sumber dan batasnya</strong><p>Informasi penting diperiksa, asumsi dijelaskan, dan klaim berisiko tidak dibuat sembarangan.</p></div>
+        <div class="value-card"><strong>Otomasi dengan kontrol kualitas</strong><p>AI dapat membantu proses editorial, tetapi kualitas dan manfaat pembaca tetap menjadi standar publikasi.</p></div>
+      </div>
+    </div>
+  </section>
 </BaseLayout>

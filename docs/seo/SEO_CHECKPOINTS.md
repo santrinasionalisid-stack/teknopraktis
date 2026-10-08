@@ -57,3 +57,16 @@ Status: V1 PASS / ACTIVE SAFE MODE
 - First manual automation run: PASS
 - First approved automated article publication: PASS
 - Auto-publish: DISABLED by design; scheduled runs create drafts only
+
+## SEO-006 — Editorial UI V2
+Status: IMPLEMENTED / CI PENDING
+
+- Topic taxonomy dipisahkan dari content type: IMPLEMENTED
+- Menu Panduan + category hub tetap tersedia walau kategori masih kosong: IMPLEMENTED
+- Featured image / thumbnail per artikel: IMPLEMENTED
+- Article structured data image + social image metadata: IMPLEMENTED
+- Table of contents berbasis H2: IMPLEMENTED
+- Tutorial/checklist/decision-guide labels: IMPLEMENTED
+- Sol copywriting gate (bahasa natural, jargon, heading, scanability): IMPLEMENTED
+- Generator featured image otomatis tanpa biaya API tambahan: IMPLEMENTED
+- Final production verification: PENDING CI

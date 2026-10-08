@@ -4,6 +4,9 @@ description: "Checklist singkat untuk meninjau keamanan akun Google: perangkat y
 slug: "checklist-keamanan-akun-google"
 category: "Keamanan Digital"
 categorySlug: "keamanan-digital"
+contentType: checklist
+featuredImage: /images/articles/checklist-keamanan-akun-google.svg
+featuredImageAlt: Ilustrasi editorial keamanan digital dengan checklist untuk meninjau keamanan Akun Google.
 tags: ["Keamanan Akun", "Google", "2FA"]
 publishedAt: 2026-10-08
 aiAssisted: true

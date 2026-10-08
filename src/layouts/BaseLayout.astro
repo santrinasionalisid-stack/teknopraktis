@@ -8,6 +8,7 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  imageAlt?: string;
   type?: 'website' | 'article';
   noindex?: boolean;
   schema?: Record<string, unknown> | Record<string, unknown>[];
@@ -17,6 +18,7 @@ const {
   title = SITE.name,
   description = SITE.description,
   image = '/brand/teknopraktis-mark.svg',
+  imageAlt = 'TeknoPraktis',
   type = 'website',
   noindex = false,
   schema,
@@ -25,6 +27,7 @@ const {
 const pageTitle = title === SITE.name ? SITE.name : `${title} | ${SITE.name}`;
 const canonical = new URL(Astro.url.pathname, SITE.url).toString();
 const socialImage = new URL(image, SITE.url).toString();
+const hasEditorialImage = image.startsWith('/images/articles/');
 ---
 <!doctype html>
 <html lang="id">
@@ -45,10 +48,14 @@ const socialImage = new URL(image, SITE.url).toString();
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={socialImage} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image:alt" content={imageAlt} />
+    {hasEditorialImage && <meta property="og:image:width" content="1200" />}
+    {hasEditorialImage && <meta property="og:image:height" content="675" />}
+    <meta name="twitter:card" content={hasEditorialImage ? 'summary_large_image' : 'summary'} />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content={imageAlt} />
     <title>{pageTitle}</title>
     {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
   </head>

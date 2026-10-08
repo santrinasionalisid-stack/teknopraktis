@@ -1,3 +1,5 @@
+import { CATEGORIES } from './editorial';
+
 export const SITE = {
   name: 'TeknoPraktis',
   url: 'https://teknopraktis.my.id',
@@ -9,8 +11,9 @@ export const SITE = {
 
 export const NAV = [
   { label: 'Beranda', href: '/' },
-  { label: 'Artikel', href: '/artikel/' },
-  { label: 'AI', href: '/kategori/ai/' },
-  { label: 'Aplikasi', href: '/kategori/aplikasi/' },
-  { label: 'Keamanan', href: '/kategori/keamanan-digital/' },
+  { label: 'Panduan', href: '/panduan/' },
+  ...CATEGORIES.map((category) => ({
+    label: category.navLabel,
+    href: `/kategori/${category.slug}/`,
+  })),
 ];

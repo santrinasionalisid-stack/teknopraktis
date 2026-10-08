@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { CONTENT_TYPES, GUIDE_CONTENT_TYPES } from '../../data/editorial';
+
+const articles = (await getCollection('articles', ({ data }) =>
+  !data.draft && GUIDE_CONTENT_TYPES.includes(data.contentType)
+)).sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+---
+<BaseLayout
+  title="Panduan Teknologi"
+  description="Tutorial, checklist, dan panduan keputusan TeknoPraktis yang dibuat untuk langsung dipraktikkan."
+>
+  <section class="page-hero">
+    <div class="container">
+      <span class="kicker">Pusat panduan</span>
+      <h1>Panduan yang dibuat untuk dipraktikkan.</h1>
+      <p>Pilih tutorial langkah demi langkah, checklist singkat, atau panduan keputusan sesuai kebutuhan Anda.</p>
+    </div>
+  </section>
+
+  <section class="section section--soft">
+    <div class="container">
+      <div class="format-grid">
+        {GUIDE_CONTENT_TYPES.map((type) => (
+          <article class="format-card">
+            <span>{CONTENT_TYPES[type].label}</span>
+            <p>{CONTENT_TYPES[type].description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>Panduan terbaru</h2>
+          <p>Disusun berdasarkan manfaat pembaca, bukan jumlah artikel.</p>
+        </div>
+      </div>
+      {articles.length > 0
+        ? <div class="article-grid">{articles.map((article) => <ArticleCard article={article} />)}</div>
+        : <div class="empty-state"><strong>Belum ada panduan terbit.</strong><p>Konten yang lolos proses editorial akan muncul di sini.</p></div>}
+    </div>
+  </section>
+</BaseLayout>
