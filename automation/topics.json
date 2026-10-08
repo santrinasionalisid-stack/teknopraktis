@@ -716,9 +716,106 @@
       "category": "Keamanan Digital",
       "categorySlug": "keamanan-digital",
       "suggestedSlug": "aturan-backup-3-2-1-file-pribadi",
-      "status": "pending",
+      "status": "published",
       "contentType": "tutorial",
-      "visualKind": "backup-321"
+      "visualKind": "backup-321",
+      "generatedAt": "2026-10-08T06:02:39.076Z",
+      "generatedSlug": "aturan-backup-3-2-1-file-pribadi",
+      "models": {
+        "draft": "gpt-6-luna",
+        "editor": "gpt-6-sol"
+      },
+      "publishPolicy": "auto-until-20",
+      "autoPublished": true,
+      "publishedAt": "2026-10-08",
+      "editorial": {
+        "initial": {
+          "decision": "revise",
+          "effectiveDecision": "revise",
+          "score": 83,
+          "projectedScore": 91,
+          "repairability": "local",
+          "summary": "Draft sudah praktis, runtut, dan layak diselamatkan. Perlu beberapa penajaman agar pembaca tidak keliru menghitung salinan yang belum lengkap atau mengira cadangan foto di cloud juga mencakup dokumen.",
+          "issueCount": 4
+        },
+        "final": {
+          "decision": "pass",
+          "score": 91,
+          "repairability": "none",
+          "summary": "Draft sudah layak terbit. Cakupan setiap salinan, batas Google Photos untuk dokumen, dan pemeriksaan folder File History telah diperjelas. Langkah pencadangan serta uji pemulihan juga praktis dan mudah diikuti.",
+          "issueCount": 0,
+          "recoveryUsed": true
+        }
+      },
+      "copyEdit": {
+        "model": "gpt-6-sol",
+        "imageTagline": "Simpan file penting di tempat berbeda",
+        "hookScore": 95,
+        "flowScore": 94,
+        "concisionScore": 93,
+        "summary": "Panduan praktis memilih file penting, membuat cadangan lokal dan di luar rumah, lalu menguji pemulihannya.",
+        "wordsBefore": 1120,
+        "wordsAfter": 1002
+      },
+      "image": {
+        "styleVersion": "premium-v1",
+        "model": "gpt-image-2.5-sunburst",
+        "visualKind": "backup-321",
+        "featuredImage": "/images/articles/aturan-backup-3-2-1-file-pribadi.webp",
+        "socialImage": "/images/articles/aturan-backup-3-2-1-file-pribadi.webp",
+        "usage": {
+          "input_tokens": 391,
+          "input_tokens_details": {
+            "image_tokens": 0,
+            "text_tokens": 391
+          },
+          "output_tokens": 1078,
+          "output_tokens_details": {
+            "image_tokens": 1078,
+            "text_tokens": 0
+          },
+          "total_tokens": 1469
+        }
+      },
+      "usage": {
+        "draft": {
+          "inputTokens": 20575,
+          "outputTokens": 3125,
+          "totalTokens": 23700,
+          "webSearchCalls": 2
+        },
+        "editorInitial": {
+          "inputTokens": 21708,
+          "outputTokens": 2081,
+          "totalTokens": 23789,
+          "webSearchCalls": 2
+        },
+        "editorFinal": {
+          "inputTokens": 3582,
+          "outputTokens": 450,
+          "totalTokens": 4032,
+          "webSearchCalls": 0
+        },
+        "copyDesk": {
+          "inputTokens": 3149,
+          "outputTokens": 2111,
+          "totalTokens": 5260,
+          "webSearchCalls": 0
+        },
+        "imageGeneration": {
+          "input_tokens": 391,
+          "input_tokens_details": {
+            "image_tokens": 0,
+            "text_tokens": 391
+          },
+          "output_tokens": 1078,
+          "output_tokens_details": {
+            "image_tokens": 1078,
+            "text_tokens": 0
+          },
+          "total_tokens": 1469
+        }
+      }
     },
     {
       "id": "phishing-email-checklist",
