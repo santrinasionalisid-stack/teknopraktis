@@ -284,9 +284,106 @@
       "category": "Internet",
       "categorySlug": "internet",
       "suggestedSlug": "troubleshooting-wifi-sebelum-reset-router",
-      "status": "pending",
+      "status": "published",
       "contentType": "tutorial",
-      "visualKind": "wifi-diagnostics"
+      "visualKind": "wifi-diagnostics",
+      "generatedAt": "2026-10-08T05:16:28.754Z",
+      "generatedSlug": "troubleshooting-wifi-sebelum-reset-router",
+      "models": {
+        "draft": "gpt-6-luna",
+        "editor": "gpt-6-sol"
+      },
+      "publishPolicy": "auto-until-20",
+      "autoPublished": true,
+      "publishedAt": "2026-10-08",
+      "editorial": {
+        "initial": {
+          "decision": "revise",
+          "effectiveDecision": "revise",
+          "score": 87,
+          "projectedScore": 93,
+          "repairability": "local",
+          "summary": "Draft sudah mengikuti intent pembaca: urutannya praktis, membedakan gangguan satu perangkat dari gangguan jaringan, dan menjelaskan risiko reset pabrik. Beberapa instruksi perlu dipertepat agar pembaca tidak salah menjalankan perintah atau salah menafsirkan hasil tes.",
+          "issueCount": 5
+        },
+        "final": {
+          "decision": "pass",
+          "score": 93,
+          "repairability": "none",
+          "summary": "Draft sudah layak terbit. Instruksi ping, penafsiran hasil Ethernet dan Wi-Fi, serta urutan mulai ulang perangkat telah diperjelas. Alur diagnosis tetap praktis dan tidak mendorong reset pabrik terlalu dini.",
+          "issueCount": 0,
+          "recoveryUsed": true
+        }
+      },
+      "copyEdit": {
+        "model": "gpt-6-sol",
+        "imageTagline": "Temukan sumber gangguan sebelum mengubah setelan",
+        "hookScore": 95,
+        "flowScore": 94,
+        "concisionScore": 93,
+        "summary": "Pemeriksaan dimulai dari perangkat dan sinyal, lalu berlanjut ke koneksi lokal, DNS, dan ISP. Mulai ulang perangkat jaringan bila perlu; simpan reset pabrik sebagai langkah terakhir.",
+        "wordsBefore": 1086,
+        "wordsAfter": 983
+      },
+      "image": {
+        "styleVersion": "premium-v1",
+        "model": "gpt-image-2.5-sunburst",
+        "visualKind": "wifi-diagnostics",
+        "featuredImage": "/images/articles/troubleshooting-wifi-sebelum-reset-router.webp",
+        "socialImage": "/images/articles/troubleshooting-wifi-sebelum-reset-router.webp",
+        "usage": {
+          "input_tokens": 374,
+          "input_tokens_details": {
+            "image_tokens": 0,
+            "text_tokens": 374
+          },
+          "output_tokens": 1078,
+          "output_tokens_details": {
+            "image_tokens": 1078,
+            "text_tokens": 0
+          },
+          "total_tokens": 1452
+        }
+      },
+      "usage": {
+        "draft": {
+          "inputTokens": 19902,
+          "outputTokens": 2605,
+          "totalTokens": 22507,
+          "webSearchCalls": 2
+        },
+        "editorInitial": {
+          "inputTokens": 21642,
+          "outputTokens": 2806,
+          "totalTokens": 24448,
+          "webSearchCalls": 3
+        },
+        "editorFinal": {
+          "inputTokens": 3411,
+          "outputTokens": 214,
+          "totalTokens": 3625,
+          "webSearchCalls": 0
+        },
+        "copyDesk": {
+          "inputTokens": 2976,
+          "outputTokens": 1973,
+          "totalTokens": 4949,
+          "webSearchCalls": 0
+        },
+        "imageGeneration": {
+          "input_tokens": 374,
+          "input_tokens_details": {
+            "image_tokens": 0,
+            "text_tokens": 374
+          },
+          "output_tokens": 1078,
+          "output_tokens_details": {
+            "image_tokens": 1078,
+            "text_tokens": 0
+          },
+          "total_tokens": 1452
+        }
+      }
     },
     {
       "id": "password-manager-basics",
