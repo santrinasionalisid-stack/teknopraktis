@@ -14,6 +14,8 @@ tags:
   - Microsoft Defender
 publishedAt: 2026-10-08
 author: Redaksi TeknoPraktis
+reviewedAt: 2026-10-08
+reviewedBy: Redaksi TeknoPraktis
 sources:
   - title: Common file name extensions in Windows — Microsoft Support
     url: https://support.microsoft.com/en-us/windows/experience/storage-filemanagement/common-file-name-extensions-in-windows
@@ -37,7 +39,7 @@ editorialNote: AI membantu riset dan drafting. Publikasi tetap mengikuti quality
   gate, sumber, dan kebijakan editorial TeknoPraktis.
 featured: false
 sponsored: false
-draft: true
+draft: false
 ---
 
 File sudah selesai diunduh, tetapi belum tentu perlu langsung dibuka. Pemeriksaan yang paling berguna bukan mencari satu tanda bahwa file “aman”, melainkan mencocokkan beberapa hal: apakah Anda memang meminta file itu, dari mana asalnya, apakah jenisnya sesuai, dan apakah Windows menemukan sesuatu yang mencurigakan.
