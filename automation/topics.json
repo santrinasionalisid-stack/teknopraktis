@@ -13,7 +13,8 @@
       "generatedSlug": "cara-memeriksa-file-download-sebelum-dibuka",
       "model": "gpt-6-sol",
       "publishedAt": "2026-10-08",
-      "contentType": "checklist"
+      "contentType": "checklist",
+      "visualKind": "file-scan"
     },
     {
       "id": "cloud-sync-vs-backup",
@@ -69,7 +70,8 @@
         }
       },
       "contentType": "tutorial",
-      "publishedAt": "2026-10-08"
+      "publishedAt": "2026-10-08",
+      "visualKind": "cloud-backup"
     },
     {
       "id": "browser-permission-audit",
@@ -142,7 +144,8 @@
           "totalTokens": 4244,
           "webSearchCalls": 0
         }
-      }
+      },
+      "visualKind": "browser-permissions"
     },
     {
       "id": "ai-meeting-notes-privacy",
@@ -152,7 +155,8 @@
       "categorySlug": "ai",
       "suggestedSlug": "checklist-privasi-ai-notulen-rapat",
       "status": "pending",
-      "contentType": "checklist"
+      "contentType": "checklist",
+      "visualKind": "ai-privacy"
     },
     {
       "id": "wifi-troubleshooting",
@@ -162,7 +166,8 @@
       "categorySlug": "internet",
       "suggestedSlug": "troubleshooting-wifi-sebelum-reset-router",
       "status": "pending",
-      "contentType": "tutorial"
+      "contentType": "tutorial",
+      "visualKind": "wifi-diagnostics"
     },
     {
       "id": "password-manager-basics",
@@ -172,7 +177,8 @@
       "categorySlug": "keamanan-digital",
       "suggestedSlug": "cara-mulai-menggunakan-password-manager",
       "status": "pending",
-      "contentType": "tutorial"
+      "contentType": "tutorial",
+      "visualKind": "password-manager"
     },
     {
       "id": "android-storage-cleanup",
@@ -182,7 +188,8 @@
       "categorySlug": "perangkat",
       "suggestedSlug": "cara-membersihkan-penyimpanan-android",
       "status": "pending",
-      "contentType": "tutorial"
+      "contentType": "tutorial",
+      "visualKind": "android-storage"
     },
     {
       "id": "two-factor-options",
@@ -192,7 +199,8 @@
       "categorySlug": "keamanan-digital",
       "suggestedSlug": "memilih-sms-authenticator-passkey",
       "status": "pending",
-      "contentType": "decision-guide"
+      "contentType": "decision-guide",
+      "visualKind": "auth-methods"
     },
     {
       "id": "three-two-one-backup",
@@ -202,7 +210,8 @@
       "categorySlug": "keamanan-digital",
       "suggestedSlug": "aturan-backup-3-2-1-file-pribadi",
       "status": "pending",
-      "contentType": "tutorial"
+      "contentType": "tutorial",
+      "visualKind": "backup-321"
     },
     {
       "id": "phishing-email-checklist",
@@ -212,7 +221,8 @@
       "categorySlug": "keamanan-digital",
       "suggestedSlug": "checklist-email-mencurigakan-sebelum-klik",
       "status": "pending",
-      "contentType": "checklist"
+      "contentType": "checklist",
+      "visualKind": "phishing-email"
     },
     {
       "id": "app-permission-cleanup",
@@ -222,7 +232,8 @@
       "categorySlug": "aplikasi",
       "suggestedSlug": "cara-audit-izin-aplikasi",
       "status": "pending",
-      "contentType": "checklist"
+      "contentType": "checklist",
+      "visualKind": "app-permissions"
     },
     {
       "id": "ai-prompt-fact-check",
@@ -232,7 +243,8 @@
       "categorySlug": "ai",
       "suggestedSlug": "prompt-ai-batas-kepastian-verifikasi",
       "status": "pending",
-      "contentType": "tutorial"
+      "contentType": "tutorial",
+      "visualKind": "ai-verification"
     },
     {
       "id": "browser-cache-cookies-reset",
@@ -242,7 +254,8 @@
       "categorySlug": "internet",
       "suggestedSlug": "cache-cookies-data-situs-browser",
       "status": "pending",
-      "contentType": "decision-guide"
+      "contentType": "decision-guide",
+      "visualKind": "browser-cache"
     },
     {
       "id": "windows-startup-apps",
@@ -252,7 +265,8 @@
       "categorySlug": "perangkat",
       "suggestedSlug": "cara-meninjau-aplikasi-startup-windows",
       "status": "pending",
-      "contentType": "tutorial"
+      "contentType": "tutorial",
+      "visualKind": "windows-startup"
     },
     {
       "id": "pdf-image-compression",
@@ -262,7 +276,8 @@
       "categorySlug": "aplikasi",
       "suggestedSlug": "cara-mengecilkan-ukuran-pdf-dan-gambar",
       "status": "pending",
-      "contentType": "tutorial"
+      "contentType": "tutorial",
+      "visualKind": "file-compression"
     },
     {
       "id": "browser-profile-separation",
@@ -272,7 +287,8 @@
       "categorySlug": "aplikasi",
       "suggestedSlug": "memisahkan-profil-browser-kerja-pribadi",
       "status": "pending",
-      "contentType": "decision-guide"
+      "contentType": "decision-guide",
+      "visualKind": "browser-profiles"
     },
     {
       "id": "official-app-update-check",
@@ -282,7 +298,8 @@
       "categorySlug": "keamanan-digital",
       "suggestedSlug": "cara-memastikan-update-aplikasi-sumber-resmi",
       "status": "pending",
-      "contentType": "checklist"
+      "contentType": "checklist",
+      "visualKind": "app-update"
     }
   ]
 }

@@ -740,6 +740,7 @@ const media = createEditorialImage({
   title: candidate.title,
   category: topic.category,
   contentType,
+  visualKind: topic.visualKind || 'generic',
 });
 
 const today = new Date().toISOString().slice(0, 10);
