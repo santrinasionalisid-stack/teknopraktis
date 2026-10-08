@@ -28,3 +28,7 @@ Content generation is intentionally paused until every item below is verified.
 - No scheduled/manual article generation was executed during the remediation window.
 - A permanent UI regression gate now blocks builds if 16:9 featured media, justify rules, disclosure removal, or card image wiring regress.
 - Content generation is re-enabled after the remediation checks completed.
+
+## Deployment verification marker
+- Article DOM marker: `data-ui-version="editorial-remediation-20261008-v3"`.
+- Marker exists only to verify that Cloudflare production is serving the remediated layout before generation is re-enabled.
