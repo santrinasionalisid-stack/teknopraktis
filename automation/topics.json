@@ -392,9 +392,106 @@
       "category": "Keamanan Digital",
       "categorySlug": "keamanan-digital",
       "suggestedSlug": "cara-mulai-menggunakan-password-manager",
-      "status": "pending",
+      "status": "published",
       "contentType": "tutorial",
-      "visualKind": "password-manager"
+      "visualKind": "password-manager",
+      "generatedAt": "2026-10-08T05:33:25.850Z",
+      "generatedSlug": "cara-mulai-menggunakan-password-manager",
+      "models": {
+        "draft": "gpt-6-luna",
+        "editor": "gpt-6-sol"
+      },
+      "publishPolicy": "auto-until-20",
+      "autoPublished": true,
+      "publishedAt": "2026-10-08",
+      "editorial": {
+        "initial": {
+          "decision": "revise",
+          "effectiveDecision": "revise",
+          "score": 82,
+          "projectedScore": 91,
+          "repairability": "local",
+          "summary": "Draft sudah memenuhi intent: langkahnya bertahap, mudah diikuti, dan memberi perhatian yang tepat pada risiko file ekspor. Koreksi utama adalah membedakan aplikasi dengan kata sandi utama tersendiri dari pengelola bawaan browser atau perangkat, lalu memperjelas bahwa pemindahan tidak selalu memerlukan file.",
+          "issueCount": 4
+        },
+        "final": {
+          "decision": "pass",
+          "score": 90,
+          "repairability": "none",
+          "summary": "Draft sudah layak terbit. Instruksi keamanan kini sesuai untuk pengelola dengan kata sandi utama maupun yang bergantung pada akun atau perangkat. Migrasi bertahap, opsi pemindahan langsung, dan penanganan file ekspor dijelaskan dengan jelas dan praktis.",
+          "issueCount": 0,
+          "recoveryUsed": true
+        }
+      },
+      "copyEdit": {
+        "model": "gpt-6-sol",
+        "imageTagline": "Pindahkan login penting tanpa terburu-buru",
+        "hookScore": 94,
+        "flowScore": 94,
+        "concisionScore": 92,
+        "summary": "Akses pengelola diamankan lebih dulu, lalu akun dipindahkan bertahap. Jika memakai file ekspor, hapus setelah impor berhasil.",
+        "wordsBefore": 979,
+        "wordsAfter": 869
+      },
+      "image": {
+        "styleVersion": "premium-v1",
+        "model": "gpt-image-2.5-sunburst",
+        "visualKind": "password-manager",
+        "featuredImage": "/images/articles/cara-mulai-menggunakan-password-manager.webp",
+        "socialImage": "/images/articles/cara-mulai-menggunakan-password-manager.webp",
+        "usage": {
+          "input_tokens": 381,
+          "input_tokens_details": {
+            "image_tokens": 0,
+            "text_tokens": 381
+          },
+          "output_tokens": 1078,
+          "output_tokens_details": {
+            "image_tokens": 1078,
+            "text_tokens": 0
+          },
+          "total_tokens": 1459
+        }
+      },
+      "usage": {
+        "draft": {
+          "inputTokens": 21953,
+          "outputTokens": 2879,
+          "totalTokens": 24832,
+          "webSearchCalls": 2
+        },
+        "editorInitial": {
+          "inputTokens": 23057,
+          "outputTokens": 2043,
+          "totalTokens": 25100,
+          "webSearchCalls": 3
+        },
+        "editorFinal": {
+          "inputTokens": 3029,
+          "outputTokens": 285,
+          "totalTokens": 3314,
+          "webSearchCalls": 0
+        },
+        "copyDesk": {
+          "inputTokens": 2681,
+          "outputTokens": 1766,
+          "totalTokens": 4447,
+          "webSearchCalls": 0
+        },
+        "imageGeneration": {
+          "input_tokens": 381,
+          "input_tokens_details": {
+            "image_tokens": 0,
+            "text_tokens": 381
+          },
+          "output_tokens": 1078,
+          "output_tokens_details": {
+            "image_tokens": 1078,
+            "text_tokens": 0
+          },
+          "total_tokens": 1459
+        }
+      }
     },
     {
       "id": "android-storage-cleanup",
