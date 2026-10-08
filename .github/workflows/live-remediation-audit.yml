@@ -1,0 +1,37 @@
+name: Live Editorial Remediation Audit
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/live-remediation-audit.yml"
+      - "src/layouts/ArticleLayout.astro"
+      - "src/components/ArticleCard.astro"
+      - "src/styles/global.css"
+      - "public/images/articles/**"
+      - "src/content/articles/**"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: teknopraktis-live-remediation-audit
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Wait for Cloudflare Pages deployment
+        run: sleep 120
+
+      - name: Audit live production HTML
+        run: node scripts/live-remediation-audit.mjs
