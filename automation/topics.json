@@ -146,7 +146,28 @@
         }
       },
       "visualKind": "browser-permissions",
-      "imageTagline": "Periksa akses situs sebelum dibiarkan aktif"
+      "imageTagline": "Periksa akses situs sebelum dibiarkan aktif",
+      "image": {
+        "styleVersion": "premium-v1",
+        "model": "gpt-image-2.5-sunburst",
+        "visualKind": "browser-permissions",
+        "featuredImage": "/images/articles/cara-audit-izin-browser-kamera-mikrofon-lokasi.svg",
+        "socialImage": "/images/articles/cara-audit-izin-browser-kamera-mikrofon-lokasi-visual.webp",
+        "usage": {
+          "input_tokens": 320,
+          "input_tokens_details": {
+            "image_tokens": 0,
+            "text_tokens": 320
+          },
+          "output_tokens": 1078,
+          "output_tokens_details": {
+            "image_tokens": 1078,
+            "text_tokens": 0
+          },
+          "total_tokens": 1398
+        },
+        "refreshedAt": "2026-10-08T02:44:33.159Z"
+      }
     },
     {
       "id": "ai-meeting-notes-privacy",

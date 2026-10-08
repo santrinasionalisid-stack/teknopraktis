@@ -9,7 +9,9 @@ category: Keamanan Digital
 categorySlug: keamanan-digital
 contentType: checklist
 featuredImage: /images/articles/cara-audit-izin-browser-kamera-mikrofon-lokasi.svg
-featuredImageAlt: Ilustrasi browser dengan ikon kamera, mikrofon, dan lokasi untuk audit izin situs.
+featuredImageAlt: Ilustrasi editorial premium tentang Checklist Audit Izin
+  Kamera, Mikrofon, dan Lokasi di Browser dengan visual yang relevan pada topik
+  Keamanan Digital.
 tags:
   - keamanan digital
   - privasi browser
@@ -37,6 +39,8 @@ editorialNote: AI membantu riset dan drafting. GPT-6 Sol melakukan fact/source
 featured: false
 sponsored: false
 draft: false
+socialImage: /images/articles/cara-audit-izin-browser-kamera-mikrofon-lokasi-visual.webp
+imageStyle: premium-v1
 ---
 
 Situs rapat yang sudah lama tidak Anda pakai mungkin masih memiliki izin kamera atau mikrofon. Begitu juga situs pencarian tempat yang pernah Anda beri akses lokasi. Audit izin membantu Anda mencabut akses yang tak lagi diperlukan tanpa mengganggu fitur yang masih dipakai.
