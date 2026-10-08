@@ -40,14 +40,17 @@ Status: IN PROGRESS
 - Initial article indexing requests: operational task
 
 ## SEO-005 — Automated Publishing
-Status: FOUNDATION PASS / ACTIVATION PENDING
+Status: V1 PASS / ACTIVE SAFE MODE
 
 - Topic queue: READY
-- Scheduled draft workflow: READY
-- OpenAI Responses API + web search generator: READY
-- Generator hard gate: READY
-- AI assistance disclosure: READY
-- Organizational author/transparency page: READY
-- Manual controlled publish workflow: READY
-- GitHub secret `OPENAI_API_KEY`: REQUIRED BEFORE ACTIVATION
-- First manual automation run: NEXT
+- Scheduled draft workflow: ACTIVE (Mon/Wed/Fri 09:15 WIB)
+- OpenAI Responses API + web search generator: PASS
+- Generator hard gate: PASS
+- Source consistency / tracking URL hygiene: PASS
+- AI assistance disclosure: PASS
+- Organizational author/transparency page: PASS
+- Manual controlled publish workflow: PASS
+- GitHub secret `OPENAI_API_KEY`: CONFIGURED
+- First manual automation run: PASS
+- First approved automated article publication: PASS
+- Auto-publish: DISABLED by design; scheduled runs create drafts only
