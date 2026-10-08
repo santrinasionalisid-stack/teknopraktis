@@ -31,7 +31,11 @@ function findArticlePathBySlug(slug) {
   throw new Error(`Artikel dengan slug ${slug} tidak ditemukan.`);
 }
 
-for (const item of config.articles) {
+const remediationItems = Array.isArray(config.retryArticles) && config.retryArticles.length
+  ? config.retryArticles
+  : config.articles;
+
+for (const item of remediationItems) {
   const articlePath = findArticlePathBySlug(item.slug);
   const raw = readFileSync(articlePath, 'utf8');
   const match = raw.match(/^---\s*\r?\n([\s\S]*?)\r?\n---\s*\r?\n([\s\S]*)$/);
@@ -68,4 +72,4 @@ for (const item of config.articles) {
 config.status = 'DONE';
 config.completedAt = new Date().toISOString();
 writeFileSync(configPath, JSON.stringify(config, null, 2) + '\n', 'utf8');
-console.log(`Thumbnail remediation complete: ${config.articles.length} articles.`);
+console.log(`Thumbnail remediation complete: ${remediationItems.length} articles.`);

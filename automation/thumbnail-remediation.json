@@ -1,5 +1,5 @@
 {
-  "status": "DONE",
+  "status": "LONG_TITLE_FIX",
   "generationPausedRequired": true,
   "articles": [
     {
@@ -30,5 +30,19 @@
   ],
   "retryNonce": "2026-10-08T03:48:00Z",
   "lastFailure": "Initial batch assumed filename equals slug; fixed to resolve file by frontmatter slug.",
-  "completedAt": "2026-10-08T03:47:46.910Z"
+  "completedAt": "2026-10-08T03:47:46.910Z",
+  "retryArticles": [
+    {
+      "slug": "aturan-satu-fungsi-satu-aplikasi-produktivitas",
+      "visualKind": "productivity-stack",
+      "tagline": "Sederhanakan workflow, kurangi aplikasi yang tumpang tindih"
+    },
+    {
+      "slug": "checklist-keamanan-akun-google",
+      "visualKind": "account-security",
+      "tagline": "Tinjau akses akun sebelum masalah muncul"
+    }
+  ],
+  "longTitleFixNonce": "2026-10-08T03:55:00Z",
+  "longTitleIssue": "Two generated thumbnails truncated the final title word; compositor now guarantees every title word is rendered within 2–4 lines."
 }

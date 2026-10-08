@@ -17,37 +17,71 @@ def font(path, size):
 def fit_title(draw, title):
     words = title.split()
     best = None
-    for i in range(1, len(words)-1):
-        for j in range(i+1, len(words)):
-            lines = [" ".join(words[:i]), " ".join(words[i:j]), " ".join(words[j:])]
+
+    # Try 2–4 balanced lines. Never truncate title words.
+    for line_count in (2, 3, 4):
+        if len(words) < line_count:
+            continue
+
+        def partitions(parts_left, start_idx, cuts):
+            if parts_left == 1:
+                yield cuts + [len(words)]
+                return
+            max_cut = len(words) - (parts_left - 1)
+            for cut in range(start_idx + 1, max_cut + 1):
+                yield from partitions(parts_left - 1, cut, cuts + [cut])
+
+        for cuts in partitions(line_count, 0, []):
+            indices = [0] + cuts
+            lines = [
+                " ".join(words[indices[i]:indices[i+1]])
+                for i in range(line_count)
+            ]
             if not all(lines):
                 continue
-            for size in range(66, 43, -1):
+
+            for size in range(66, 37, -1):
                 f = font(BOLD, size)
                 widths = [draw.textbbox((0,0), line, font=f)[2] for line in lines]
-                line_h = int(size * 1.16)
-                total_h = line_h * 3
+                line_h = int(size * 1.14)
+                total_h = line_h * line_count
+
                 if max(widths) <= (TEXT_MAX_X - LEFT) and TITLE_TOP + total_h <= TITLE_BOTTOM:
-                    score = max(widths) + (max(widths)-min(widths))*0.35 - size*4
+                    max_w = max(widths)
+                    min_w = min(widths)
+                    raggedness = sum(abs(w - sum(widths)/len(widths)) for w in widths)
+                    score = (
+                        (66 - size) * 20
+                        + line_count * 26
+                        + (max_w - min_w) * 0.35
+                        + raggedness * 0.10
+                    )
                     cand = (score, size, line_h, lines)
                     if best is None or cand[0] < best[0]:
                         best = cand
                     break
+
     if best:
         return best[1], best[2], best[3]
 
-    size = 46
+    # Last resort: keep every word, allow smaller 4-line layout.
+    size = 38
     f = font(BOLD, size)
     lines, current = [], ""
     for word in words:
         trial = (current + " " + word).strip()
-        if current and draw.textbbox((0,0), trial, font=f)[2] > (TEXT_MAX_X-LEFT):
+        if current and draw.textbbox((0,0), trial, font=f)[2] > (TEXT_MAX_X - LEFT):
             lines.append(current)
             current = word
         else:
             current = trial
-    if current: lines.append(current)
-    return size, int(size*1.16), lines[:3]
+    if current:
+        lines.append(current)
+
+    if len(lines) > 4:
+        raise RuntimeError(f"Title cannot fit safely in four lines: {title}")
+
+    return size, int(size * 1.14), lines
 
 def main():
     p = argparse.ArgumentParser()
