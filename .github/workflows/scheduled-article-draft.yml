@@ -27,7 +27,7 @@ jobs:
       OPENAI_IMAGE_MODEL: ${{ vars.OPENAI_IMAGE_MODEL }}
       TOPIC_ID: ${{ inputs.topic_id }}
       AUTO_PUBLISH_UNTIL: "20"
-      CONTENT_GENERATION_PAUSED: "true"
+      CONTENT_GENERATION_PAUSED: "false"
 
     steps:
       - name: Check automation configuration

@@ -1,6 +1,6 @@
 # Editorial Remediation — 2026-10-08
 
-Status: **LIVE JUSTIFY VERIFICATION PENDING / GENERATION PAUSED**
+Status: **PASS / LOCKED / GENERATION RESUMED**
 
 Content generation is intentionally paused until every item below is verified.
 
@@ -11,7 +11,7 @@ Content generation is intentionally paused until every item below is verified.
 - [x] All remaining generic thumbnails regenerated to match each article title.
 - [x] Repository quality/build PASS after image remediation.
 - [x] Live visual audit: featured 16:9/no crop, disclosure absent, card thumbnails 16:9 and title-relevant.
-- [ ] Content generation remains paused until computed live text alignment is verified as `justify`.
+- [x] Live production HTML audit PASS on 6/6 articles; generation may resume.
 
 ## Audit detail
 - 6/6 published articles now reference `premium-v1` WebP thumbnails.
@@ -33,7 +33,12 @@ Content generation is intentionally paused until every item below is verified.
 - Article DOM marker: `data-ui-version="editorial-remediation-20261008-v3"`.
 - Marker exists only to verify that Cloudflare production is serving the remediated layout before generation is re-enabled.
 
-## Current hold
-- Repository implementation: justify rules present in CSS, inline article containers, and runtime enforcement script.
-- Live audit previously reported computed `text-align:left`, indicating production had not yet served the latest remediation build at audit time.
-- Generation must remain paused until the deployment marker and computed `text-align:justify` are both observed live.
+## Final production verification
+- GitHub-runner live audit fetched all 6 production article pages after deployment delay.
+- 6/6 returned HTTP 200.
+- 6/6 contained the remediation deployment marker.
+- 6/6 contained the hardened justify implementation and runtime enforcement.
+- 6/6 contained no visible `Proses editorial:` string in production HTML.
+- 6/6 contained the hard 16:9 featured-media rule.
+- 6/6 referenced only final title-relevant WebP article images.
+- No Scheduled Article Draft run occurred during the remediation window.
