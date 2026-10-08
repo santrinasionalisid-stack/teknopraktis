@@ -1,0 +1,66 @@
+name: Refresh Premium Featured Image
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "automation/image-refresh.json"
+  workflow_dispatch:
+    inputs:
+      topic_id:
+        description: "Topic ID from automation/topics.json"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: teknopraktis-image-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_IMAGE_MODEL: ${{ vars.OPENAI_IMAGE_MODEL }}
+      REFRESH_TOPIC_ID: ${{ inputs.topic_id }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Generate locked premium featured image
+        run: node scripts/regenerate-featured-image.mjs
+
+      - name: Validate repository
+        run: |
+          node --check scripts/editorial-image.mjs
+          node --check scripts/regenerate-featured-image.mjs
+          npm run quality
+          npm run build
+
+      - name: Commit refreshed image
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "Tidak ada perubahan." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          git config user.name "teknopraktis-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add automation/topics.json src/content/articles/ public/images/articles/
+          git commit -m "design: refresh premium featured image"
+          git pull --rebase origin main
+          git push origin HEAD:main

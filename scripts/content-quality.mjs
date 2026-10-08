@@ -46,6 +46,8 @@ for (const file of walk(articlesDir)) {
   const contentType = String(data.contentType ?? '').trim();
   const featuredImage = String(data.featuredImage ?? '').trim();
   const featuredImageAlt = String(data.featuredImageAlt ?? '').trim();
+  const socialImage = String(data.socialImage ?? '').trim();
+  const imageStyle = String(data.imageStyle ?? '').trim();
   const tags = Array.isArray(data.tags) ? data.tags : [];
 
   if (title.length < 35 || title.length > 85) addError(short, `panjang title harus 35–85 karakter (sekarang ${title.length}).`);
@@ -63,6 +65,14 @@ for (const file of walk(articlesDir)) {
   }
   if (featuredImageAlt.length < 20 || featuredImageAlt.length > 180) {
     addError(short, `featuredImageAlt harus 20–180 karakter (sekarang ${featuredImageAlt.length}).`);
+  }
+  if (imageStyle === 'premium-v1') {
+    if (!socialImage.startsWith('/images/articles/')) {
+      addError(short, 'premium-v1 wajib memiliki socialImage di /images/articles/.');
+    } else {
+      const socialAssetPath = join(publicDir, socialImage.replace(/^\//, ''));
+      if (!existsSync(socialAssetPath)) addError(short, `socialImage tidak ditemukan: ${socialImage}`);
+    }
   }
 
   if (slugs.has(slug)) addError(short, `slug duplikat dengan ${slugs.get(slug)}.`);

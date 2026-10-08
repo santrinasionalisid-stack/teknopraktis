@@ -145,7 +145,8 @@
           "webSearchCalls": 0
         }
       },
-      "visualKind": "browser-permissions"
+      "visualKind": "browser-permissions",
+      "imageTagline": "Periksa akses situs sebelum dibiarkan aktif"
     },
     {
       "id": "ai-meeting-notes-privacy",

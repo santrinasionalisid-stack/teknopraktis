@@ -17,7 +17,7 @@ const modified = d.updatedAt
   : null;
 
 const articleUrl = `${SITE.url}/artikel/${d.slug}/`;
-const imageUrl = new URL(d.featuredImage, SITE.url).toString();
+const imageUrl = new URL(d.socialImage ?? d.featuredImage, SITE.url).toString();
 const tocHeadings = headings.filter((heading) => heading.depth === 2);
 const typeLabel = contentTypeLabel(d.contentType);
 
@@ -57,7 +57,7 @@ const breadcrumbSchema = {
 <BaseLayout
   title={d.seoTitle ?? d.title}
   description={d.description}
-  image={d.featuredImage}
+  image={d.socialImage ?? d.featuredImage}
   imageAlt={d.featuredImageAlt}
   type="article"
   schema={[articleSchema, breadcrumbSchema]}
@@ -90,7 +90,7 @@ const breadcrumbSchema = {
     </header>
 
     <figure class="article-featured container">
-      <img src={d.featuredImage} alt={d.featuredImageAlt} width="1200" height="675" decoding="async" />
+      <img src={d.featuredImage} alt={d.featuredImageAlt} width="1536" height="864" decoding="async" />
     </figure>
 
     <div class="article-guide-meta container prose-width" aria-label="Informasi panduan">

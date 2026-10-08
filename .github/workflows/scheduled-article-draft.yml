@@ -24,6 +24,7 @@ jobs:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       OPENAI_DRAFT_MODEL: ${{ vars.OPENAI_DRAFT_MODEL }}
       OPENAI_EDITOR_MODEL: ${{ vars.OPENAI_EDITOR_MODEL }}
+      OPENAI_IMAGE_MODEL: ${{ vars.OPENAI_IMAGE_MODEL }}
       TOPIC_ID: ${{ inputs.topic_id }}
       AUTO_PUBLISH_UNTIL: "20"
 

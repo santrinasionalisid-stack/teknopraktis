@@ -5,14 +5,22 @@ import { fileURLToPath } from 'node:url';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const outDir = join(root, 'public', 'images', 'articles');
 
+export const THUMBNAIL_STYLE_VERSION = 'premium-v1';
+export const DEFAULT_IMAGE_MODEL = 'gpt-image-2.5-sunburst';
+
 function esc(value) {
-  return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 }
 
-function wrapTitle(title, max = 31) {
-  const words = title.split(/\s+/);
+function wrapTitle(title, max = 22) {
+  const words = String(title).trim().split(/\s+/);
   const lines = [];
   let line = '';
+
   for (const word of words) {
     const next = line ? `${line} ${word}` : word;
     if (next.length > max && line) {
@@ -23,264 +31,184 @@ function wrapTitle(title, max = 31) {
     }
   }
   if (line) lines.push(line);
-  return lines.slice(0, 3);
+
+  // Keep the title inside the locked three-line safe area.
+  if (lines.length <= 3) return lines;
+  return [lines[0], lines[1], lines.slice(2).join(' ')];
 }
 
-function iconCamera(x, y) {
-  return `<g transform="translate(${x} ${y})">
-    <rect x="0" y="10" width="74" height="52" rx="12" fill="#fff"/>
-    <rect x="18" y="0" width="28" height="16" rx="6" fill="#fff"/>
-    <circle cx="37" cy="36" r="15" fill="#f97316"/>
-  </g>`;
+function contentTypeLabel(type) {
+  return ({
+    tutorial: 'TUTORIAL',
+    checklist: 'CHECKLIST',
+    explainer: 'PENJELASAN',
+    'decision-guide': 'PANDUAN KEPUTUSAN',
+  })[type] || 'PANDUAN';
 }
 
-function iconMic(x, y) {
-  return `<g transform="translate(${x} ${y})" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round">
-    <rect x="22" y="0" width="32" height="62" rx="16" fill="#f97316" stroke="none"/>
-    <path d="M12 38c0 24 52 24 52 0"/>
-    <path d="M38 62v20"/>
-    <path d="M22 82h32"/>
-  </g>`;
+function visualBrief(kind) {
+  const briefs = {
+    'browser-permissions': 'A premium browser site-permissions panel with camera, microphone, and location controls, security shield, permission toggles, and polished browser chrome.',
+    'cloud-backup': 'A premium cloud-sync and backup scene with cloud storage, a separate external backup drive, directional sync arrows, file layers, and a clear separation between sync and backup.',
+    'backup-321': 'A premium visual explanation of 3-2-1 backup using three file copies, two storage media types, one off-site cloud copy, and subtle recovery arrows.',
+    'file-scan': 'A premium file-security scene with a downloaded file card, magnifying glass, antivirus scan status, verified source indicators, and a protective shield.',
+    'ai-privacy': 'A premium AI meeting-notes interface with transcript cards, privacy shield, consent indicator, retention controls, and protected data symbols.',
+    'wifi-diagnostics': 'A premium Wi-Fi diagnostic dashboard with router, signal strength, device connection path, DNS/network checks, and status indicators.',
+    'password-manager': 'A premium password-vault interface with secure credential cards, strong master-lock symbol, passkey/key iconography, and protected login fields.',
+    'auth-methods': 'A premium authentication comparison interface showing SMS, authenticator app, and passkey as three clear secure login methods with security-level indicators.',
+    'android-storage': 'A premium Android storage dashboard with storage categories, cleanup recommendations, protected files, and a phone device mockup.',
+    'phishing-email': 'A premium suspicious-email inspection interface with sender identity, link warning, domain verification, red-flag markers, and a protective shield.',
+    'app-permissions': 'A premium mobile app-permission management interface with permission rows, toggles, app icon, privacy indicators, and audit status.',
+    'ai-verification': 'A premium AI answer-verification interface showing claims, confidence indicators, source checks, assumptions, and verified/unverified states.',
+    'browser-cache': 'A premium browser storage settings interface with cache, cookies, and site-data controls, reset arrows, and clearly separated data categories.',
+    'windows-startup': 'A premium Windows startup-app management dashboard with app rows, enable/disable controls, startup impact indicators, and boot-performance gauge.',
+    'file-compression': 'A premium document and image compression interface showing PDF/image cards, before-vs-after file sizes, compression slider, and readable-quality indicator.',
+    'browser-profiles': 'A premium browser profile interface with clearly separated work and personal profiles, account cards, bookmarks, and profile switching.',
+    'app-update': 'A premium official software-update interface with verified publisher badge, version details, secure download source, update action, and trust indicators.',
+    generic: 'A premium topic-relevant technology interface with clean UI cards, subtle security/productivity cues, and a strong central hero object.',
+  };
+  return briefs[kind] || briefs.generic;
 }
 
-function iconPin(x, y) {
-  return `<g transform="translate(${x} ${y})">
-    <path d="M38 0c-21 0-38 17-38 38 0 27 38 72 38 72s38-45 38-72C76 17 59 0 38 0z" fill="#fff"/>
-    <circle cx="38" cy="38" r="13" fill="#f97316"/>
-  </g>`;
-}
-
-function iconCloud(x, y) {
-  return `<g transform="translate(${x} ${y})">
-    <path d="M28 78h142c25 0 44-18 44-41 0-22-18-40-40-41-10-28-36-47-67-47-37 0-68 28-72 64-20 2-35 18-35 38 0 15 9 27 28 27z" fill="#fff"/>
-  </g>`;
-}
-
-function iconShield(x, y) {
-  return `<g transform="translate(${x} ${y})">
-    <path d="M70 0l58 22v48c0 45-24 80-58 100C36 150 12 115 12 70V22L70 0z" fill="#fff"/>
-    <path d="M42 80l18 18 38-44" fill="none" stroke="#f97316" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
-  </g>`;
-}
-
-function iconFile(x, y) {
-  return `<g transform="translate(${x} ${y})">
-    <path d="M0 0h88l34 34v126H0z" fill="#fff"/>
-    <path d="M88 0v34h34" fill="#e5e7eb"/>
-    <rect x="22" y="62" width="78" height="12" rx="6" fill="#cbd5e1"/>
-    <rect x="22" y="90" width="64" height="12" rx="6" fill="#cbd5e1"/>
-  </g>`;
-}
-
-function semanticMotif(visualKind, contentType) {
-  switch (visualKind) {
-    case 'browser-permissions':
-      return `<g transform="translate(785 165)">
-        <rect x="0" y="0" width="330" height="350" rx="30" fill="#111827" stroke="#475569" stroke-width="3"/>
-        <rect x="24" y="24" width="282" height="46" rx="14" fill="#1f2937"/>
-        <circle cx="48" cy="47" r="7" fill="#f97316"/><circle cx="70" cy="47" r="7" fill="#64748b"/><circle cx="92" cy="47" r="7" fill="#64748b"/>
-        <rect x="116" y="37" width="164" height="20" rx="10" fill="#334155"/>
-        ${iconCamera(42,108)}
-        ${iconMic(132,104)}
-        ${iconPin(226,104)}
-        <rect x="40" y="250" width="250" height="58" rx="18" fill="#fff" opacity=".96"/>
-        <circle cx="78" cy="279" r="16" fill="#f97316"/>
-        <path d="M70 279l7 7 13-16" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-        <rect x="106" y="268" width="140" height="12" rx="6" fill="#cbd5e1"/>
-        <rect x="106" y="288" width="94" height="10" rx="5" fill="#e2e8f0"/>
-      </g>`;
-    case 'cloud-backup':
-    case 'backup-321':
-      return `<g transform="translate(790 190)">
-        ${iconCloud(20,40)}
-        <path d="M135 150v80" stroke="#fdba74" stroke-width="12" stroke-linecap="round"/>
-        <path d="M112 210l23 23 23-23" fill="none" stroke="#fdba74" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
-        <rect x="65" y="245" width="150" height="72" rx="20" fill="#fff"/>
-        <rect x="95" y="270" width="90" height="16" rx="8" fill="#f97316"/>
-      </g>`;
-    case 'file-scan':
-      return `<g transform="translate(820 190)">
-        ${iconFile(25,35)}
-        <circle cx="205" cy="210" r="72" fill="#fff"/>
-        <circle cx="205" cy="210" r="46" fill="#111827"/>
-        <path d="M242 247l58 58" stroke="#f97316" stroke-width="18" stroke-linecap="round"/>
-        <path d="M185 210l16 16 30-38" fill="none" stroke="#f97316" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
-      </g>`;
-    case 'ai-privacy':
-      return `<g transform="translate(805 190)">
-        <rect x="10" y="20" width="250" height="190" rx="28" fill="#fff"/>
-        <circle cx="82" cy="96" r="34" fill="#111827"/>
-        <circle cx="70" cy="90" r="5" fill="#f97316"/><circle cx="94" cy="90" r="5" fill="#f97316"/>
-        <path d="M68 110h28" stroke="#f97316" stroke-width="7" stroke-linecap="round"/>
-        <path d="M138 80h82M138 112h66M48 160h170" stroke="#cbd5e1" stroke-width="14" stroke-linecap="round"/>
-        ${iconShield(150,155)}
-      </g>`;
-    case 'wifi-diagnostics':
-      return `<g transform="translate(815 210)" fill="none" stroke="#fff" stroke-width="18" stroke-linecap="round">
-        <path d="M20 80c75-70 175-70 250 0"/>
-        <path d="M62 126c52-48 114-48 166 0"/>
-        <path d="M107 172c24-23 52-23 76 0"/>
-        <circle cx="145" cy="216" r="16" fill="#f97316" stroke="none"/>
-        <path d="M260 205h70" stroke="#f97316"/><path d="M295 170v70" stroke="#f97316"/>
-      </g>`;
-    case 'password-manager':
-    case 'auth-methods':
-      return `<g transform="translate(820 185)">
-        <rect x="30" y="70" width="240" height="210" rx="28" fill="#fff"/>
-        <path d="M88 70V42c0-42 124-42 124 0v28" fill="none" stroke="#fff" stroke-width="18"/>
-        <circle cx="150" cy="155" r="34" fill="#f97316"/>
-        <rect x="141" y="182" width="18" height="54" rx="9" fill="#f97316"/>
-      </g>`;
-    case 'android-storage':
-    case 'file-compression':
-      return `<g transform="translate(825 178)">
-        <rect x="55" y="0" width="185" height="340" rx="32" fill="#fff"/>
-        <rect x="76" y="42" width="143" height="210" rx="18" fill="#111827"/>
-        <rect x="96" y="74" width="104" height="18" rx="9" fill="#f97316"/>
-        <rect x="96" y="112" width="78" height="12" rx="6" fill="#475569"/>
-        <rect x="96" y="140" width="92" height="12" rx="6" fill="#475569"/>
-        <circle cx="148" cy="296" r="15" fill="#cbd5e1"/>
-      </g>`;
-    case 'phishing-email':
-      return `<g transform="translate(790 205)">
-        <rect x="15" y="25" width="290" height="190" rx="26" fill="#fff"/>
-        <path d="M32 60l128 90L288 60" fill="none" stroke="#f97316" stroke-width="14" stroke-linejoin="round"/>
-        <path d="M160 110v80" stroke="#111827" stroke-width="16" stroke-linecap="round"/>
-        <circle cx="160" cy="214" r="10" fill="#111827"/>
-      </g>`;
-    case 'app-permissions':
-    case 'app-update':
-      return `<g transform="translate(805 188)">
-        <rect x="0" y="0" width="300" height="300" rx="34" fill="#fff"/>
-        <rect x="38" y="42" width="72" height="72" rx="20" fill="#f97316"/>
-        <circle cx="74" cy="78" r="16" fill="#fff"/>
-        <rect x="138" y="52" width="120" height="16" rx="8" fill="#cbd5e1"/>
-        <rect x="138" y="82" width="90" height="12" rx="6" fill="#e2e8f0"/>
-        <rect x="38" y="152" width="220" height="78" rx="20" fill="#111827"/>
-        <circle cx="82" cy="191" r="17" fill="#f97316"/>
-        <path d="M74 191l7 7 14-17" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-        <rect x="112" y="181" width="108" height="13" rx="6" fill="#64748b"/>
-      </g>`;
-    case 'ai-verification':
-      return `<g transform="translate(805 190)">
-        <rect x="20" y="30" width="260" height="230" rx="30" fill="#fff"/>
-        <circle cx="95" cy="112" r="48" fill="#111827"/>
-        <path d="M74 110h42M95 89v42" stroke="#f97316" stroke-width="10" stroke-linecap="round"/>
-        <circle cx="205" cy="112" r="48" fill="#f97316"/>
-        <path d="M184 112l15 15 28-36" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-        <rect x="65" y="190" width="170" height="14" rx="7" fill="#cbd5e1"/>
-      </g>`;
-    case 'browser-cache':
-      return `<g transform="translate(800 185)">
-        <rect x="0" y="0" width="300" height="280" rx="30" fill="#fff"/>
-        <rect x="24" y="24" width="252" height="42" rx="13" fill="#111827"/>
-        <circle cx="50" cy="45" r="7" fill="#f97316"/>
-        <path d="M102 150a58 58 0 1 1 15 40" fill="none" stroke="#f97316" stroke-width="16" stroke-linecap="round"/>
-        <path d="M105 195l14-35 31 20" fill="none" stroke="#f97316" stroke-width="12" stroke-linejoin="round"/>
-      </g>`;
-    case 'windows-startup':
-      return `<g transform="translate(810 190)">
-        <rect x="18" y="10" width="270" height="220" rx="28" fill="#fff"/>
-        <rect x="48" y="45" width="90" height="65" rx="12" fill="#f97316"/>
-        <rect x="150" y="45" width="108" height="16" rx="8" fill="#cbd5e1"/>
-        <rect x="150" y="75" width="84" height="12" rx="6" fill="#e2e8f0"/>
-        <path d="M90 155h126" stroke="#111827" stroke-width="18" stroke-linecap="round"/>
-        <path d="M185 125l34 30-34 30" fill="none" stroke="#f97316" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
-      </g>`;
-    case 'browser-profiles':
-      return `<g transform="translate(810 190)">
-        <rect x="0" y="0" width="300" height="275" rx="30" fill="#fff"/>
-        <circle cx="95" cy="95" r="48" fill="#111827"/>
-        <circle cx="95" cy="82" r="18" fill="#f97316"/>
-        <path d="M56 132c16-30 62-30 78 0" fill="#f97316"/>
-        <circle cx="215" cy="95" r="48" fill="#f97316"/>
-        <circle cx="215" cy="82" r="18" fill="#fff"/>
-        <path d="M176 132c16-30 62-30 78 0" fill="#fff"/>
-        <path d="M150 58v95" stroke="#cbd5e1" stroke-width="8" stroke-dasharray="10 10"/>
-      </g>`;
-    default:
-      return motif(contentType);
-  }
-}
-
-function motif(contentType) {
-  if (contentType === 'checklist') {
-    return `<g transform="translate(820 195)">
-      <rect x="0" y="0" width="250" height="300" rx="32" fill="#fff" opacity=".96"/>
-      <rect x="38" y="52" width="34" height="34" rx="8" fill="#f97316"/><path d="M47 69l8 8 15-18" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-      <rect x="92" y="57" width="112" height="12" rx="6" fill="#cbd5e1"/>
-      <rect x="38" y="124" width="34" height="34" rx="8" fill="#f97316"/><path d="M47 141l8 8 15-18" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-      <rect x="92" y="129" width="128" height="12" rx="6" fill="#cbd5e1"/>
-      <rect x="38" y="196" width="34" height="34" rx="8" fill="#fff" stroke="#cbd5e1" stroke-width="5"/>
-      <rect x="92" y="201" width="94" height="12" rx="6" fill="#cbd5e1"/>
-    </g>`;
-  }
-  if (contentType === 'decision-guide') {
-    return `<g transform="translate(830 210)" fill="none" stroke-linecap="round">
-      <circle cx="45" cy="120" r="34" fill="#fff"/>
-      <circle cx="190" cy="40" r="34" fill="#f97316"/>
-      <circle cx="190" cy="200" r="34" fill="#fff"/>
-      <path d="M80 120h48c32 0 28-80 62-80" stroke="#fdba74" stroke-width="14"/>
-      <path d="M80 120h48c32 0 28 80 62 80" stroke="#fff" stroke-opacity=".75" stroke-width="14"/>
-    </g>`;
-  }
-  if (contentType === 'explainer') {
-    return `<g transform="translate(830 205)">
-      <circle cx="120" cy="120" r="112" fill="#fff" opacity=".95"/>
-      <circle cx="120" cy="120" r="54" fill="#f97316"/>
-      <circle cx="120" cy="72" r="9" fill="#fff"/>
-      <rect x="111" y="96" width="18" height="76" rx="9" fill="#fff"/>
-    </g>`;
-  }
-  return `<g transform="translate(825 190)">
-    <rect x="0" y="0" width="270" height="310" rx="34" fill="#fff" opacity=".96"/>
-    <circle cx="62" cy="70" r="27" fill="#f97316"/><text x="62" y="80" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" font-weight="800" fill="#fff">1</text>
-    <circle cx="62" cy="155" r="27" fill="#f97316"/><text x="62" y="165" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" font-weight="800" fill="#fff">2</text>
-    <circle cx="62" cy="240" r="27" fill="#f97316"/><text x="62" y="250" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" font-weight="800" fill="#fff">3</text>
-    <rect x="108" y="61" width="112" height="15" rx="7" fill="#cbd5e1"/>
-    <rect x="108" y="146" width="126" height="15" rx="7" fill="#cbd5e1"/>
-    <rect x="108" y="231" width="96" height="15" rx="7" fill="#cbd5e1"/>
-  </g>`;
-}
-
-export function renderEditorialSvg({ title, category, contentType, visualKind }) {
+function renderOverlaySvg({ slug, title, category, contentType, tagline, visualPath }) {
   const lines = wrapTitle(title);
+  const fontSize = lines.length <= 2 ? 76 : 66;
+  const lineHeight = fontSize * 1.08;
+  const firstY = lines.length <= 2 ? 360 : 330;
   const titleLines = lines.map((line, index) =>
-    `<text x="86" y="${250 + index * 66}" font-family="Arial,sans-serif" font-size="54" font-weight="800" letter-spacing="-1.5" fill="#fff">${esc(line)}</text>`
+    `<text x="74" y="${firstY + index * lineHeight}" font-family="Inter, Arial, sans-serif" font-size="${fontSize}" font-weight="800" letter-spacing="-2.2" fill="#ffffff">${esc(line)}</text>`
   ).join('\n');
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-label="${esc(title)}">
+  const categoryWidth = Math.min(390, Math.max(240, 125 + category.length * 12));
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1536" height="864" viewBox="0 0 1536 864" role="img" aria-label="${esc(title)}">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0b1220"/>
-      <stop offset=".58" stop-color="#172033"/>
-      <stop offset="1" stop-color="#263244"/>
+    <linearGradient id="leftFade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#07111f" stop-opacity=".98"/>
+      <stop offset=".38" stop-color="#0b1424" stop-opacity=".92"/>
+      <stop offset=".56" stop-color="#0d1726" stop-opacity=".38"/>
+      <stop offset=".72" stop-color="#0d1726" stop-opacity="0"/>
     </linearGradient>
-    <radialGradient id="glow" cx=".75" cy=".18" r=".75">
-      <stop offset="0" stop-color="#f97316" stop-opacity=".38"/>
-      <stop offset="1" stop-color="#f97316" stop-opacity="0"/>
-    </radialGradient>
+    <linearGradient id="pill" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#3b2418" stop-opacity=".96"/>
+      <stop offset="1" stop-color="#6b371c" stop-opacity=".88"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#000000" flood-opacity=".30"/>
+    </filter>
   </defs>
-  <rect width="1200" height="675" rx="0" fill="url(#bg)"/>
-  <rect width="1200" height="675" fill="url(#glow)"/>
-  <circle cx="1105" cy="50" r="220" fill="#f97316" opacity=".08"/>
-  <circle cx="760" cy="690" r="260" fill="#fff" opacity=".035"/>
-  <rect x="86" y="86" width="260" height="48" rx="24" fill="#f97316" opacity=".16" stroke="#fb923c" stroke-opacity=".55"/>
-  <text x="110" y="118" font-family="Arial,sans-serif" font-size="21" font-weight="700" fill="#fed7aa">${esc(category)}</text>
-  <text x="86" y="194" font-family="Arial,sans-serif" font-size="20" font-weight="700" letter-spacing="2" fill="#94a3b8">TEKNOPRAKTIS · ${esc(contentType.toUpperCase())}</text>
+
+  <image href="${visualPath}" x="0" y="0" width="1536" height="864" preserveAspectRatio="xMidYMid slice"/>
+  <rect x="0" y="0" width="1536" height="864" fill="url(#leftFade)"/>
+
+  <g transform="translate(74 98)" filter="url(#softShadow)">
+    <rect x="0" y="0" width="${categoryWidth}" height="68" rx="34" fill="url(#pill)" stroke="#9a4d1f" stroke-opacity=".75"/>
+    <path d="M38 18l15 6v13c0 13-7 23-15 29-9-6-16-16-16-29V24l16-6z" fill="none" stroke="#ffb454" stroke-width="4"/>
+    <path d="M30 38l7 7 12-15" fill="none" stroke="#ffb454" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="76" y="44" font-family="Inter, Arial, sans-serif" font-size="27" font-weight="750" fill="#ffd19c">${esc(category)}</text>
+  </g>
+
+  <text x="74" y="260" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="700" letter-spacing="5" fill="#9fb4d4">TEKNOPRAKTIS · ${esc(contentTypeLabel(contentType))}</text>
   ${titleLines}
-  <text x="86" y="596" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#fdba74">Panduan praktis untuk pengguna Indonesia</text>
-  ${semanticMotif(visualKind, contentType)}
-  </svg>`;
+
+  <rect x="74" y="690" width="112" height="5" rx="3" fill="#f97316"/>
+  <text x="74" y="756" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="500" fill="#b8c8df">${esc(tagline)}</text>
+</svg>`;
 }
 
-export function createEditorialImage({ slug, title, category, contentType, visualKind }) {
+export async function createEditorialImage({
+  slug,
+  title,
+  category,
+  contentType,
+  visualKind,
+  tagline,
+  apiKey,
+  imageModel = DEFAULT_IMAGE_MODEL,
+}) {
+  if (!apiKey) throw new Error('OPENAI_API_KEY wajib tersedia untuk premium thumbnail generation.');
+
   mkdirSync(outDir, { recursive: true });
-  const relativePath = `/images/articles/${slug}.svg`;
-  writeFileSync(join(outDir, `${slug}.svg`), renderEditorialSvg({ title, category, contentType, visualKind }), 'utf8');
-  const typeAlt = contentType === 'checklist' ? 'checklist' : contentType === 'decision-guide' ? 'alur pilihan' : contentType === 'explainer' ? 'diagram penjelasan' : 'langkah tutorial';
+
+  const prompt = `
+Create a premium 16:9 editorial hero background for TeknoPraktis, an Indonesian professional technology publication.
+
+LOCKED VISUAL STYLE:
+- sophisticated dark navy / charcoal palette with controlled warm orange glow;
+- high-end editorial technology aesthetic, modern and expensive, never cartoonish or template-like;
+- polished 3D + realistic UI hybrid illustration;
+- cinematic but restrained lighting, soft depth, subtle reflections, rounded premium interface cards;
+- composition must reserve the LEFT 55% as a clean, dark, low-detail text-safe zone;
+- place the main topic-relevant hero object on the RIGHT 45%, large and visually strong;
+- illustration should feel integrated into the environment, not pasted on;
+- balanced negative space, professional proportions, no clutter;
+- no stock-photo look, no people unless absolutely necessary;
+- no logos, no watermarks, no branding marks;
+- IMPORTANT: render NO WORDS, NO LETTERS, NO NUMBERS, NO READABLE UI TEXT anywhere. Use abstract bars/icons/status dots only. Exact typography will be overlaid later by the publishing system.
+
+TOPIC:
+${visualBrief(visualKind)}
+
+The image must communicate this article visually:
+"${title}"
+
+Category context: ${category}.
+Content format: ${contentType}.
+Keep all important illustration details inside the right-side safe area. The left side must stay sufficiently dark and simple for large white editorial typography.
+`.trim();
+
+  const response = await fetch('https://api.openai.com/v1/images/generations', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: imageModel,
+      prompt,
+      n: 1,
+      size: '1536x864',
+      quality: 'high',
+      output_format: 'webp',
+      output_compression: 88,
+      background: 'opaque',
+    }),
+  });
+
+  if (!response.ok) {
+    const message = await response.text();
+    throw new Error(`OpenAI Images API gagal untuk ${imageModel}: HTTP ${response.status} — ${message}`);
+  }
+
+  const data = await response.json();
+  const encoded = data.data?.[0]?.b64_json;
+  if (!encoded) throw new Error(`Model gambar ${imageModel} tidak mengembalikan b64_json.`);
+
+  const visualFilename = `${slug}-visual.webp`;
+  const visualRelativePath = `/images/articles/${visualFilename}`;
+  writeFileSync(join(outDir, visualFilename), Buffer.from(encoded, 'base64'));
+
+  const overlayFilename = `${slug}.svg`;
+  const overlayRelativePath = `/images/articles/${overlayFilename}`;
+  writeFileSync(
+    join(outDir, overlayFilename),
+    renderOverlaySvg({
+      slug,
+      title,
+      category,
+      contentType,
+      tagline,
+      visualPath: visualRelativePath,
+    }),
+    'utf8'
+  );
+
   return {
-    path: relativePath,
-    alt: `Ilustrasi editorial relevan tentang ${title}, kategori ${category}, dalam format ${typeAlt}.`,
+    path: overlayRelativePath,
+    socialPath: visualRelativePath,
+    alt: `Ilustrasi editorial premium tentang ${title} dengan visual yang relevan pada topik ${category}.`,
+    styleVersion: THUMBNAIL_STYLE_VERSION,
+    model: imageModel,
+    usage: data.usage || null,
   };
 }

@@ -11,6 +11,7 @@ const articlesDir = join(root, 'src', 'content', 'articles');
 const apiKey = process.env.OPENAI_API_KEY;
 const draftModel = process.env.OPENAI_DRAFT_MODEL || process.env.OPENAI_MODEL || 'gpt-6-luna';
 const editorModel = process.env.OPENAI_EDITOR_MODEL || 'gpt-6-sol';
+const imageModel = process.env.OPENAI_IMAGE_MODEL || 'gpt-image-2.5-sunburst';
 const requestedTopicId = (process.env.TOPIC_ID || '').trim();
 const autoPublishUntil = Number.parseInt(process.env.AUTO_PUBLISH_UNTIL || '0', 10);
 
@@ -170,9 +171,10 @@ const finalCopySchema = {
     hookScore: { type: 'integer', minimum: 0, maximum: 100 },
     flowScore: { type: 'integer', minimum: 0, maximum: 100 },
     concisionScore: { type: 'integer', minimum: 0, maximum: 100 },
+    imageTagline: { type: 'string' },
     summary: { type: 'string' }
   },
-  required: ['title', 'seoTitle', 'description', 'body', 'hookScore', 'flowScore', 'concisionScore', 'summary']
+  required: ['title', 'seoTitle', 'description', 'body', 'hookScore', 'flowScore', 'concisionScore', 'imageTagline', 'summary']
 };
 
 const draftInstructions = `
@@ -682,6 +684,7 @@ Penilaian:
 - flowScore: kesinambungan antar kalimat, paragraf, dan bagian.
 - concisionScore: ketepatan, keringkasan, dan bebas pengulangan.
 Targetkan ketiganya minimal 90.
+- imageTagline = satu kalimat sangat pendek 28–64 karakter untuk teks pendamping thumbnail. Harus natural, relevan, informatif, tanpa clickbait, dan tidak mengulang judul.
 `;
 
 const finalCopyPrompt = `
@@ -735,12 +738,19 @@ if (copyEdit.hookScore < 90 || copyEdit.flowScore < 90 || copyEdit.concisionScor
 
 const finalStats = validateCandidate(candidate, 'Final setelah copy editor Sol');
 const contentType = topic.contentType || 'explainer';
-const media = createEditorialImage({
+if (copyEdit.imageTagline.length < 28 || copyEdit.imageTagline.length > 64) {
+  throw new Error(`imageTagline harus 28–64 karakter, sekarang ${copyEdit.imageTagline.length}.`);
+}
+
+const media = await createEditorialImage({
   slug: topic.suggestedSlug,
   title: candidate.title,
   category: topic.category,
   contentType,
   visualKind: topic.visualKind || 'generic',
+  tagline: copyEdit.imageTagline,
+  apiKey,
+  imageModel,
 });
 
 const today = new Date().toISOString().slice(0, 10);
@@ -754,6 +764,8 @@ const metadata = {
   contentType,
   featuredImage: media.path,
   featuredImageAlt: media.alt,
+  socialImage: media.socialPath,
+  imageStyle: media.styleVersion,
   tags: candidate.tags,
   publishedAt: today,
   author: 'Redaksi TeknoPraktis',
@@ -806,6 +818,7 @@ topic.editorial = {
 };
 topic.copyEdit = {
   model: editorModel,
+  imageTagline: copyEdit.imageTagline,
   hookScore: copyEdit.hookScore,
   flowScore: copyEdit.flowScore,
   concisionScore: copyEdit.concisionScore,
@@ -813,11 +826,20 @@ topic.copyEdit = {
   wordsBefore: preCopyStats.words,
   wordsAfter: postCopyStats.words
 };
+topic.image = {
+  styleVersion: media.styleVersion,
+  model: media.model,
+  visualKind: topic.visualKind || 'generic',
+  featuredImage: media.path,
+  socialImage: media.socialPath,
+  usage: media.usage
+};
 topic.usage = {
   draft: usageSummary(draftResult.data),
   editorInitial: usageSummary(editorResult.data),
   editorFinal: finalEditorResult ? usageSummary(finalEditorResult.data) : null,
-  copyDesk: usageSummary(finalCopyResult.data)
+  copyDesk: usageSummary(finalCopyResult.data),
+  imageGeneration: media.usage
 };
 writeFileSync(queuePath, JSON.stringify(queue, null, 2) + '\n', 'utf8');
 
@@ -836,4 +858,6 @@ console.log(`Final: kata ${finalStats.words}; H2 ${finalStats.h2Count}; sumber $
 console.log(`Usage draft: ${JSON.stringify(topic.usage.draft)}`);
 console.log(`Usage editor initial: ${JSON.stringify(topic.usage.editorInitial)}`);
 console.log(`Usage editor final: ${JSON.stringify(topic.usage.editorFinal)}`);
+console.log(`Image: style ${media.styleVersion}; model ${media.model}; visual ${topic.visualKind || 'generic'}`);
 console.log(`Usage copy desk: ${JSON.stringify(topic.usage.copyDesk)}`);
+console.log(`Usage image: ${JSON.stringify(topic.usage.imageGeneration)}`);

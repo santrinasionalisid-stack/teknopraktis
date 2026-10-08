@@ -15,10 +15,16 @@ Menyatukan kualitas editorial, navigasi, visual artikel, dan otomasi sehingga ar
 - Halaman artikel memakai featured image besar, content-type badge, metadata panduan, dan daftar isi berbasis H2.
 - BlogPosting schema dan social metadata memakai featured image artikel.
 
-## Otomasi gambar
-Generator membuat SVG editorial 1200×675 secara deterministik dari judul, kategori, dan content type.
-Tidak ada API image tambahan sehingga biaya generation tidak bertambah.
-Asset ditulis ke `public/images/articles/<slug>.svg`.
+## Otomasi gambar — THUMBNAIL STYLE V1 LOCKED
+Generator memakai GPT Image untuk membuat background premium 1536×864 yang relevan dengan topik, lalu sistem menambahkan typography overlay secara deterministik.
+- Style: dark navy/charcoal + warm orange glow.
+- Komposisi: text-safe zone kiri + hero illustration besar di kanan.
+- Visual: premium 3D + realistic UI hybrid.
+- Title, category badge, content label, dan tagline ditulis oleh sistem agar ejaan konsisten.
+- Wrapper SVG: `public/images/articles/<slug>.svg`.
+- Raster source/social image: `public/images/articles/<slug>-visual.webp`.
+- Quality gate memblokir artikel premium-v1 bila raster source tidak tersedia.
+- Default image model: `gpt-image-2.5-sunburst`, quality high.
 
 ## Copywriting gate Sol
 Sol wajib melakukan final professional copy edit dengan standar:
