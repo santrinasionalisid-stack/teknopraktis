@@ -21,7 +21,7 @@ Cron GitHub Actions disimpan dalam UTC: `15 2 * * 1,3,5`.
 1. Pilih topic `pending` pertama dari `automation/topics.json`.
 2. **GPT-6 Luna** melakukan web research dan menyusun draft awal dengan maksimal 3 web-search call.
 3. Generator menjalankan hard gate metadata, struktur, sumber, dan source hygiene.
-4. **GPT-6 Sol** bertindak sebagai editor senior: memeriksa logika, kegunaan, akurasi istilah, kekuatan sumber, klaim berisiko, struktur, dan gaya.
+4. **GPT-6 Sol** bertindak sebagai editor senior: memeriksa logika, kegunaan, akurasi istilah, kekuatan sumber, klaim berisiko, dan struktur.
 5. Sol dapat memakai maksimal 2 web-search call hanya ketika verifikasi tambahan memang diperlukan.
 6. Sol harus memberi keputusan `pass`, `revise`, atau `reject`, score saat ini, projected score setelah koreksi, dan tingkat repairability.
 7. Sol memakai prinsip **repair-first**: masalah yang masih dapat diperbaiki wajib masuk `revise`, bukan langsung `reject`.
@@ -29,7 +29,9 @@ Cron GitHub Actions disimpan dalam UTC: `15 2 * * 1,3,5`.
 9. Bila `revise`, Sol memberi patch exact-match sekecil mungkin; script menerapkannya lalu menjalankan hard gate ulang.
 10. Jika revisi bersifat substantif, menyentuh sumber, atau projected score masih di bawah 85, sistem memberi Sol satu putaran **recovery review** tanpa web search untuk memperbaiki sisa masalah secara efisien.
 11. Draft hanya berhenti setelah dua putaran jika masalah material tetap tidak dapat diselesaikan; draft yang gagal tidak dikomit dan topic tetap pending.
-12. Artikel lolos ditulis sebagai `draft: true`.
+12. Setelah fact/source edit lolos, **GPT-6 Sol menjalankan Final Copy Desk** tanpa web search: memperkuat hook paragraf pertama, memastikan kesinambungan antar paragraf, memangkas kalimat bertele-tele, dan memoles Bahasa Indonesia agar natural.
+13. Final Copy Desk wajib mencapai `hookScore`, `flowScore`, dan `concisionScore` minimal **90/100**. URL eksternal tidak boleh berubah dan panjang akhir tidak boleh bertambah lebih dari 8%.
+14. Artikel lolos ditulis sebagai `draft: true`.
 10. `npm run quality` dan production build harus PASS.
 11. Draft dikomit otomatis ke `main` dan tidak muncul di website.
 12. Setelah approval, workflow **Publish Approved Article** mengubah `draft: false`, mencatat review, menjalankan quality gate lagi, lalu push ke main.
@@ -46,7 +48,7 @@ Opsional:
 
 Arsitektur biaya/kualitas:
 - Luna = riset + produksi draft.
-- Sol = editor profesional penjaga kualitas.
+- Sol = editor profesional penjaga kualitas + penulis/copy editor akhir.
 - Script = auditor mekanis tanpa biaya model.
 - Token usage dan jumlah web-search call untuk kedua tahap dicatat di `automation/topics.json` agar biaya aktual dapat dievaluasi.
 
@@ -63,6 +65,8 @@ Jangan pernah menaruh API key di repository, workflow YAML, artikel, issue, log,
 - Sol tidak menulis ulang seluruh artikel secara default; perubahan dilakukan lewat patch kecil untuk menjaga efisiensi token.
 - Score rendah bukan alasan otomatis untuk menolak. Selama masalah masih repairable, Sol wajib mencoba memperbaikinya terlebih dahulu.
 - Recovery Sol dibatasi satu putaran tambahan dan tanpa web search agar tetap hemat biaya.
+- Final Copy Desk Sol selalu tanpa web search: fokus murni pada hook, alur, kesinambungan, ritme, keringkasan, dan naturalitas bahasa.
+- Final copy edit boleh menulis ulang kalimat/paragraf secara menyeluruh, tetapi dilarang menambah fakta/sumber baru atau mengubah URL citation.
 
 ## Aktivasi
 
