@@ -9,8 +9,7 @@ category: Keamanan Digital
 categorySlug: keamanan-digital
 contentType: checklist
 featuredImage: /images/articles/cara-audit-izin-browser-kamera-mikrofon-lokasi.svg
-featuredImageAlt: Ilustrasi editorial Keamanan Digital dengan checklist untuk
-  artikel “Checklist Audit Izin Kamera, Mikrofon, dan Lokasi di Browser”.
+featuredImageAlt: Ilustrasi browser dengan ikon kamera, mikrofon, dan lokasi untuk audit izin situs.
 tags:
   - keamanan digital
   - privasi browser
