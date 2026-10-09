@@ -824,9 +824,101 @@
       "category": "Keamanan Digital",
       "categorySlug": "keamanan-digital",
       "suggestedSlug": "checklist-email-mencurigakan-sebelum-klik",
-      "status": "pending",
+      "status": "published",
       "contentType": "checklist",
-      "visualKind": "phishing-email"
+      "visualKind": "phishing-email",
+      "generatedAt": "2026-10-09T09:07:10.102Z",
+      "generatedSlug": "checklist-email-mencurigakan-sebelum-klik",
+      "models": {
+        "draft": "gpt-6-luna",
+        "editor": "gpt-6-sol"
+      },
+      "publishPolicy": "auto-until-20",
+      "autoPublished": true,
+      "publishedAt": "2026-10-09",
+      "editorial": {
+        "initial": {
+          "decision": "revise",
+          "effectiveDecision": "revise",
+          "score": 88,
+          "projectedScore": 94,
+          "repairability": "local",
+          "summary": "Draft sudah sesuai intent: pembaca diajak memeriksa beberapa sinyal dan memverifikasi pesan di luar email. Dua penajaman lokal akan membuat pemeriksaan domain lebih mudah dipraktikkan dan langkah setelah terlanjur mengeklik lebih lengkap.",
+          "issueCount": 2
+        },
+        "final": {
+          "decision": "revise",
+          "score": 94,
+          "repairability": "local",
+          "summary": "Draft sudah sesuai intent: pembaca diajak memeriksa beberapa sinyal dan memverifikasi pesan di luar email. Dua penajaman lokal akan membuat pemeriksaan domain lebih mudah dipraktikkan dan langkah setelah terlanjur mengeklik lebih lengkap.",
+          "issueCount": 2,
+          "recoveryUsed": false
+        }
+      },
+      "copyEdit": {
+        "model": "gpt-6-sol",
+        "imageTagline": "Cek pengirim dan tautan, lalu verifikasi mandiri",
+        "hookScore": 95,
+        "flowScore": 94,
+        "concisionScore": 94,
+        "summary": "Checklist untuk menilai email mencurigakan, memverifikasinya lewat kanal resmi, dan mengambil langkah aman jika terlanjur berinteraksi.",
+        "wordsBefore": 983,
+        "wordsAfter": 887
+      },
+      "image": {
+        "styleVersion": "premium-v1",
+        "model": "gpt-image-2.5-sunburst",
+        "visualKind": "phishing-email",
+        "featuredImage": "/images/articles/checklist-email-mencurigakan-sebelum-klik.webp",
+        "socialImage": "/images/articles/checklist-email-mencurigakan-sebelum-klik.webp",
+        "usage": {
+          "input_tokens": 384,
+          "input_tokens_details": {
+            "image_tokens": 0,
+            "text_tokens": 384
+          },
+          "output_tokens": 1078,
+          "output_tokens_details": {
+            "image_tokens": 1078,
+            "text_tokens": 0
+          },
+          "total_tokens": 1462
+        }
+      },
+      "usage": {
+        "draft": {
+          "inputTokens": 13764,
+          "outputTokens": 2358,
+          "totalTokens": 16122,
+          "webSearchCalls": 1
+        },
+        "editorInitial": {
+          "inputTokens": 18194,
+          "outputTokens": 1708,
+          "totalTokens": 19902,
+          "webSearchCalls": 2
+        },
+        "editorFinal": null,
+        "copyDesk": {
+          "inputTokens": 2790,
+          "outputTokens": 1817,
+          "totalTokens": 4607,
+          "webSearchCalls": 0
+        },
+        "imageGeneration": {
+          "input_tokens": 384,
+          "input_tokens_details": {
+            "image_tokens": 0,
+            "text_tokens": 384
+          },
+          "output_tokens": 1078,
+          "output_tokens_details": {
+            "image_tokens": 1078,
+            "text_tokens": 0
+          },
+          "total_tokens": 1462
+        }
+      }
     },
     {
       "id": "app-permission-cleanup",
