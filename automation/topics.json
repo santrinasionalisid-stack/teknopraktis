@@ -927,9 +927,106 @@
       "category": "Aplikasi & Produktivitas",
       "categorySlug": "aplikasi",
       "suggestedSlug": "cara-audit-izin-aplikasi",
-      "status": "pending",
+      "status": "published",
       "contentType": "checklist",
-      "visualKind": "app-permissions"
+      "visualKind": "app-permissions",
+      "generatedAt": "2026-10-12T09:15:31.351Z",
+      "generatedSlug": "cara-audit-izin-aplikasi",
+      "models": {
+        "draft": "gpt-6-luna",
+        "editor": "gpt-6-sol"
+      },
+      "publishPolicy": "auto-until-20",
+      "autoPublished": true,
+      "publishedAt": "2026-10-12",
+      "editorial": {
+        "initial": {
+          "decision": "revise",
+          "effectiveDecision": "revise",
+          "score": 87,
+          "projectedScore": 94,
+          "repairability": "local",
+          "summary": "Draft sudah menjawab intent pembaca dengan checklist yang praktis dan prinsip akses minimum yang tidak berlebihan. Pertahankan struktur dan sebagian besar isinya. Beberapa koreksi lokal akan membuat jalur menu lebih mudah diikuti serta contoh dan rujukan lebih presisi.",
+          "issueCount": 5
+        },
+        "final": {
+          "decision": "pass",
+          "score": 94,
+          "repairability": "none",
+          "summary": "Draft sudah layak terbit. Checklist menjawab kebutuhan pembaca, jalur pengaturan cukup jelas, contoh izin proporsional, dan batasan audit dijelaskan tanpa klaim berlebihan.",
+          "issueCount": 0,
+          "recoveryUsed": true
+        }
+      },
+      "copyEdit": {
+        "model": "gpt-6-sol",
+        "imageTagline": "Batasi akses tanpa mengganggu fungsi aplikasi",
+        "hookScore": 95,
+        "flowScore": 94,
+        "concisionScore": 93,
+        "summary": "Audit izin berdasarkan fitur yang digunakan, pilih akses paling terbatas yang tersedia, lalu uji fungsi penting sebelum mencabut izin lain.",
+        "wordsBefore": 1047,
+        "wordsAfter": 936
+      },
+      "image": {
+        "styleVersion": "premium-v1",
+        "model": "gpt-image-2.5-sunburst",
+        "visualKind": "app-permissions",
+        "featuredImage": "/images/articles/cara-audit-izin-aplikasi.webp",
+        "socialImage": "/images/articles/cara-audit-izin-aplikasi.webp",
+        "usage": {
+          "input_tokens": 387,
+          "input_tokens_details": {
+            "image_tokens": 0,
+            "text_tokens": 387
+          },
+          "output_tokens": 1078,
+          "output_tokens_details": {
+            "image_tokens": 1078,
+            "text_tokens": 0
+          },
+          "total_tokens": 1465
+        }
+      },
+      "usage": {
+        "draft": {
+          "inputTokens": 20070,
+          "outputTokens": 2489,
+          "totalTokens": 22559,
+          "webSearchCalls": 2
+        },
+        "editorInitial": {
+          "inputTokens": 26674,
+          "outputTokens": 1859,
+          "totalTokens": 28533,
+          "webSearchCalls": 3
+        },
+        "editorFinal": {
+          "inputTokens": 3446,
+          "outputTokens": 227,
+          "totalTokens": 3673,
+          "webSearchCalls": 0
+        },
+        "copyDesk": {
+          "inputTokens": 2875,
+          "outputTokens": 1982,
+          "totalTokens": 4857,
+          "webSearchCalls": 0
+        },
+        "imageGeneration": {
+          "input_tokens": 387,
+          "input_tokens_details": {
+            "image_tokens": 0,
+            "text_tokens": 387
+          },
+          "output_tokens": 1078,
+          "output_tokens_details": {
+            "image_tokens": 1078,
+            "text_tokens": 0
+          },
+          "total_tokens": 1465
+        }
+      }
     },
     {
       "id": "ai-prompt-fact-check",
