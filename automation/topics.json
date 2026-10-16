@@ -1035,9 +1035,106 @@
       "category": "AI & Otomasi",
       "categorySlug": "ai",
       "suggestedSlug": "prompt-ai-batas-kepastian-verifikasi",
-      "status": "pending",
+      "status": "published",
       "contentType": "tutorial",
-      "visualKind": "ai-verification"
+      "visualKind": "ai-verification",
+      "generatedAt": "2026-10-16T07:12:20.686Z",
+      "generatedSlug": "prompt-ai-batas-kepastian-verifikasi",
+      "models": {
+        "draft": "gpt-6-luna",
+        "editor": "gpt-6-sol"
+      },
+      "publishPolicy": "auto-until-20",
+      "autoPublished": true,
+      "publishedAt": "2026-10-16",
+      "editorial": {
+        "initial": {
+          "decision": "revise",
+          "effectiveDecision": "revise",
+          "score": 87,
+          "projectedScore": 92,
+          "repairability": "local",
+          "summary": "Draft sudah sesuai intent, praktis, dan berhati-hati: label dari AI tidak diperlakukan sebagai bukti, sementara langkah verifikasinya jelas. Ketiga sumber yang dicantumkan dapat diakses dan mendukung klaim utama. ([help.openai.com](https://help.openai.com/en/articles/8313428-chatgpt-accuracy-and-limitations)) Perlu dua penajaman kecil pada templat dan satu contoh agar pembaca lebih mudah menerapkannya.",
+          "issueCount": 3
+        },
+        "final": {
+          "decision": "pass",
+          "score": 92,
+          "repairability": "none",
+          "summary": "Draft sudah layak terbit. Templat kini menangani klaim tanpa sumber yang dapat diperiksa, contoh singkat membedakan asumsi dari hal yang perlu diverifikasi, dan judul SEO tidak menyiratkan bahwa prompt melakukan verifikasi. Artikel tetap menegaskan bahwa pembaca harus memeriksa sumber sendiri.",
+          "issueCount": 0,
+          "recoveryUsed": true
+        }
+      },
+      "copyEdit": {
+        "model": "gpt-6-sol",
+        "imageTagline": "Pisahkan dugaan sebelum memakai jawaban AI",
+        "hookScore": 94,
+        "flowScore": 94,
+        "concisionScore": 92,
+        "summary": "Prompt membantu menandai dasar klaim, asumsi, dan hal yang belum pasti; klaim penting tetap harus diperiksa pada sumbernya.",
+        "wordsBefore": 999,
+        "wordsAfter": 946
+      },
+      "image": {
+        "styleVersion": "premium-v1",
+        "model": "gpt-image-2.5-sunburst",
+        "visualKind": "ai-verification",
+        "featuredImage": "/images/articles/prompt-ai-batas-kepastian-verifikasi.webp",
+        "socialImage": "/images/articles/prompt-ai-batas-kepastian-verifikasi.webp",
+        "usage": {
+          "input_tokens": 389,
+          "input_tokens_details": {
+            "image_tokens": 0,
+            "text_tokens": 389
+          },
+          "output_tokens": 1078,
+          "output_tokens_details": {
+            "image_tokens": 1078,
+            "text_tokens": 0
+          },
+          "total_tokens": 1467
+        }
+      },
+      "usage": {
+        "draft": {
+          "inputTokens": 14226,
+          "outputTokens": 2311,
+          "totalTokens": 16537,
+          "webSearchCalls": 1
+        },
+        "editorInitial": {
+          "inputTokens": 23454,
+          "outputTokens": 1564,
+          "totalTokens": 25018,
+          "webSearchCalls": 2
+        },
+        "editorFinal": {
+          "inputTokens": 3134,
+          "outputTokens": 204,
+          "totalTokens": 3338,
+          "webSearchCalls": 0
+        },
+        "copyDesk": {
+          "inputTokens": 2922,
+          "outputTokens": 1979,
+          "totalTokens": 4901,
+          "webSearchCalls": 0
+        },
+        "imageGeneration": {
+          "input_tokens": 389,
+          "input_tokens_details": {
+            "image_tokens": 0,
+            "text_tokens": 389
+          },
+          "output_tokens": 1078,
+          "output_tokens_details": {
+            "image_tokens": 1078,
+            "text_tokens": 0
+          },
+          "total_tokens": 1467
+        }
+      }
     },
     {
       "id": "browser-cache-cookies-reset",
