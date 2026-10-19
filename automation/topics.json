@@ -1143,9 +1143,106 @@
       "category": "Internet",
       "categorySlug": "internet",
       "suggestedSlug": "cache-cookies-data-situs-browser",
-      "status": "pending",
+      "status": "published",
       "contentType": "decision-guide",
-      "visualKind": "browser-cache"
+      "visualKind": "browser-cache",
+      "generatedAt": "2026-10-19T07:48:54.411Z",
+      "generatedSlug": "cache-cookies-data-situs-browser",
+      "models": {
+        "draft": "gpt-6-luna",
+        "editor": "gpt-6-sol"
+      },
+      "publishPolicy": "auto-until-20",
+      "autoPublished": true,
+      "publishedAt": "2026-10-19",
+      "editorial": {
+        "initial": {
+          "decision": "revise",
+          "effectiveDecision": "revise",
+          "score": 83,
+          "projectedScore": 92,
+          "repairability": "local",
+          "summary": "Draft sudah menjawab kebutuhan pembaca: memilih penghapusan data yang paling sempit dan memahami risikonya. Perlu beberapa koreksi lokal agar gangguan login tidak otomatis diarahkan ke penghapusan cookies, urutan langkah lebih sesuai gejala, dan keterbatasan pilihan di Safari iPhone lebih jelas.",
+          "issueCount": 3
+        },
+        "final": {
+          "decision": "pass",
+          "score": 91,
+          "repairability": "none",
+          "summary": "Draft sudah layak terbit. Panduan kini membedakan masalah tampilan dari masalah login, mengutamakan pemeriksaan sebelum penghapusan, dan menjelaskan dampak pilihan Safari iPhone. Tidak ada isu material yang memerlukan patch.",
+          "issueCount": 0,
+          "recoveryUsed": true
+        }
+      },
+      "copyEdit": {
+        "model": "gpt-6-sol",
+        "imageTagline": "Mulai dari data yang paling perlu dihapus",
+        "hookScore": 96,
+        "flowScore": 94,
+        "concisionScore": 93,
+        "summary": "Suntingan akhir menajamkan pembukaan, merapikan alur berdasarkan gejala dan langkah, serta memangkas pengulangan tanpa mengubah substansi atau URL.",
+        "wordsBefore": 1023,
+        "wordsAfter": 936
+      },
+      "image": {
+        "styleVersion": "premium-v1",
+        "model": "gpt-image-2.5-sunburst",
+        "visualKind": "browser-cache",
+        "featuredImage": "/images/articles/cache-cookies-data-situs-browser.webp",
+        "socialImage": "/images/articles/cache-cookies-data-situs-browser.webp",
+        "usage": {
+          "input_tokens": 381,
+          "input_tokens_details": {
+            "image_tokens": 0,
+            "text_tokens": 381
+          },
+          "output_tokens": 1078,
+          "output_tokens_details": {
+            "image_tokens": 1078,
+            "text_tokens": 0
+          },
+          "total_tokens": 1459
+        }
+      },
+      "usage": {
+        "draft": {
+          "inputTokens": 22597,
+          "outputTokens": 2625,
+          "totalTokens": 25222,
+          "webSearchCalls": 2
+        },
+        "editorInitial": {
+          "inputTokens": 24743,
+          "outputTokens": 2169,
+          "totalTokens": 26912,
+          "webSearchCalls": 2
+        },
+        "editorFinal": {
+          "inputTokens": 3203,
+          "outputTokens": 309,
+          "totalTokens": 3512,
+          "webSearchCalls": 0
+        },
+        "copyDesk": {
+          "inputTokens": 2817,
+          "outputTokens": 1809,
+          "totalTokens": 4626,
+          "webSearchCalls": 0
+        },
+        "imageGeneration": {
+          "input_tokens": 381,
+          "input_tokens_details": {
+            "image_tokens": 0,
+            "text_tokens": 381
+          },
+          "output_tokens": 1078,
+          "output_tokens_details": {
+            "image_tokens": 1078,
+            "text_tokens": 0
+          },
+          "total_tokens": 1459
+        }
+      }
     },
     {
       "id": "windows-startup-apps",
