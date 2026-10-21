@@ -1251,9 +1251,106 @@
       "category": "Perangkat",
       "categorySlug": "perangkat",
       "suggestedSlug": "cara-meninjau-aplikasi-startup-windows",
-      "status": "pending",
+      "status": "published",
       "contentType": "tutorial",
-      "visualKind": "windows-startup"
+      "visualKind": "windows-startup",
+      "generatedAt": "2026-10-21T07:41:51.986Z",
+      "generatedSlug": "cara-meninjau-aplikasi-startup-windows",
+      "models": {
+        "draft": "gpt-6-luna",
+        "editor": "gpt-6-sol"
+      },
+      "publishPolicy": "auto-until-20",
+      "autoPublished": true,
+      "publishedAt": "2026-10-21",
+      "editorial": {
+        "initial": {
+          "decision": "revise",
+          "effectiveDecision": "revise",
+          "score": 83,
+          "projectedScore": 93,
+          "repairability": "local",
+          "summary": "Draft sudah menjawab intent dengan urutan yang aman: membedakan boot dari kondisi setelah masuk Windows, memilih kandidat yang dikenal, menguji satu perubahan, lalu menyediakan cara membatalkannya. Perbaikan utamanya adalah mengganti sumber kinerja yang ternyata khusus Windows 8.1 dan memperjelas beberapa instruksi.",
+          "issueCount": 4
+        },
+        "final": {
+          "decision": "pass",
+          "score": 93,
+          "repairability": "none",
+          "summary": "Draft sudah layak terbit. Alurnya aman dan mudah diikuti: membedakan kelambatan boot dari kondisi setelah masuk Windows, memilih aplikasi yang dikenali, menguji satu perubahan, lalu mengembalikannya bila perlu. Koreksi sumber, navigasi Windows 10/11, dan batasan clean boot sudah diterapkan.",
+          "issueCount": 0,
+          "recoveryUsed": true
+        }
+      },
+      "copyEdit": {
+        "model": "gpt-6-sol",
+        "imageTagline": "Uji satu perubahan startup setiap kali",
+        "hookScore": 95,
+        "flowScore": 94,
+        "concisionScore": 93,
+        "summary": "Alur diperjelas dari mengenali gejala, memilih kandidat yang aman, menguji satu perubahan, hingga mengembalikannya bila perlu.",
+        "wordsBefore": 921,
+        "wordsAfter": 828
+      },
+      "image": {
+        "styleVersion": "premium-v1",
+        "model": "gpt-image-2.5-sunburst",
+        "visualKind": "windows-startup",
+        "featuredImage": "/images/articles/cara-meninjau-aplikasi-startup-windows.webp",
+        "socialImage": "/images/articles/cara-meninjau-aplikasi-startup-windows.webp",
+        "usage": {
+          "input_tokens": 379,
+          "input_tokens_details": {
+            "image_tokens": 0,
+            "text_tokens": 379
+          },
+          "output_tokens": 1078,
+          "output_tokens_details": {
+            "image_tokens": 1078,
+            "text_tokens": 0
+          },
+          "total_tokens": 1457
+        }
+      },
+      "usage": {
+        "draft": {
+          "inputTokens": 14316,
+          "outputTokens": 2194,
+          "totalTokens": 16510,
+          "webSearchCalls": 1
+        },
+        "editorInitial": {
+          "inputTokens": 19998,
+          "outputTokens": 1997,
+          "totalTokens": 21995,
+          "webSearchCalls": 3
+        },
+        "editorFinal": {
+          "inputTokens": 3086,
+          "outputTokens": 213,
+          "totalTokens": 3299,
+          "webSearchCalls": 0
+        },
+        "copyDesk": {
+          "inputTokens": 2694,
+          "outputTokens": 1681,
+          "totalTokens": 4375,
+          "webSearchCalls": 0
+        },
+        "imageGeneration": {
+          "input_tokens": 379,
+          "input_tokens_details": {
+            "image_tokens": 0,
+            "text_tokens": 379
+          },
+          "output_tokens": 1078,
+          "output_tokens_details": {
+            "image_tokens": 1078,
+            "text_tokens": 0
+          },
+          "total_tokens": 1457
+        }
+      }
     },
     {
       "id": "pdf-image-compression",
